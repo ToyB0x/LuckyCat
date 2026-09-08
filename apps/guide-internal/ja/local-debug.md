@@ -46,3 +46,7 @@ JSONには候補のリソース識別子と必要な根拠だけを含め、IP�
 - テストは生成したテスト鍵とGoogleの模擬応答を使い、署名、有効期限、エラー、プロジェクト制限、読み取り確認の意味を検証します。実鍵やクラウド接続は不要です。実際のGoogle Cloud接続と最小権限のIAMは、明示的に承認したプロジェクトで別途検証します。
 
 Googleの[サービスアカウントOAuth](https://developers.google.com/identity/protocols/oauth2/service-account)、Cloudflareの[ローカルシークレット](https://developers.cloudflare.com/workers/configuration/secrets/)と[ローカルWorkflows](https://developers.cloudflare.com/workflows/build/local-development/)も参照してください。
+
+## UIだけを確認する
+
+Webの開発サーバーで`/dev/diagnostics`を開くと、APIや鍵なしで8状態×日英の架空データを確認できます。実診断と同じ結果表示を使います。プレビュー操作では診断やクラウド通信は始まりません。[フロントの暫定方針](./frontend-direction)を参照してください。

@@ -46,3 +46,7 @@ JSON includes candidate resource identifiers and necessary evidence, excluding I
 - The tests check credential signing, expiry, errors, project restrictions, and read-probe semantics using generated test keys and mocked Google responses. It requires no real key or cloud access. Actual Google Cloud connectivity and least-privilege IAM must be verified separately for an explicitly approved project.
 
 Google documents [service account OAuth](https://developers.google.com/identity/protocols/oauth2/service-account); Cloudflare documents [local secrets](https://developers.cloudflare.com/workers/configuration/secrets/) and [local Workflows](https://developers.cloudflare.com/workflows/build/local-development/).
+
+## Previewing the UI Independently
+
+Open `/dev/diagnostics` on the web development server to explore eight synthetic states in English and Japanese without the API or keys. It shares the real diagnostic result display. Preview controls never start a diagnosis or cloud request. See [Provisional frontend direction](./frontend-direction).
