@@ -11,3 +11,19 @@ Similarly, this tool is backed by solid technology but goes beyond simply being 
 ## Purpose and Vision
 
 This repository is not just a platform to share a tool; it is a space for my own hands-on practice and growth. I view this solo project as a vital opportunity to earnestly dedicate myself to the craft of building software, hone my technical skills, and continue evolving as an engineer.
+
+## Guide Development
+
+Use Node.js 22 or later and pnpm 11.18.0.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+- Customer guide: http://127.0.0.1:5173 (`apps/guide`)
+- Internal guide: http://127.0.0.1:5174 (`apps/guide-internal`)
+
+Run one site with `pnpm guide:dev` or `pnpm guide-internal:dev`. Build both with `pnpm build`.
+
+The guides start small and grow alongside the product. Product workflows and infrastructure choices remain to be defined.
