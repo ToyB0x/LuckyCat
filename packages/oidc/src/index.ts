@@ -70,7 +70,7 @@ export function createLocalServiceAccountProvider(options: LocalCredentialOption
     }
     try {
       const response = await fetcher(tokenEndpoint, {
-        method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10_000),
+        method: 'POST', redirect: 'manual', signal: AbortSignal.timeout(10_000),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion }),
       });

@@ -20,7 +20,7 @@ test('separates authentication and bounded read probes, preserving partial failu
     urls.push(url);
     if (url === 'https://oauth2.googleapis.com/token') return Response.json({ access_token: 'secret-test-token', token_type: 'Bearer', expires_in: 3600 });
     assert.equal(init.headers.Authorization, 'Bearer secret-test-token');
-    assert.equal(init.redirect, 'error'); assert.equal(new URL(url).searchParams.get('maxResults'), '1');
+    assert.equal(init.redirect, 'manual'); assert.equal(new URL(url).searchParams.get('maxResults'), '1');
     assert.ok(!init.method || init.method === 'GET');
     if (url.includes('/disks?')) return Response.json({ items: { 'zones/example': {} } });
     if (url.includes('/addresses?')) return new Response('sensitive-provider-error', { status: 403 });
@@ -46,4 +46,19 @@ test('regular Worker entrypoint does not import local debug code', async () => {
   assert.equal(config.main, 'src/index.ts'); assert.equal(config.workflows, undefined);
   const main = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
   assert.ok(!main.includes('./local')); assert.ok(!main.includes('./debug'));
+});
+
+test('redirected read probes remain failures without forwarding the access token', async () => {
+  let probes = 0;
+  const result = await checkGoogleConnection(env, 'debug-example', async (url, init) => {
+    if (url === 'https://oauth2.googleapis.com/token') return Response.json({ access_token: 'test-token', token_type: 'Bearer', expires_in: 3600 });
+    probes++;
+    assert.equal(new URL(url).hostname, 'compute.googleapis.com');
+    assert.equal(init.redirect, 'manual');
+    return new Response(null, { status: 307, headers: { Location: 'https://example.invalid/collect' } });
+  });
+  assert.equal(probes, 3);
+  assert.equal(result.authentication, 'succeeded');
+  assert.deepEqual(result.sources.map(s => s.status), ['retrieval_failed', 'retrieval_failed', 'retrieval_failed']);
+  assert.equal(result.diagnosis, 'not_run');
 });

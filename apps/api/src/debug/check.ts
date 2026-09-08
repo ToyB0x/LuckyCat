@@ -36,7 +36,7 @@ export async function checkGoogleConnection(env: DebugSettings, project: string,
       endpoint.searchParams.set('returnPartialSuccess', 'true');
       endpoint.searchParams.set('fields', 'warning,unreachables,items/*/warning');
       const response = await fetcher(endpoint.toString(), {
-        headers: { Authorization: `Bearer ${token}` }, redirect: 'error', signal: AbortSignal.timeout(10_000),
+        headers: { Authorization: `Bearer ${token}` }, redirect: 'manual', signal: AbortSignal.timeout(10_000),
       });
       let status: string;
       if (!response.ok) {

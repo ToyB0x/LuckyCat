@@ -19,7 +19,7 @@ test('signs a verifiable Google OAuth assertion with a read scope and no delegat
   const provider = createLocalServiceAccountProvider({ ...options, now: () => 1_000_000,
     fetcher: async (url, init) => {
       assert.equal(url, 'https://oauth2.googleapis.com/token');
-      assert.equal(init.redirect, 'error');
+      assert.equal(init.redirect, 'manual');
       assert.equal(init.method, 'POST');
       const [header, payload, signature] = init.body.get('assertion').split('.');
       assert.equal(JSON.parse(Buffer.from(header, 'base64url')).alg, 'RS256');
@@ -58,4 +58,16 @@ test('does not leak or cache failures and rejects malformed token responses', as
   }
   const denied = createLocalServiceAccountProvider({ ...options, fetcher: async () => new Response('secret-must-not-escape', { status: 403 }) });
   await assert.rejects(denied.getAccessToken(), { message: 'token_exchange_failed' });
+});
+
+test('rejects token endpoint redirects without forwarding the signed assertion', async () => {
+  let calls = 0;
+  const provider = createLocalServiceAccountProvider({ ...options, fetcher: async (url, init) => {
+    calls++;
+    assert.equal(url, 'https://oauth2.googleapis.com/token');
+    assert.equal(init.redirect, 'manual');
+    return new Response(null, { status: 307, headers: { Location: 'https://example.invalid/collect' } });
+  } });
+  await assert.rejects(provider.getAccessToken(), { message: 'token_exchange_failed' });
+  assert.equal(calls, 1);
 });
