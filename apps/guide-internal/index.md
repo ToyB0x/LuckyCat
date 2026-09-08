@@ -9,6 +9,7 @@ Keep the customer experience and internal design knowledge aligned as LuckyCat e
 | [Concept](./concept) | Purpose, generic FinOps, intended audience, and the quiet-companion experience |
 | [Business model](./business-model) | Pricing, potential revenue, referral conditions, market approach, and economic validation |
 | [Development guidelines](./product-strategy) | Design principles, development scope, acceptance conditions, and open decisions |
+| [Provisional frontend direction](./frontend-direction) | Temporary light earth-tone baseline, interactive HTML reference, and application handoff |
 
 Google Cloud connection setup and the first diagnosis are **v0.1 planned · Not available**. See [connection design](./google-cloud) and [diagnostic design](./diagnostics) for the proposed implementation boundaries and acceptance conditions.
 
