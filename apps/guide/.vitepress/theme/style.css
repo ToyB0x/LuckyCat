@@ -1,0 +1,88 @@
+:root {
+  --vp-c-brand-1: #356044;
+  --vp-c-brand-2: #427651;
+  --vp-c-brand-3: #528b63;
+  --vp-c-brand-soft: rgba(53, 96, 68, 0.12);
+  --vp-c-bg: #faf9f4;
+  --vp-c-bg-soft: #f0f0e7;
+}
+
+.dark {
+  --vp-c-brand-1: #a9c9a6;
+  --vp-c-brand-2: #bbd8b7;
+  --vp-c-brand-3: #8bb887;
+  --vp-c-brand-soft: rgba(169, 201, 166, 0.12);
+  --vp-c-bg: #191e1a;
+  --vp-c-bg-soft: #232a24;
+}
+
+.landing {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 80px 40px 56px;
+}
+
+.landing .eyebrow {
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.landing h1 {
+  margin: 24px 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(48px, 7.5vw, 92px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1.06;
+}
+
+.landing h1 span { color: var(--vp-c-brand-1); }
+
+.landing .intro {
+  max-width: 570px;
+  color: var(--vp-c-text-2);
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.landing .actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin: 32px 0 64px;
+}
+
+.landing .primary {
+  padding: 13px 22px;
+  border-radius: 6px;
+  background: var(--vp-c-brand-1);
+  color: var(--vp-c-bg);
+  font-weight: 600;
+}
+
+.landing .primary:hover { background: var(--vp-c-brand-2); }
+.landing .secondary { text-decoration: underline; text-underline-offset: 5px; }
+.landing a:focus-visible { outline: 3px solid var(--vp-c-brand-2); outline-offset: 5px; }
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--vp-c-divider);
+  padding-top: 28px;
+}
+
+.principles h2 { margin: 0 0 10px; font-size: 18px; font-weight: 600; }
+.principles p { color: var(--vp-c-text-2); font-size: 16px; line-height: 1.65; }
+.landing .status { margin-top: 48px; color: var(--vp-c-text-2); font-size: 14px; }
+
+@media (max-width: 640px) {
+  .landing { padding: 48px 24px 36px; }
+  .landing .intro { font-size: 17px; }
+  .landing .actions { margin-bottom: 40px; }
+  .principles { grid-template-columns: 1fr; gap: 24px; }
+}
