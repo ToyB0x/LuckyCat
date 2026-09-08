@@ -33,6 +33,14 @@ LuckyCat is intended for people who want to improve cloud costs but recognize th
 
 With a pricing direction that starts free and lightweight setup, we aim to reduce the effort of getting started, so you can understand costs and move toward improvements alongside your main work. Exact free allowances are undecided, and product features are [not available yet](./getting-started).
 
+### When You Need a Little More Flexibility
+
+We also serve people who use cloud-native cost tools but find gaps or friction in organizing costs for their business and sharing them with others. They may want to organize costs without waiting for resource tagging or Terraform changes, or reduce the effort of teaching stakeholders to use a cloud management console.
+
+We aim to let users apply virtual tags or labels to cost data and share understandable team-level costs without changing resource settings. Simple showback explains whose work incurred which costs; internal billing and accounting are separate in scope. These are [feature candidates, not available capabilities](./getting-started#features-under-consideration); their free scope and target versions remain undecided.
+
+Native tools already offer categorization and allocation. Respect their use and affordably complement the extra step a team needs. See [how we relate to cloud-native tools](./comparison#working-with-cloud-native-tools).
+
 ### Roles Involved in Adoption
 
 | Role | What matters |

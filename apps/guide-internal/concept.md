@@ -20,6 +20,8 @@ The focus is organizations of around 100 engineers, up to roughly 100–300, whe
 
 These organizations need help turning cost information into safe, prioritized action without maintaining a sophisticated analysis platform. Serve small accumulated opportunities and larger decisions over time; the first detection scope remains undecided. Do not expand into advanced allocation, complex organizational management, or specialist governance merely to match another product. Judge fit by requirements, not size alone.
 
+Our direction includes helping people who find gaps or friction in business-specific classification and sharing in native tools organize costs without changing resources and share them with stakeholders. Include simple classification, visibility, and sharing, while keeping complex internal billing and accounting separate. Virtual tags and simple showback are candidates to refine; their free scope and target versions remain undecided. See [target segments and pricing strategy](./business-model#target-segments-and-pricing-strategy).
+
 ## A Quiet Good-Luck Charm
 
 The product should keep watch quietly and help when something deserves attention. Minimize setup and upkeep without requiring daily dashboard use. Present information worth checking with evidence and next actions, and never execute risky changes without authorization.

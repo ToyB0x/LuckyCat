@@ -16,6 +16,15 @@ No customer feature has an approved target version yet. In particular, the first
 
 When a feature is approved, this page will describe its user goal, planned actions, expected result, and constraints, together with both a target version and availability. Until then, there are no product setup steps to follow.
 
+### Features Under Consideration
+
+Organizing and sharing costs without changing resources is a product direction. The following capabilities are candidates for that experience; implementation scope, free allowances, and target versions remain undecided.
+
+| Candidate | Goal and intended experience | Constraints and availability |
+| --- | --- | --- |
+| Virtual tags or labels | Define classification rules for imported cost data and inspect team or product totals and uncategorized costs. | Keep classifications within LuckyCat; do not write back to resource tags or Terraform. Detail depends on available data. Not available; target version undecided. |
+| Simple showback | Share classified costs and their rationale with stakeholders within a limited viewing scope. | Internal billing and accounting are out of scope. Shared-cost allocation methods are undecided. Not available; target version undecided. |
+
 ### How to Read Release Status
 
 These are notation examples, not announced releases:

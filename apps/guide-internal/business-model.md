@@ -8,16 +8,25 @@ Free basic capabilities, or a substantial free allowance, with inexpensive paid 
 
 ## Target Segments and Pricing Strategy
 
-Among people who manage costs alongside other work and have meaningful cloud spending to improve, focus on two segments. Their needs can overlap.
+Among people who manage costs alongside other work and have meaningful cloud spending to improve, focus on the following segments. Their needs can overlap.
 
 | Segment | What delays adoption | Intended value from LuckyCat |
 | --- | --- | --- |
 | People hesitant to pay for the tool | They have meaningful cloud spending but hesitate to add a recurring cost for a cost-saving tool before seeing its benefit. A fee of tens of US dollars per month, or in some cases tens of thousands of yen per month, can feel like a barrier. | Free basics or a substantial free allowance that lets them assess value with little financial commitment. |
 | People deterred by payment administration | Beyond the price itself, preparing expense claims for accounting or internal spending-approval requests makes them put off adoption. | Less payment administration and lighter setup, so they can work on cost improvements in short periods alongside their main job. |
+| People seeking an extra step beyond native tools | They find gaps or friction in business-specific classification, allocation, or stakeholder sharing, and want to start without waiting for resource tagging or Terraform changes. | Aim for free-to-affordable classification without resource changes and simple showback. Exact scope remains undecided. |
 
 The amounts illustrate possible perceived barriers; they are not prices of specific products or planned LuckyCat prices. Reduce both financial commitment and the time needed to get started. Design the free scope to let users assess basic value, and make paid prices, limits, and additional value clear. Design onboarding to respect each organization's required approvals for service use and data access.
 
 Validate the pricing and administrative barriers these segments actually face, the effort needed to reach initial value, and the free allowance they need. Use those findings to balance useful scope with operating cost.
+
+## Value Alongside Native Tools
+
+Serve users who experience missing capabilities or friction in native tools by complementing the extra step they need. Official tools already support categorization and allocation, so neither those capabilities nor a free price alone establish differentiation. Continuing with native tools is appropriate when they meet the user's needs.
+
+Focus on the complete experience of organizing cost data with virtual tags or labels and sharing team totals and classification rationale with stakeholders. Reduce console training and resource-tagging effort, keeping scope to simple classification, visibility, and sharing. Complex internal billing and accounting remain separate. See [development guidelines](./product-strategy#design-conditions-for-virtual-classification-and-simple-showback) for candidate design conditions.
+
+Compare time to initial value, monthly review time, and the effort stakeholders need to understand and share cost breakdowns against native tools alone. Include third-party service review and data-connection effort when evaluating whether adoption is worthwhile. Define the free scope by balancing a meaningful basic experience with operating costs.
 
 ## Users, Adoption Decision-Makers, and Revenue Partners
 

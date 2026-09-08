@@ -30,6 +30,15 @@ The following are acceptance principles for future scope, not scheduled features
 
 Use paired version and availability labels, such as `v0.1 planned · Not available` / `v0.1予定・未提供`. These are examples, not a release announcement. Keep both language versions consistent as scope and implementation change.
 
+## Design Conditions for Virtual Classification and Simple Showback
+
+Organizing and sharing costs without changing resources is a product direction. Refine virtual tags or labels and simple showback as candidate capabilities. They are not available; supported clouds, free scope, target versions, and allocation methods remain undecided. Turn these principles into acceptance conditions when adopting the capabilities:
+
+- Layer LuckyCat-owned classifications over imported cost data without writing back to resource settings, tags, or Terraform. Allow virtual classification to support transitional organization and ongoing cost-management perspectives.
+- Let users try rules and inspect classified totals, uncategorized amounts, and rationale. Do not present detail absent from source data as established fact; show allocation rules and rationale for shared costs.
+- Keep simple showback focused on sharing team costs and rationale. Enforce viewing scope on the server and do not expose unauthorized teams' costs. Complex internal billing and accounting are out of scope.
+- During implementation, verify total reconciliation before and after classification, uncategorized-cost handling, absence of resource writeback, and rejection of access outside the viewer's scope.
+
 ## Open Decisions and Validation
 
 - **Release scope:** first customer outcome, supported cloud, detection rules, target version, and timing. “One cloud, one rule” is not an approved specification.
