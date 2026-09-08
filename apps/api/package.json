@@ -6,7 +6,7 @@
     "dev": "wrangler dev --local --config wrangler.local.jsonc --ip 127.0.0.1 --port 8787",
     "build": "wrangler deploy --dry-run --outdir dist",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test test/*.test.mjs",
+    "test": "vp test run",
     "build:local": "wrangler deploy --dry-run --config wrangler.local.jsonc --outdir dist-local"
   },
   "dependencies": {

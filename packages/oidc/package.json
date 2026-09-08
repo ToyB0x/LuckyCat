@@ -2,10 +2,12 @@
   "name": "@luckycat/oidc",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc --outDir dist --declaration",
-    "test": "node --experimental-strip-types --test test/*.test.mjs"
+    "test": "vp test run"
   }
 }

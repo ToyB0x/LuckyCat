@@ -30,6 +30,7 @@ JSON鍵で署名した情報を短期トークンへ交換し、ディスク・�
 - トークンのキャッシュはプロバイダーのインスタンス内に限定し、有効期限に余裕を持って更新します。鍵・トークン・Googleの生エラーをAPIの結果やWorkflowの入出力に含めません。認証情報の取得はステップ内で行い、独立した永続化されるステップの戻り値にはしません。
 - ローカルWorkflowsは、指定したプロジェクト、機密情報を除いた確認結果、時刻を`.wrangler/`配下へ保存します。開発データとして扱い、不要になったローカル状態はサーバーを停止してから削除します。
 - `packages/auth`と本番のWIF設計は別に維持します。デバッグモードは顧客向けの導入やテナント認可を実装するものではありません。
-- `pnpm test`は生成したテスト鍵とGoogleの模擬応答を使い、署名、有効期限、エラー、プロジェクト制限、読み取り確認の意味を検証します。実鍵やクラウド接続は不要です。実際のGoogle Cloud接続と最小権限のIAMは、明示的に承認したプロジェクトで別途検証します。
+- `pnpm test`はVite+に同梱されたVitestでワークスペースのテストを実行します（`vp test run`、APIは`vite-plus/test`から読み込み）。Vitest単体の追加依存は不要です。各パッケージの`vite.config.ts`にテスト設定を置きます。Node環境のユニットテストであり、Worker・Workflowの実行環境での確認は別に行います。
+- テストは生成したテスト鍵とGoogleの模擬応答を使い、署名、有効期限、エラー、プロジェクト制限、読み取り確認の意味を検証します。実鍵やクラウド接続は不要です。実際のGoogle Cloud接続と最小権限のIAMは、明示的に承認したプロジェクトで別途検証します。
 
 Googleの[サービスアカウントOAuth](https://developers.google.com/identity/protocols/oauth2/service-account)、Cloudflareの[ローカルシークレット](https://developers.cloudflare.com/workers/configuration/secrets/)と[ローカルWorkflows](https://developers.cloudflare.com/workflows/build/local-development/)も参照してください。
