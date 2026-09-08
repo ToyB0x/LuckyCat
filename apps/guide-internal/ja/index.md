@@ -46,10 +46,11 @@ Better Authの設定、プラグイン選択、セッション処理、ロール
 | `packages/auth` | Better Authの統合、認証、セッション、ロール、権限、認可のインターフェース | 土台のみ |
 | `packages/core` | FinOpsのドメインロジック、ユースケース、永続化インターフェース | 土台のみ |
 | `packages/db` | 認証データの永続化を含むDrizzleスキーマ、マイグレーション、D1アクセス | 土台のみ |
+| `packages/oidc` | 開発用のGoogle Cloud認証情報プロバイダー | ローカル専用。OIDC・WIFは未実装 |
 
 pnpm Workspaceで`apps/*`と`packages/*`を管理します。アプリ固有の組み立ては`apps/`、再利用する責務は`packages/`に置きます。両ガイドサイトは引き続きMarkdownからビルドします。
 
-サーバー側のワークロードIDと連携トークンを扱う`packages/oidc`を追加候補とします。まだ存在せず、[Google Cloud連携の設計](./google-cloud)と合わせて採用と責務の境界を決めます。Better Authの責務は引き続き`packages/auth`に置きます。
+`packages/oidc`は[ローカル専用のGoogle Cloud認証](./local-debug)を提供します。OIDC発行者と顧客向けWIFは未実装です。Better Authの責務は引き続き`packages/auth`に置きます。
 
 ### 開発ツール
 

@@ -23,6 +23,9 @@ importers:
       '@luckycat/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@luckycat/oidc':
+        specifier: workspace:*
+        version: link:../../packages/oidc
       '@orpc/server':
         specifier: ^1.0.0
         version: 1.15.0(ws@8.21.3)
@@ -109,6 +112,8 @@ importers:
       '@cloudflare/workers-types':
         specifier: '>=4.20250101.0 <6'
         version: 5.20260905.1
+
+  packages/oidc: {}
 
 packages:
 
