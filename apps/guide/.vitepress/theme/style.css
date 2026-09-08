@@ -95,3 +95,8 @@
   .landing .actions { margin-bottom: 40px; }
   .principles { grid-template-columns: 1fr; gap: 24px; }
 }
+
+.landing .cat-mark { width: 40px; height: 40px; color: #171b18; }
+.dark .landing .cat-mark { background: #c5cebf; border-radius: 50%; padding: 4px; }
+.landing .availability { color: var(--vp-c-text-2); font-size: 14px; margin-bottom: 16px; }
+.landing .status a { text-decoration: underline; text-underline-offset: 3px; }

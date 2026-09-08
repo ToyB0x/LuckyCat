@@ -4,13 +4,13 @@ LuckyCat is a streamlined, minimalist FinOps tool. It is designed primarily for 
 
 ## Product Philosophy
 
-This project aspires to the exceptional product development ethos of the Japanese appliance manufacturer, TWINBIRD. I deeply resonate with their approach: despite possessing the advanced technical capabilities to build cooling systems for space stations, they consistently deliver "simple, affordable, and user-friendly" products, offering a stark alternative to today’s overly complex, feature-bloated, and expensive appliance market.
+LuckyCat takes inspiration from the Japanese appliance maker TWINBIRD, whose [cooling technology is used aboard the International Space Station](<https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf>) and whose [appliance philosophy emphasizes essential functions, lasting quality, and design](https://www.twinbird.jp/brand/). We admire how technical depth can become everyday usability.
 
-Similarly, this tool is backed by solid technology but goes beyond simply being "free or cheap." It delivers **refined design and usability that provide tangible, practical benefits to your daily operations**.
+LuckyCat aims to apply that lesson to simple, affordable, easy-to-use FinOps, with **refined design and usability that bring tangible benefits to day-to-day work**. Read the [product philosophy](apps/guide/product.md#product-philosophy) for how this shapes the product.
 
 ## Purpose and Vision
 
-This repository is not just a platform to share a tool; it is a space for my own hands-on practice and growth. I view this solo project as a vital opportunity to earnestly dedicate myself to the craft of building software, hone my technical skills, and continue evolving as an engineer.
+This independent project is a place to build and share a practical tool and a place for the author’s hands-on practice and growth. By taking software craftsmanship seriously and developing technical and design skills, the author aims to turn learning into quality and usability for users. See the [internal concept](apps/guide-internal/concept.md#project-purpose-and-vision) for this development purpose.
 
 ## Local Development
 
@@ -32,7 +32,7 @@ Run `pnpm typecheck` and `pnpm build` for all workspace packages through the loc
 
 The web and API apps are Hello World starters. Auth and DB packages expose initialization factories only; no sign-in, D1 database, or product workflow is configured. See the internal guide for the package boundaries.
 
-The guides start small and grow alongside the product. Product workflows and infrastructure choices remain to be defined.
+The guides are the shared home for product direction and development plans. See the [product direction](apps/guide/product.md), [availability](apps/guide/getting-started.md), and [internal design rationale](apps/guide-internal/product-strategy.md). The direction and core stack are selected; customer feature scope and release versions remain undecided.
 
 ## Guide Deployment
 

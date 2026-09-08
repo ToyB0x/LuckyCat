@@ -13,7 +13,25 @@ export default defineConfig({
       title: 'LuckyCat 内部ガイド',
       description: 'LuckyCatのアーキテクチャと開発に関するナレッジ。',
       themeConfig: {
-        nav: [{ text: '内部ガイド', link: '/ja/' }],
+        nav: [
+          { text: 'コンセプト', link: '/ja/concept' },
+          { text: 'ビジネスモデル', link: '/ja/business-model' },
+          { text: '開発・技術', link: '/ja/' }
+        ],
+        sidebar: [
+          {
+            text: '製品方針',
+            items: [
+              { text: 'コンセプト', link: '/ja/concept' },
+              { text: 'ビジネスモデル', link: '/ja/business-model' },
+              { text: '開発方針', link: '/ja/product-strategy' }
+            ]
+          },
+          {
+            text: '技術',
+            items: [{ text: 'アーキテクチャとモノレポ', link: '/ja/' }]
+          }
+        ],
         outline: { level: [2, 3], label: 'このページの内容' },
         docFooter: { prev: '前のページ', next: '次のページ' },
         langMenuLabel: '言語を変更',
@@ -28,6 +46,24 @@ export default defineConfig({
   },
   themeConfig: {
     outline: [2, 3],
-    nav: [{ text: 'Internal guide', link: '/' }]
+    nav: [
+      { text: 'Concept', link: '/concept' },
+      { text: 'Business model', link: '/business-model' },
+      { text: 'Development & technology', link: '/' }
+    ],
+    sidebar: [
+      {
+        text: 'Product direction',
+        items: [
+          { text: 'Concept', link: '/concept' },
+          { text: 'Business model', link: '/business-model' },
+          { text: 'Development guidelines', link: '/product-strategy' }
+        ]
+      },
+      {
+        text: 'Technology',
+        items: [{ text: 'Architecture and monorepo', link: '/' }]
+      }
+    ]
   }
 })
