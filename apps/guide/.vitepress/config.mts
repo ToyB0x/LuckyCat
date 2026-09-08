@@ -13,11 +13,13 @@ export default defineConfig({
       description: 'シンプルで実用的なFinOpsを目指すLuckyCat。',
       themeConfig: {
         nav: [
-          { text: 'ガイド', link: '/ja/getting-started' },
+          { text: '製品方針', link: '/ja/product' },
+          { text: '提供状況', link: '/ja/getting-started' },
           { text: '製品比較', link: '/ja/comparison' }
         ],
         sidebar: [
-          { text: 'はじめに', link: '/ja/getting-started' },
+          { text: '製品方針', link: '/ja/product' },
+          { text: '提供状況とはじめ方', link: '/ja/getting-started' },
           { text: '製品比較', link: '/ja/comparison' }
         ],
         footer: { message: 'LuckyCat · シンプルさを、設計から。' },
@@ -35,11 +37,13 @@ export default defineConfig({
   },
   themeConfig: {
     nav: [
-      { text: 'Guide', link: '/getting-started' },
+      { text: 'Product', link: '/product' },
+      { text: 'Availability', link: '/getting-started' },
       { text: 'Comparison', link: '/comparison' }
     ],
     sidebar: [
-      { text: 'Getting started', link: '/getting-started' },
+      { text: 'Product direction', link: '/product' },
+      { text: 'Availability and getting started', link: '/getting-started' },
       { text: 'Product comparison', link: '/comparison' }
     ],
     footer: { message: 'LuckyCat · Simple by design.' }

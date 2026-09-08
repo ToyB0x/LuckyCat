@@ -2,6 +2,16 @@
 
 Keep the customer experience and internal design knowledge aligned as LuckyCat evolves.
 
+## Product Direction
+
+| Page | Contents |
+| --- | --- |
+| [Concept](./concept) | Purpose, generic FinOps, intended audience, and the quiet-companion experience |
+| [Business model](./business-model) | Pricing, potential revenue, referral conditions, market approach, and economic validation |
+| [Development guidelines](./product-strategy) | Design principles, development scope, acceptance conditions, and open decisions |
+
+The following sections describe the selected technologies and monorepo structure.
+
 ## Main Architecture
 
 The following stack is selected for LuckyCat. The guide sites and minimal application/package scaffolds exist. Authentication, persistence, and FinOps workflows remain to be implemented.
