@@ -34,5 +34,8 @@ export const diagnosticStyles = `
 .local-debug .json-result, .local-debug .connection-tools { margin-top: 18px; border-top: 1px solid #d8e2df; padding-top: 8px; }
 .local-debug pre { background: #f3f5f4; padding: 16px; overflow: auto; max-height: 480px; font-size: .8rem; }
 .local-debug .privacy-note { margin-top: 22px; }
+.local-debug .prototype-estimate { background: #f5f8f7; border: 1px solid #c9ded5; border-radius: 10px; padding: 20px; margin: 20px 0; }
+.local-debug .prototype-estimate h4 { margin-top: 8px; }
+.local-debug .estimate-total { font-size: 2rem; font-weight: 700; letter-spacing: -.03em; margin: 6px 0; color: #176354; }
 @media (max-width: 520px) { .local-debug .evidence-grid { grid-template-columns: 1fr; } .local-debug .candidate summary > span { display: block; margin-left: 16px; margin-top: 3px; } }
 `;

@@ -24,7 +24,8 @@ test('end-to-end JSON keeps one source failure separate from valid findings and 
   });
   assert.equal(urls.length, 3); assert.equal(result.authentication, 'succeeded'); assert.equal(result.status, 'partially_evaluated');
   assert.equal(result.rules[0].conclusion, 'incomplete'); assert.equal(result.rules[1].candidates.length, 1);
-  assert.equal(result.rules[1].candidates[0].amount.status, 'unknown');
+  assert.equal(result.schemaVersion, '2');
+  assert.deepEqual(result.rules[1].candidates[0].amount, { status: 'estimated', basis: 'prototype-fixed-rates', monthlyUsd: 7.3, unitPriceUsd: 0.01, quantity: 730, unit: 'IP-hour' });
   const serialized = JSON.stringify(result);
   for (const secret of ['do-not-expose', '203.0.113.10', 'private_key']) assert.ok(!serialized.includes(secret));
   assert.ok(result.sources.every(s => !('records' in s)));

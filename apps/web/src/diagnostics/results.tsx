@@ -3,6 +3,7 @@ import type { DiagnosticResult, Finding } from '@luckycat/core';
 const ruleNames = { 'unattached-persistent-disk': '未接続の永続ディスク', 'unassigned-static-external-ipv4': '未割り当ての静的外部IPv4' };
 const sourceNames = { disks: 'ディスク', addresses: 'IPアドレス' };
 const reasonNames: Record<string, string> = {
+  unsupported_prototype_price: 'この種類の仮単価は未設定です。', invalid_capacity: '容量を確認できないため算出していません。',
   authentication_failed: '認証できなかったため、データを取得していません。', disabled: 'ローカル認証モードが無効です。',
   invalid_credentials: '認証情報の形式を確認できません。ローカル設定を確認してください。', token_exchange_failed: '認証用トークンを取得できませんでした。鍵の有効性と接続環境を確認してください。',
   authentication_rejected: '読み取り要求で認証が拒否されました。', access_denied_or_api_disabled: '権限が不足しているか、必要なAPIが無効です。',
@@ -18,14 +19,16 @@ const reasonNames: Record<string, string> = {
 };
 export const explainReason = (reason: string) => reasonNames[reason] ?? `詳細な理由を確認してください（${reason}）。`;
 const time = (value: string) => new Date(value).toLocaleString('ja-JP', { timeZoneName: 'short' });
+const usd = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 function location(resource: string) {
   const parts = resource.split('/');
   return parts[2] === 'global' ? 'グローバル' : `${parts[3]}（${parts[2] === 'zones' ? 'ゾーン' : 'リージョン'}）`;
 }
 function Candidate({ finding }: { finding: Finding }) {
   const r = finding.evidence;
+  const amount = finding.amount;
   return <details className="candidate">
-    <summary><strong>{finding.resource.split('/').at(-1)}</strong><span>{location(finding.resource)}</span><span className="badge">金額不明</span></summary>
+    <summary><strong>{finding.resource.split('/').at(-1)}</strong><span>{location(finding.resource)}</span><span className="badge">{amount.status === 'estimated' ? `約${usd(amount.monthlyUsd)}/月（仮）` : '金額不明'}</span></summary>
     <div className="candidate-body">
       <p className="resource-id">{finding.resource}</p>
       <dl className="evidence-grid">
@@ -34,7 +37,8 @@ function Candidate({ finding }: { finding: Finding }) {
         <div><dt>参照先</dt><dd>{r.referenceCount}件</dd></div>
         {r.diskType && <div><dt>ディスク種別・容量</dt><dd>{r.diskType} / {r.sizeGb === null || r.sizeGb === undefined ? '容量不明' : `${r.sizeGb} GiB`}</dd></div>}
         {r.ipVersion && <div><dt>アドレス種別</dt><dd>静的外部IPv4</dd></div>}
-        <div><dt>削減可能額</dt><dd>不明（価格・請求データ未取得）</dd></div>
+        <div><dt>概算月額（仮）</dt><dd>{amount.status === 'estimated' ? `約${usd(amount.monthlyUsd)} USD/月` : explainReason(amount.reason)}</dd></div>
+        {amount.status === 'estimated' && <div><dt>計算の内訳</dt><dd>{usd(amount.unitPriceUsd)} × {amount.quantity} {amount.unit === 'GiB-month' ? 'GiB（月額）' : '時間／月'}</dd></div>}
         <div><dt>連続した未使用期間</dt><dd>不明</dd></div>
       </dl>
       {r.referencesOmitted && <p className="muted">参照先0件は、Google APIで空の参照先フィールドが省略された応答に基づきます。</p>}
@@ -45,7 +49,10 @@ function Candidate({ finding }: { finding: Finding }) {
 }
 
 export function DiagnosticResults({ result }: { result: DiagnosticResult }) {
-  const count = result.rules.reduce((sum, rule) => sum + rule.candidates.length, 0);
+  const candidates = result.rules.flatMap(rule => rule.candidates);
+  const count = candidates.length;
+  const estimated = candidates.flatMap(finding => finding.amount.status === 'estimated' ? [finding.amount.monthlyUsd] : []);
+  const subtotal = estimated.reduce((sum, value) => sum + value, 0);
   const complete = result.status === 'evaluated';
   const title = result.authentication === 'failed' ? '認証に失敗しました' : complete ? (count ? '見直し候補があります' : '評価範囲内で該当なし')
     : result.status === 'partially_evaluated' ? '一部を評価できませんでした' : '診断を評価できませんでした';
@@ -53,10 +60,21 @@ export function DiagnosticResults({ result }: { result: DiagnosticResult }) {
     <header className={`result-banner ${complete ? 'complete' : 'incomplete'}`}>
       <p className="eyebrow">診断結果 · {result.project}</p><h3>{title}</h3>
       <p>{complete ? '今回取得・評価できた範囲の結果です。環境全体に問題がないことを保証しません。' : '未取得・未評価の範囲が残っています。候補の件数だけで判断しないでください。'}</p>
-      {result.status !== 'not_evaluated' && <p><strong>確認できた候補：{count}件</strong> · 金額は不明</p>}
+      {result.status !== 'not_evaluated' && <p><strong>確認できた候補：{count}件</strong></p>}
       <p className="muted">実行：<time dateTime={result.startedAt}>{time(result.startedAt)}</time> 〜 <time dateTime={result.completedAt}>{time(result.completedAt)}</time></p>
       {result.authenticationReason && <p>{explainReason(result.authenticationReason)}</p>}
     </header>
+    {count > 0 && <section className="prototype-estimate" aria-label="仮の価格推定">
+      <p className="eyebrow">価格推定は仮実装 · USD</p>
+      <h4>概算月額の小計</h4>
+      <p className="estimate-total">{estimated.length ? `約${usd(subtotal)}/月` : '金額不明'}</p>
+      <p>算出済み {estimated.length}件 ／ 金額不明 {count - estimated.length}件</p>
+      <p>画面の利用感を確認するための固定単価による概算です。実請求額や確定した削減額ではありません。</p>
+      <details><summary>概算の前提を確認</summary>
+        <p>現在の状態が続く場合の費用を概算しています。削除・解放でき、代替費用が発生しなければ削減の目安になります。</p>
+        <p>地域差・割引・無料枠・BYOIPなどの個別条件は未反映です。IPv4は月730時間、リージョンのディスクはゾーンの2倍の仮単価を使います。未取得・未評価の範囲や金額不明の候補は小計に含みません。</p>
+      </details>
+    </section>}
     {result.rules.map(rule => <section className="rule-result" key={rule.rule} aria-label={ruleNames[rule.rule]}>
       <h4>{ruleNames[rule.rule]} <span className="badge">{rule.status === 'evaluated' ? '評価済み' : rule.status === 'partially_evaluated' ? '一部未評価' : '未評価'}</span></h4>
       <p>{rule.source === 'disks' ? '利用可能な状態で、取得時点の参照先がない永続ディスクです。' : '予約中の静的外部IPv4で、取得時点の参照先がないものです。'} <span className="muted">ルール v{rule.version}</span></p>

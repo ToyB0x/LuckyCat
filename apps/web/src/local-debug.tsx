@@ -60,7 +60,7 @@ export function LocalDebugPanel() {
   return <section className="local-debug" aria-label="Google Cloudのローカル検証">
     <style>{diagnosticStyles}</style>
     <header><p className="eyebrow">Google Cloud · 開発用</p><h2>リソースの見直し候補を確認</h2>
-      <p>未接続ディスクと未割り当ての静的外部IPv4を、現在の状態から確認します。</p></header>
+      <p>未接続ディスクと未割り当ての静的外部IPv4を、現在の状態から確認します。価格推定は現在仮実装で、固定単価による概算を表示します。</p></header>
     <div className="diagnostic-controls">
       <button type="button" className="secondary" onClick={() => void run('status')}>設定状態を読み込む</button>
       {status && <>

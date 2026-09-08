@@ -15,7 +15,7 @@ async function load() {
 const diagnose = () => fireEvent.click(screen.getByRole('button', { name: '診断を実行' }));
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(r => { resolve = r; }); return { promise, resolve }; }
 
-test('shows candidate identity, location, evidence and unknown money; JSON is collapsed', () => {
+test('shows candidate identity, location, evidence and prototype money; JSON is collapsed', () => {
   render(<DiagnosticResults result={fixture()} />);
   assert.ok(screen.getByRole('heading', { name: '見直し候補があります' }));
   assert.ok(screen.getByText('確認できた候補：1件'));
@@ -25,7 +25,10 @@ test('shows candidate identity, location, evidence and unknown money; JSON is co
   assert.ok(screen.getByText('zone-a（ゾーン）'));
   assert.ok(screen.getByText('pd-balanced / 10 GiB'));
   assert.ok(screen.getByText('利用可能（READY）'));
-  assert.ok(screen.getByText('不明（価格・請求データ未取得）'));
+  assert.ok(screen.getByText('価格推定は仮実装 · USD'));
+  assert.ok(screen.getByText('約$1.00 USD/月'));
+  assert.ok(screen.getByText('$0.10 × 10 GiB（月額）'));
+  assert.ok(screen.getByText('算出済み 1件 ／ 金額不明 0件'));
   assert.equal(screen.getByText('診断JSONを表示').closest('details')?.open, false);
 });
 test('partial collection preserves candidates and describes the missing source rather than a clean result', () => {
@@ -58,7 +61,7 @@ test('validates response structure, project and no-match consistency at the netw
   const contradictory = fixture('empty'); contradictory.rules[0].conclusion = 'incomplete';
   const wrongResource = fixture('candidate', 'other-example'); wrongResource.project = project;
   const malformed = fixture(); (malformed.rules[0].candidates[0].evidence as unknown as { referenceCount: unknown }).referenceCount = 'zero';
-  for (const value of [null, {}, { ...fixture(), project: 'other-example' }, { ...fixture(), schemaVersion: '2' }, { ...fixture(), rules: [] }, broken, contradictory, wrongResource, malformed]) {
+  for (const value of [null, {}, { ...fixture(), project: 'other-example' }, { ...fixture(), schemaVersion: '1' }, { ...fixture(), rules: [] }, broken, contradictory, wrongResource, malformed]) {
     assert.throws(() => parseDiagnosticResult(value, project), /診断結果の形式/);
   }
 });
@@ -103,4 +106,30 @@ test('malformed successful HTTP response is shown as an error, not zero findings
   render(<LocalDebugPanel />); await load(); diagnose();
   await waitFor(() => assert.match(screen.getByRole('alert').textContent ?? '', /診断結果の形式/));
   assert.equal(screen.queryByRole('region', { name: '診断結果' }), null);
+});
+
+test('subtotal includes only priced candidates and keeps unknown amounts visible', () => {
+  const result = fixture('partial');
+  const first = result.rules[0].candidates[0];
+  result.rules[0].candidates.push({ ...first, resource: `${first.resource}-unknown`, amount: { status: 'unknown', reason: 'invalid_capacity' } });
+  const view = render(<DiagnosticResults result={result} />);
+  assert.ok(screen.getByText('約$1.00/月'));
+  assert.ok(screen.getByText('算出済み 1件 ／ 金額不明 1件'));
+  assert.ok(screen.getByText('金額不明'));
+  assert.ok(screen.getByRole('heading', { name: '一部を評価できませんでした' }));
+  first.amount = { status: 'unknown', reason: 'unsupported_prototype_price' };
+  view.rerender(<DiagnosticResults result={result} />);
+  assert.ok(screen.getByText('算出済み 0件 ／ 金額不明 2件'));
+  assert.equal(screen.queryByText(/約\$0\.00/), null);
+});
+
+test('response validation accepts unknown prices and rejects malformed estimates', () => {
+  const result = fixture();
+  result.rules[0].candidates[0].amount = { status: 'unknown', reason: 'invalid_capacity' };
+  assert.deepEqual(parseDiagnosticResult(result, project), result);
+  for (const monthlyUsd of [-1, Infinity, NaN, '7.30']) {
+    const invalid = fixture();
+    Object.assign(invalid.rules[0].candidates[0].amount, { monthlyUsd });
+    assert.throws(() => parseDiagnosticResult(invalid, project), /診断結果の形式/);
+  }
 });

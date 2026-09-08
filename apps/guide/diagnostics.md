@@ -6,7 +6,7 @@ The planned first diagnosis collects data from explicitly selected Google Cloud 
 
 Start with the [Google Cloud connection plan](./google-cloud). Once provided, the intended flow is to confirm the connection and scope, explicitly start a diagnosis, then review the result for that run.
 
-The next development scope prioritizes unattached disks and unassigned static external IPv4. Start with candidates and evidence from current state, leaving amounts unknown. Disks on stopped VMs follow a decision on stop duration and exclusions.
+The next development scope prioritizes unattached disks and unassigned static external IPv4. Start with candidates and evidence from current state. The local development screen also shows rough amounts to evaluate the user experience. Disks on stopped VMs follow a decision on stop duration and exclusions.
 
 ## Initial Candidates
 
@@ -21,6 +21,13 @@ Prioritize rules that share Compute Engine metadata and keep setup small. These 
 The first two candidates use current inventory. A claim about a continuous unused period requires history; creation time is not a substitute. The stopped-VM candidate needs reliable stop timestamps and an agreed duration. Exact grace periods, exclusions, and supported resource types must be finalized before release.
 
 Snapshot retention review remains a separate candidate requiring an agreed retention purpose and period. Low-utilization or rightsizing rules are lower priority because they need additional monitoring data and observation windows. None of these candidates guarantees that a resource can safely be deleted.
+
+
+::: warning Price estimation is currently a prototype
+The local development screen uses fixed rates to show rough monthly amounts for evaluating the user experience. These are neither actual bills nor confirmed savings. Regional differences, discounts, free tiers, BYOIP, and other special conditions are not reflected. Candidates with unknown amounts remain visible; the subtotal includes only priced candidates. Treat it as an indication of possible savings if resources can be deleted or released without replacement costs.
+
+When formally adopted, consider combining BigQuery Billing Export, pricing REST APIs, and other sources. Prices are not dynamically fetched or automatically refreshed today. Customer-facing functionality remains unavailable.
+:::
 
 ## Reading Results
 
