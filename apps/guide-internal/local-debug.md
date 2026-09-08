@@ -34,7 +34,7 @@ Switching projects, reloading configuration, or rerunning clears previous result
 
 Read `status` together with each rule's `conclusion`. `candidates_found` means review candidates exist; `no_matching_candidates` applies only to completely collected and evaluated scope; `incomplete` means a conclusion cannot be made for all scope. Even with findings, `partially_evaluated` retains collection/evaluation gaps. Reasons appear in `sources.issues` and `rules.unevaluated`. Amounts are fixed-rate `estimated` values or `unknown` with a reason. The result uses `schemaVersion: "2"`. Continuous unused duration remains unknown.
 
-JSON includes candidate resource identifiers and necessary evidence, excluding IP addresses, labels, descriptions, credentials, and raw Google errors. Inspect results locally and do not save them in Git-tracked files. Diagnosis does not persist results in a DB or Workflow or automatically modify resources. Startup and configuration loading do not start a diagnosis.
+JSON includes candidate resource identifiers and necessary evidence, excluding IP addresses, labels, descriptions, credentials, and raw Google errors. Inspect results locally and do not save them in Git-tracked files. Results can be explicitly saved to local D1. Diagnostic Workflow persistence and automatic resource changes remain outside this scope. Startup and configuration loading do not start a diagnosis.
 
 ## Boundaries and Verification
 
@@ -50,3 +50,15 @@ Google documents [service account OAuth](https://developers.google.com/identity/
 ## Previewing the UI Independently
 
 Open `/dev/diagnostics` on the web development server to explore eight synthetic states in English and Japanese without the API or keys. It shares the real diagnostic result display. Preview controls never start a diagnosis or cloud request. See [Provisional frontend direction](./frontend-direction).
+
+## Local Diagnostic Storage and History
+
+Development only; not available to customers. First run `pnpm --filter @luckycat/api db:migrate:local`, then start the applications with `pnpm dev`. After a diagnosis in the local debug screen, choose “Save locally.” Saving is optional, and a storage failure leaves the diagnostic result on screen. The project's ID must be in the local allowlist when saving.
+
+Open `/dev/history` to browse the newest saved results, 20 at a time, and open an entry to inspect evidence with the same renderer as a live diagnosis. Partial collection, unevaluated scopes, and unknown amounts are preserved. Prices and evidence are snapshots from the diagnosis; viewing them does not retrieve data, reevaluate rules, or recalculate prices. Saving time and diagnosis time are distinct. Deletion removes only the saved entry, never a Google Cloud resource.
+
+Viewing and deleting history require the local API and D1, but no Google Cloud credentials. These actions do not initiate cloud connections. The synthetic preview at `/dev/diagnostics` remains usable without the API or D1 and never automatically saves to history.
+
+Only fields validated against the current result contract are stored. Each save request is limited to 1 MiB. Unsupported or corrupt results never become “no matches.” History endpoints are confined to the local configuration and excluded from production builds. Local D1 lives in Git-ignored `apps/api/.wrangler/` and retains entries until explicitly deleted. Automatic retention, production tenant authorization, and production deletion guarantees are outside this scope. Do not publish or share the local database or backups.
+
+Follow D1's [local development](https://developers.cloudflare.com/d1/best-practices/local-development/) and [migration](https://developers.cloudflare.com/d1/reference/migrations/) guidance; setup applies only to the local database.

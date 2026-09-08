@@ -7,15 +7,18 @@
     "build": "wrangler deploy --dry-run --outdir dist",
     "typecheck": "tsc --noEmit",
     "test": "vp test run",
-    "build:local": "wrangler deploy --dry-run --config wrangler.local.jsonc --outdir dist-local"
+    "build:local": "wrangler deploy --dry-run --config wrangler.local.jsonc --outdir dist-local",
+    "db:migrate:local": "wrangler d1 migrations apply LOCAL_DIAGNOSTICS --local --config wrangler.local.jsonc"
   },
   "dependencies": {
     "@luckycat/core": "workspace:*",
     "@orpc/server": "^1.0.0",
-    "@luckycat/oidc": "workspace:*"
+    "@luckycat/oidc": "workspace:*",
+    "@luckycat/db": "workspace:*"
   },
   "devDependencies": {
     "wrangler": "^4.0.0",
-    "@cloudflare/workers-types": ">=4.20250101.0 <6"
+    "@cloudflare/workers-types": ">=4.20250101.0 <6",
+    "miniflare": "5.20260903.0-alpha"
   }
 }
