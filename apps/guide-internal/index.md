@@ -46,10 +46,11 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 | `packages/auth` | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Scaffold |
 | `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Scaffold |
 | `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Scaffold |
+| `packages/oidc` | Google Cloud credential provider for development | Local only; OIDC/WIF unimplemented |
 
 Use pnpm Workspace for `apps/*` and `packages/*`. Keep app-specific wiring in `apps/` and reusable responsibilities in `packages/`. Both guide sites continue to build from Markdown.
 
-`packages/oidc` is an additional candidate for server-side workload identity and federation token handling. It does not exist yet; decide its adoption and boundary with the [Google Cloud connection design](./google-cloud). Better Auth responsibilities remain in `packages/auth`.
+`packages/oidc` provides [local-only Google Cloud credentials](./local-debug). The OIDC issuer and customer WIF remain unimplemented. Better Auth responsibilities stay in `packages/auth`.
 
 ### Development Tooling
 

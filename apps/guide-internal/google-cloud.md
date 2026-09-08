@@ -1,7 +1,7 @@
 # Google Cloud Connection Design
 
 ::: info v0.1 planned · Not available
-The first-cloud decision is Google Cloud. Connection setup, access checks, scoped retrieval, and an initial diagnosis are the approved experience. Authentication, exact IAM configuration, and individual rule adoption remain proposals. None of this workflow is implemented.
+The first-cloud decision is Google Cloud. Connection setup, access checks, scoped retrieval, and an initial diagnosis are the approved experience. Authentication, exact IAM configuration, and individual rule adoption remain proposals. The customer workflow is not implemented. See [local debugging](./local-debug) for the development-only connection check.
 :::
 
 ## Connection Method: Proposal to Validate
@@ -33,7 +33,7 @@ Keep authentication success separate from a limited read probe for each required
 - `packages/core` owns evaluation and result semantics behind data-source interfaces, independent of Cloudflare, Google SDKs, and HTTP.
 - `packages/db` owns persistence. Data schemas, retention, and deletion are not implemented yet.
 
-Consider a server-only `packages/oidc` package to encapsulate workload identity token issuance/signing and federation token exchange. If adopted, `apps/api` would use its interfaces while retaining resource collection, and `packages/auth` would retain Better Auth session and authorization responsibilities. The package, its exact boundary, and the connection method remain candidates; no package is created or required by this guide update.
+`packages/oidc` now provides a server-only credential-provider interface and a local service-account JSON adapter for short-lived tokens. An OIDC issuer and customer WIF are not implemented. `apps/api` retains resource reads, and `packages/auth` retains Better Auth sessions and authorization. Workload identity issuance/signing and federation token exchange remain candidates for this package.
 
 ## Safety and Data Management
 

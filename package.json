@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vp run -r --parallel dev",
     "build": "vp run -r --cache build",
-    "typecheck": "vp run -r --cache typecheck"
+    "typecheck": "vp run -r --cache typecheck",
+    "test": "vp run -r test"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
