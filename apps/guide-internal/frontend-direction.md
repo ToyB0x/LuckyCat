@@ -14,12 +14,12 @@ The dark treasure-chest direction (Option 2) is deferred, not rejected permanent
 
 ## Stable Constraints and Changeable Choices
 
-| Keep stable during visual iterations | Provisional and replaceable |
-| --- | --- |
-| Findings and their evidence, uncertainty, and collection coverage | Colors, typography, spacing, layout, copy, mascot placement |
-| Distinguish estimates, unknown amounts, and realized savings | Table, disclosure, drawer, or dedicated detail-page presentation |
-| Explicit diagnosis; no automatic resource changes | Navigation structure and eventual light/dark theme support |
-| Current result contract and separation of UI / acquisition / evaluation | Component boundaries as the application grows |
+| Keep stable during visual iterations                                    | Provisional and replaceable                                      |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Findings and their evidence, uncertainty, and collection coverage       | Colors, typography, spacing, layout, copy, mascot placement      |
+| Distinguish estimates, unknown amounts, and realized savings            | Table, disclosure, drawer, or dedicated detail-page presentation |
+| Explicit diagnosis; no automatic resource changes                       | Navigation structure and eventual light/dark theme support       |
+| Current result contract and separation of UI / acquisition / evaluation | Component boundaries as the application grows                    |
 
 The broader product purpose in [Concept](./concept) remains in place. This provisional decision concerns the frontend and how that purpose is expressed, not a reset of the product's safety requirements or target audience.
 

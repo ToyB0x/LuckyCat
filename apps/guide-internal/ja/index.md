@@ -4,11 +4,11 @@ LuckyCatの成長に合わせて、顧客体験と内部設計のナレッジを
 
 ## 製品方針
 
-| ページ | 内容 |
-| --- | --- |
-| [コンセプト](./concept) | 存在意義、ジェネリックFinOps、対象ユーザー、お守りとしての体験 |
-| [ビジネスモデル](./business-model) | 価格方針、収益案、紹介の条件、市場展開、採算の検証 |
-| [開発方針](./product-strategy) | 設計原則、開発範囲、受け入れ条件、未決定事項 |
+| ページ                                     | 内容                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------ |
+| [コンセプト](./concept)                    | 存在意義、ジェネリックFinOps、対象ユーザー、お守りとしての体験     |
+| [ビジネスモデル](./business-model)         | 価格方針、収益案、紹介の条件、市場展開、採算の検証                 |
+| [開発方針](./product-strategy)             | 設計原則、開発範囲、受け入れ条件、未決定事項                       |
 | [フロントの暫定方針](./frontend-direction) | 明色・アースカラーの仮採用、操作できるHTML見本、アプリへの引き継ぎ |
 
 以下では、採用済みの技術とモノレポの構成を説明します。
@@ -19,14 +19,14 @@ Google Cloud連携セットアップと初回診断は**v0.1予定・未提供**
 
 LuckyCatには以下の技術を採用します。ガイドサイトと最小限のアプリ・パッケージの土台は作成済みです。認証、永続化、FinOpsの業務フローはこれから実装します。
 
-| 領域 | 利用技術・責務 |
-| --- | --- |
-| ガイドサイト | VitePress。英語・日本語に対応 |
-| Webアプリケーション | TanStack Startによる画面とアプリケーションのルーティング |
-| API | [oRPC](https://orpc.dev/)による型付きのクライアント・サーバー間通信 |
-| 認証・認可 | [Better Auth](https://better-auth.com/docs/adapters/drizzle)を`packages/auth`に集約。独自実装よりも、提供される認証・セッション・アクセス制御機能を優先して活用 |
-| 業務ロジック | `core`パッケージにFinOpsのドメインロジックとユースケースを集約 |
-| データ永続化 | [Drizzle ORMとCloudflare D1](https://orm.drizzle.team/docs/connect-cloudflare-d1)によるスキーマ定義とDBアクセス |
+| 領域                | 利用技術・責務                                                                                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ガイドサイト        | VitePress。英語・日本語に対応                                                                                                                                   |
+| Webアプリケーション | TanStack Startによる画面とアプリケーションのルーティング                                                                                                        |
+| API                 | [oRPC](https://orpc.dev/)による型付きのクライアント・サーバー間通信                                                                                             |
+| 認証・認可          | [Better Auth](https://better-auth.com/docs/adapters/drizzle)を`packages/auth`に集約。独自実装よりも、提供される認証・セッション・アクセス制御機能を優先して活用 |
+| 業務ロジック        | `core`パッケージにFinOpsのドメインロジックとユースケースを集約                                                                                                  |
+| データ永続化        | [Drizzle ORMとCloudflare D1](https://orm.drizzle.team/docs/connect-cloudflare-d1)によるスキーマ定義とDBアクセス                                                 |
 
 WebアプリケーションからoRPC経由でAPIを呼び出します。APIはセッション検証と認可を`packages/auth`に委譲してから、coreのユースケースを実行します。coreはUI・HTTP・認証・DBライブラリに依存させず、永続化はインターフェースを通して渡します。D1へのアクセスやサーバー側の認証コードはブラウザ向けのバンドルに含めません。
 
@@ -38,16 +38,16 @@ Better Authの設定、プラグイン選択、セッション処理、ロール
 
 ## モノレポの基礎構造
 
-| パス | 目的 | 状態 |
-| --- | --- | --- |
-| `apps/guide` | 顧客向けのVitePressサイトとランディングページ | 作成済み |
-| `apps/guide-internal` | 内部向けのVitePressサイト | 作成済み |
-| `apps/web` | TanStack StartアプリケーションとoRPCクライアント | 土台のみ |
-| `apps/api` | oRPCエンドポイントとauth・core・DBパッケージの組み合わせ | 土台のみ |
-| `packages/auth` | Better Authの統合、認証、セッション、ロール、権限、認可のインターフェース | 土台のみ |
-| `packages/core` | FinOpsのドメインロジック、ユースケース、永続化インターフェース | ローカル診断の結果型と2ルールの評価 |
-| `packages/db` | 認証データの永続化を含むDrizzleスキーマ、マイグレーション、D1アクセス | 土台のみ |
-| `packages/oidc` | 開発用のGoogle Cloud認証情報プロバイダー | ローカル専用。OIDC・WIFは未実装 |
+| パス                  | 目的                                                                      | 状態                                |
+| --------------------- | ------------------------------------------------------------------------- | ----------------------------------- |
+| `apps/guide`          | 顧客向けのVitePressサイトとランディングページ                             | 作成済み                            |
+| `apps/guide-internal` | 内部向けのVitePressサイト                                                 | 作成済み                            |
+| `apps/web`            | TanStack StartアプリケーションとoRPCクライアント                          | 土台のみ                            |
+| `apps/api`            | oRPCエンドポイントとauth・core・DBパッケージの組み合わせ                  | 土台のみ                            |
+| `packages/auth`       | Better Authの統合、認証、セッション、ロール、権限、認可のインターフェース | 土台のみ                            |
+| `packages/core`       | FinOpsのドメインロジック、ユースケース、永続化インターフェース            | ローカル診断の結果型と2ルールの評価 |
+| `packages/db`         | 認証データの永続化を含むDrizzleスキーマ、マイグレーション、D1アクセス     | 土台のみ                            |
+| `packages/oidc`       | 開発用のGoogle Cloud認証情報プロバイダー                                  | ローカル専用。OIDC・WIFは未実装     |
 
 pnpm Workspaceで`apps/*`と`packages/*`を管理します。アプリ固有の組み立ては`apps/`、再利用する責務は`packages/`に置きます。両ガイドサイトは引き続きMarkdownからビルドします。
 
@@ -68,16 +68,22 @@ Vite+はルートの開発依存として導入しており、グローバルイ
 - `packages/auth`はDB・ベースURL・シークレット・許可オリジンを受け取る、サーバー専用のBetter Auth初期化関数を提供します。認証ルート、ログイン方式、ロール、権限は有効にしておらず、APIにもまだ接続していません。
 - Webの見本からoRPCはまだ呼び出しません。保護が必要な製品のエンドポイントと業務フローは、これから設計します。
 - 共通パッケージはワークスペース内向けにTypeScriptソースを公開し、ビルド時にJavaScriptと型宣言を出力します。Webの生成済みルートツリーは管理対象に含め、新しいチェックアウトでも型チェックできるようにします。
-- GitHub ActionsはPRと`main`へのPushで、ロックファイルを固定したインストール・`pnpm typecheck`・`pnpm test`・`pnpm build`を実行します。APIはWranglerのdry-runでビルドするため、CIにCloudflareアカウント・シークレット・デプロイ権限は不要です。
+- GitHub ActionsはPRと`main`へのPushで、ロックファイルを固定したインストール・`pnpm lint`・`pnpm format:check`・`pnpm typecheck`・`pnpm test`・`pnpm build`を実行します。APIはWranglerのdry-runでビルドするため、CIにCloudflareアカウント・シークレット・デプロイ権限は不要です。
+
+### 作業後の品質チェック
+
+ルートで`pnpm check`を実行すると、リント、フォーマット検査、全ワークスペースの型チェック・テスト・ビルドを順に実行し、失敗した時点で終了します。Vite+内蔵のOxlint・Oxfmtを使い、ルールはルートの`vite.config.ts`で管理します。リントの警告・エラーとフォーマット差分はCIを失敗させます。
+
+自動修正は`pnpm lint:fix`と`pnpm format`です。修正内容を確認してから`pnpm check`を再実行します。生成済みルートツリー、ロックファイル、ビルド成果物、ローカル状態は対象外です。Gitフックは必須にせず、コミット・Push前に開発者またはAIがチェックし、PRのCIでも検査します。GitHubのマージを必須チェックで制限する設定は、CIの定義とは別のリポジトリ設定です。
 
 ### ガイドのデプロイ
 
 GitHub Actionsの`deploy-guides.yml`は`main`へのPushでCIと独立して実行され、両ガイドをCloudflare Workers Static Assetsへ並列にデプロイします。各ガイド自身の型チェックとビルドの成功を条件とし、リポジトリ全体のCI結果は待ちません。本番デプロイの実行は直列化し、複数のリリースが重ならないようにします。PRではビルドとWranglerのdry-run検証のみを行い、デプロイしません。各サイトは同じデプロイで英語・日本語を配信します。
 
-| ガイド | Worker名 | 静的出力 |
-| --- | --- | --- |
-| 顧客向けガイド | `luckycat-guide` | `apps/guide/.vitepress/dist` |
-| 内部ガイド | `luckycat-guide-internal` | `apps/guide-internal/.vitepress/dist` |
+| ガイド         | Worker名                  | 静的出力                              |
+| -------------- | ------------------------- | ------------------------------------- |
+| 顧客向けガイド | `luckycat-guide`          | `apps/guide/.vitepress/dist`          |
+| 内部ガイド     | `luckycat-guide-internal` | `apps/guide-internal/.vitepress/dist` |
 
 初回デプロイ前に、GitHubの`production`環境へ`CLOUDFLARE_ACCOUNT_ID`と`CLOUDFLARE_API_TOKEN`をSecretsとして設定します。APIトークンは対象アカウントに限定し、Workers Scriptsの編集権限を付与します。アカウントのworkers.devサブドメインも有効にします。認証情報はデプロイステップだけに渡し、CIでの検証には使用しません。
 

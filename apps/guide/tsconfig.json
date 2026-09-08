@@ -1,17 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
     "allowArbitraryExtensions": true
   },
-  "include": [
-    ".vitepress/**/*.mts",
-    ".vitepress/**/*.ts"
-  ]
+  "include": [".vitepress/**/*.mts", ".vitepress/**/*.ts"]
 }

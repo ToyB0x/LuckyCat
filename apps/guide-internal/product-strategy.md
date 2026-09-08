@@ -24,13 +24,13 @@ v0.1 excludes automatic resource changes, AWS/Azure, reseller implementation, tr
 
 The following general principles apply when their respective scope is adopted; they do not expand v0.1:
 
-| If the approved scope includes… | Verify that… |
-| --- | --- |
-| Onboarding or a cloud connection | Required access and setup are explained; success and failure are understandable. The installation method must first be selected. |
-| An improvement finding | The user can inspect its reason, evidence, estimate assumptions, and next action; an estimate is distinct from a realized result. |
-| Monitoring or notifications | The user can understand why something deserves attention and what to do next; frequency and relevance criteria are specified before release. |
-| A change to cloud resources | The required authorization is enforced and risky changes cannot run without it. |
-| A quote request or referral | The relationship, recipient, and shared data are clear; declining consent sends nothing. |
+| If the approved scope includes…  | Verify that…                                                                                                                                 |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Onboarding or a cloud connection | Required access and setup are explained; success and failure are understandable. The installation method must first be selected.             |
+| An improvement finding           | The user can inspect its reason, evidence, estimate assumptions, and next action; an estimate is distinct from a realized result.            |
+| Monitoring or notifications      | The user can understand why something deserves attention and what to do next; frequency and relevance criteria are specified before release. |
+| A change to cloud resources      | The required authorization is enforced and risky changes cannot run without it.                                                              |
+| A quote request or referral      | The relationship, recipient, and shared data are clear; declining consent sends nothing.                                                     |
 
 Use paired version and availability labels, such as `v0.1 planned · Not available` / `v0.1予定・未提供`. The planned label applies to the approved Google Cloud flow; it does not announce availability. Keep both language versions consistent as scope and implementation change.
 

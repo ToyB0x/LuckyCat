@@ -25,9 +25,9 @@ packages:
 
 MOCK TEMPLATE - not factual claims or agreed product scope.
 
-| Capability | This product | [MOCK: predecessor] | [MOCK: similar product] |
-| --- | --- | --- | --- |
-| [TEMPLATE: capability] | UNDECIDED | NOT RESEARCHED | NOT RESEARCHED |
+| Capability             | This product | [MOCK: predecessor] | [MOCK: similar product] |
+| ---------------------- | ------------ | ------------------- | ----------------------- |
+| [TEMPLATE: capability] | UNDECIDED    | NOT RESEARCHED      | NOT RESEARCHED          |
 ```
 
 ## Internal Guide: `apps/guide-internal`
@@ -38,14 +38,17 @@ Start with these three sections in `index.md`; split them into pages only when n
 # Internal Guide
 
 ## Main Architecture
+
 [UNDECIDED: main components, technologies, and responsibilities]
 
 ## Monorepo Foundation
+
 - apps/guide: customer-facing VitePress site.
 - apps/guide-internal: internal VitePress site.
 - Package management: pnpm workspace.
 
 ## Infrastructure Selection Criteria
+
 [UNDECIDED: requirements and criteria for choosing infrastructure]
 Provider: [UNDECIDED]
 ```

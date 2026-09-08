@@ -6,39 +6,120 @@ import restingCat from './resting.svg';
 export function DiagnosticPreview() {
   const [locale, setLocale] = useState<DiagnosticLocale>('ja');
   const [scenario, setScenario] = useState<PreviewScenario>('findings');
-  const t = (ja: string, en: string) => locale === 'ja' ? ja : en;
+  const t = (ja: string, en: string) => (locale === 'ja' ? ja : en);
   const state = createPreviewState(scenario);
-  return <div className="diagnostic-preview" lang={locale}>
-    <style>{previewStyles}</style>
-    <div className="preview-toolbar">
-      <div><strong>{t('UIプレビュー', 'UI preview')}</strong><span>{t('架空データ · デザイン仮採用', 'Fictional data · Provisional design')}</span></div>
-      <div className="preview-controls">
-        <label>{t('表示状態', 'Scenario')}<select value={scenario} onChange={event => setScenario(event.target.value as PreviewScenario)}>
-          {previewScenarios.map(item => <option key={item.id} value={item.id}>{item[locale]}</option>)}
-        </select></label>
-        <label>{t('言語', 'Language')}<select value={locale} onChange={event => setLocale(event.target.value as DiagnosticLocale)}><option value="ja">日本語</option><option value="en">English</option></select></label>
+  return (
+    <div className="diagnostic-preview" lang={locale}>
+      <style>{previewStyles}</style>
+      <div className="preview-toolbar">
+        <div>
+          <strong>{t('UIプレビュー', 'UI preview')}</strong>
+          <span>{t('架空データ · デザイン仮採用', 'Fictional data · Provisional design')}</span>
+        </div>
+        <div className="preview-controls">
+          <label>
+            {t('表示状態', 'Scenario')}
+            <select
+              value={scenario}
+              onChange={(event) => setScenario(event.target.value as PreviewScenario)}
+            >
+              {previewScenarios.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item[locale]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            {t('言語', 'Language')}
+            <select
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as DiagnosticLocale)}
+            >
+              <option value="ja">日本語</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div className="preview-layout">
+        <aside className="preview-sidebar">
+          <a href="/dev/diagnostics" className="preview-brand">
+            LuckyCat<span>FINOPS</span>
+          </a>
+          <p>{t('デモワークスペース', 'Demo workspace')}</p>
+          <span className="preview-nav">{t('初回診断', 'First diagnostic')}</span>
+          <div className="preview-cat">
+            <img src={restingCat} width="72" height="40" alt="" />
+            <small>{t('小さく、着実に。', 'Small, steady steps.')}</small>
+          </div>
+        </aside>
+        <div className="preview-content">
+          <header className="preview-topbar">
+            Google Cloud / {t('初回診断', 'First diagnostic')}
+            <a href="/">{t('ローカル検証へ', 'Local diagnostics')}</a>
+          </header>
+          <main>
+            <div className="preview-heading">
+              <p>Google Cloud</p>
+              <h1>{t('リソースの見直し', 'Resource review')}</h1>
+              <p>
+                {t(
+                  '概要から候補を見つけ、個別の根拠を確認します。',
+                  'Find candidates in the overview, then inspect the evidence for each one.',
+                )}
+              </p>
+            </div>
+            <p className="preview-notice">
+              {t(
+                '開発専用の見本です。クラウドへの接続・データの保存は行いません。価格推定は固定単価による仮実装です。',
+                'Development preview only. No cloud connection or data storage. Price estimates use prototype fixed rates.',
+              )}
+            </p>
+            <div className="preview-state">
+              <output>
+                {t('表示中', 'Showing')}:{' '}
+                {previewScenarios.find((item) => item.id === scenario)?.[locale]}
+              </output>
+            </div>
+            {state.kind === 'result' ? (
+              <DiagnosticResults
+                key={`${scenario}-${locale}`}
+                result={state.result}
+                locale={locale}
+              />
+            ) : (
+              <section className="preview-request" aria-busy={state.kind === 'loading'}>
+                <p className="preview-request-label">{t('診断リクエスト', 'Diagnostic request')}</p>
+                <h2>
+                  {state.kind === 'loading'
+                    ? t('診断結果を読み込み中', 'Loading diagnostic results')
+                    : t('通信に失敗しました', 'The request failed')}
+                </h2>
+                <p>
+                  {state.kind === 'loading'
+                    ? t(
+                        '結果を待っています。候補の有無や金額はまだ確認できません。',
+                        'Waiting for a result. Candidates and amounts are not yet known.',
+                      )
+                    : t(
+                        '診断結果を取得できませんでした。候補の有無や金額は未確認です。',
+                        'The result could not be retrieved. Candidates and amounts remain unknown.',
+                      )}
+                </p>
+                <p>
+                  {t(
+                    'これは表示状態の見本です。再試行や通信は発生しません。',
+                    'This is a simulated request state. No retry or network request is made.',
+                  )}
+                </p>
+              </section>
+            )}
+          </main>
+        </div>
       </div>
     </div>
-    <div className="preview-layout">
-      <aside className="preview-sidebar"><a href="/dev/diagnostics" className="preview-brand">LuckyCat<span>FINOPS</span></a><p>{t('デモワークスペース', 'Demo workspace')}</p>
-        <span className="preview-nav">{t('初回診断', 'First diagnostic')}</span>
-        <div className="preview-cat"><img src={restingCat} width="72" height="40" alt="" /><small>{t('小さく、着実に。', 'Small, steady steps.')}</small></div>
-      </aside>
-      <div className="preview-content"><header className="preview-topbar">Google Cloud / {t('初回診断', 'First diagnostic')}<a href="/">{t('ローカル検証へ', 'Local diagnostics')}</a></header>
-        <main><div className="preview-heading"><p>Google Cloud</p><h1>{t('リソースの見直し', 'Resource review')}</h1><p>{t('概要から候補を見つけ、個別の根拠を確認します。', 'Find candidates in the overview, then inspect the evidence for each one.')}</p></div>
-          <p className="preview-notice">{t('開発専用の見本です。クラウドへの接続・データの保存は行いません。価格推定は固定単価による仮実装です。', 'Development preview only. No cloud connection or data storage. Price estimates use prototype fixed rates.')}</p>
-          <div className="preview-state" role="status">{t('表示中', 'Showing')}: {previewScenarios.find(item => item.id === scenario)?.[locale]}</div>
-          {state.kind === 'result' ? <DiagnosticResults key={`${scenario}-${locale}`} result={state.result} locale={locale} />
-            : <section className="preview-request" aria-busy={state.kind === 'loading'}>
-              <p className="preview-request-label">{t('診断リクエスト', 'Diagnostic request')}</p>
-              <h2>{state.kind === 'loading' ? t('診断結果を読み込み中', 'Loading diagnostic results') : t('通信に失敗しました', 'The request failed')}</h2>
-              <p>{state.kind === 'loading' ? t('結果を待っています。候補の有無や金額はまだ確認できません。', 'Waiting for a result. Candidates and amounts are not yet known.') : t('診断結果を取得できませんでした。候補の有無や金額は未確認です。', 'The result could not be retrieved. Candidates and amounts remain unknown.')}</p>
-              <p>{t('これは表示状態の見本です。再試行や通信は発生しません。', 'This is a simulated request state. No retry or network request is made.')}</p>
-            </section>}
-        </main>
-      </div>
-    </div>
-  </div>;
+  );
 }
 
 const previewStyles = `

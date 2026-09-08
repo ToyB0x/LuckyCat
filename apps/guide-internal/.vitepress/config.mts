@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'LuckyCat Internal Guide',
@@ -16,7 +16,7 @@ export default defineConfig({
         nav: [
           { text: 'コンセプト', link: '/ja/concept' },
           { text: 'ビジネスモデル', link: '/ja/business-model' },
-          { text: '開発・技術', link: '/ja/' }
+          { text: '開発・技術', link: '/ja/' },
         ],
         sidebar: [
           {
@@ -24,8 +24,8 @@ export default defineConfig({
             items: [
               { text: 'コンセプト', link: '/ja/concept' },
               { text: 'ビジネスモデル', link: '/ja/business-model' },
-              { text: '開発方針', link: '/ja/product-strategy' }
-            ]
+              { text: '開発方針', link: '/ja/product-strategy' },
+            ],
           },
           {
             text: '技術',
@@ -34,9 +34,9 @@ export default defineConfig({
               { text: 'Google Cloud連携の設計', link: '/ja/google-cloud' },
               { text: '初回診断の設計', link: '/ja/diagnostics' },
               { text: 'フロントの暫定方針・UIプレビュー', link: '/ja/frontend-direction' },
-              { text: 'ローカル検証', link: '/ja/local-debug' }
-            ]
-          }
+              { text: 'ローカル検証', link: '/ja/local-debug' },
+            ],
+          },
         ],
         outline: { level: [2, 3], label: 'このページの内容' },
         docFooter: { prev: '前のページ', next: '次のページ' },
@@ -46,16 +46,16 @@ export default defineConfig({
         skipToContentLabel: '本文へスキップ',
         darkModeSwitchLabel: '表示テーマ',
         darkModeSwitchTitle: 'ダークモードに切り替え',
-        lightModeSwitchTitle: 'ライトモードに切り替え'
-      }
-    }
+        lightModeSwitchTitle: 'ライトモードに切り替え',
+      },
+    },
   },
   themeConfig: {
     outline: [2, 3],
     nav: [
       { text: 'Concept', link: '/concept' },
       { text: 'Business model', link: '/business-model' },
-      { text: 'Development & technology', link: '/' }
+      { text: 'Development & technology', link: '/' },
     ],
     sidebar: [
       {
@@ -63,8 +63,8 @@ export default defineConfig({
         items: [
           { text: 'Concept', link: '/concept' },
           { text: 'Business model', link: '/business-model' },
-          { text: 'Development guidelines', link: '/product-strategy' }
-        ]
+          { text: 'Development guidelines', link: '/product-strategy' },
+        ],
       },
       {
         text: 'Technology',
@@ -73,9 +73,9 @@ export default defineConfig({
           { text: 'Google Cloud connection design', link: '/google-cloud' },
           { text: 'Initial diagnostic design', link: '/diagnostics' },
           { text: 'Provisional frontend & UI preview', link: '/frontend-direction' },
-          { text: 'Local debugging', link: '/local-debug' }
-        ]
-      }
-    ]
-  }
-})
+          { text: 'Local debugging', link: '/local-debug' },
+        ],
+      },
+    ],
+  },
+});
