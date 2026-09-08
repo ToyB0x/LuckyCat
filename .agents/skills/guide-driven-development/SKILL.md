@@ -23,6 +23,8 @@ Treat guides as living product and design knowledge. Describe the intended exper
 
 For initial guide setup, use the [minimal guide template](references/guide-template.md). Expand it incrementally as the product needs become clearer.
 
+For English and Japanese guide setup or updates, use [Bilingual Guide Sync](../guide-bilingual-sync/SKILL.md) to keep both language versions aligned.
+
 ## Review
 
 Check that the changed behavior matches the guides. Run relevant tests and guide builds when affected, and summarize any remaining gaps.
