@@ -32,7 +32,7 @@ Run `pnpm typecheck` and `pnpm build` for all workspace packages through the loc
 
 The web and API apps are Hello World starters. Auth and DB packages expose initialization factories only; no sign-in, D1 database, or product workflow is configured. See the internal guide for the package boundaries.
 
-The guides are the shared home for product direction and development plans. See the [product direction](apps/guide/product.md), [availability](apps/guide/getting-started.md), and [internal design rationale](apps/guide-internal/product-strategy.md). The direction and core stack are selected; customer feature scope and release versions remain undecided.
+The guides are the shared home for product direction and development plans. See the [product direction](apps/guide/product.md), [availability](apps/guide/getting-started.md), and [internal design rationale](apps/guide-internal/product-strategy.md). The direction and core stack are selected. Google Cloud connection setup and a first diagnosis are planned for v0.1 and are not available; authentication and individual rule adoption remain undecided.
 
 ## Guide Deployment
 
