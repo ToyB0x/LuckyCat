@@ -2,3 +2,5 @@
 export function getGreeting(): string {
   return 'Hello from LuckyCat';
 }
+
+export * from './diagnostics';

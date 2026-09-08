@@ -1,10 +1,12 @@
 # First Diagnosis and Rule Candidates
 
 ::: info v0.1 planned · Not available
-The planned first diagnosis collects data from explicitly selected Google Cloud projects and shows improvement candidates with evidence. Individual rules and thresholds are not yet approved for release. There is no runnable diagnosis service today.
+The planned first diagnosis collects data from explicitly selected Google Cloud projects and shows improvement candidates with evidence. Individual rules and thresholds are not yet approved for release. A customer diagnosis service is not available yet.
 :::
 
 Start with the [Google Cloud connection plan](./google-cloud). Once provided, the intended flow is to confirm the connection and scope, explicitly start a diagnosis, then review the result for that run.
+
+The next development scope prioritizes unattached disks and unassigned static external IPv4. Start with candidates and evidence from current state, leaving amounts unknown. Disks on stopped VMs follow a decision on stop duration and exclusions.
 
 ## Initial Candidates
 

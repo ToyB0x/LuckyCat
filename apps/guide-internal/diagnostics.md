@@ -1,7 +1,7 @@
 # Initial Diagnostic Design
 
 ::: info v0.1 planned · Not available
-Google Cloud setup → connection and permission checks → scoped collection → rule evaluation → candidates and evidence is the approved experience. The following rule choices are recommendations pending adoption, not implemented capabilities.
+Google Cloud setup → connection and permission checks → scoped collection → rule evaluation → candidates and evidence is the approved experience. Customer capabilities remain unavailable. Local development implements the first two rules below; the stopped-VM rule follows a decision on stop duration and exclusions.
 :::
 
 ## Small Initial Rule Set
@@ -33,7 +33,16 @@ The official references describe [disk reads](https://docs.cloud.google.com/comp
 | Snapshot retention | Storage basis, location, pricing or billing attribution; age alone cannot determine savings. | Decide retention purpose/period first; validate recoverability constraints and cost basis before inclusion. |
 | Low utilization / rightsizing | Valid target configuration, price difference, discounts, and utilization coverage. | Define metric windows, completeness, peak handling, and workload exclusions; validate target suitability before estimating a change. |
 
-LuckyCat has no implemented collector, evaluator, or diagnostic tests yet. Required tests cover positive matches, valid non-matches, missing fields, permissions/API errors, partial lists, and unknown pricing for each adopted rule. Additional cases include disk attachment changes, internal/IPv6 address exclusions, mixed running/stopped VM attachments, invalid stop times, retention exceptions, and gaps in metric history. Test source alone does not establish readiness; verify the actual LuckyCat implementation and runtime before provision.
+Local diagnostics separate collection/normalization in `apps/api`, pure evaluation and result types in `packages/core`, and credential acquisition in `packages/oidc`. Required tests cover positive matches, valid non-matches, missing fields, permissions/API errors, partial lists, and unknown pricing for each adopted rule. Additional cases include disk attachment changes, internal/IPv6 address exclusions, mixed running/stopped VM attachments, invalid stop times, retention exceptions, and gaps in metric history. Test source alone does not establish readiness; verify the actual LuckyCat implementation and runtime before provision.
+
+## Local Diagnostic Scope
+
+- Read disks and addresses for one explicitly selected project through Compute aggregated lists. Evaluate zonal/regional `pd-standard`, `pd-balanced`, `pd-ssd`, and `pd-extreme` disks and regional/global static external IPv4 addresses included in those lists. Do not discover additional scope through other APIs. Show returned scopes and collection gaps; this is not an organization-wide completeness guarantee.
+- Candidates are `READY` disks without references and `EXTERNAL`, `IPV4`, `RESERVED` addresses without references. Replicating disks and unsupported disk types remain unevaluated. Grace periods and retention exceptions are not automatically applied yet.
+- Request explicit fields. Normalize an omitted repeated `users` field in Google's list response as zero references, retaining the omission in evidence. Null/malformed references, missing state/type/identity, and contradictions remain unevaluated. An omitted `addressType` uses the documented `EXTERNAL` default. An omitted `ipVersion` becomes `IPV4` only when the actual address strictly validates as IPv4. Record both normalization decisions in evidence, excluding the actual IP from results. Other missing values and explicit nulls remain unevaluated. The generic core never converts missing data into empty arrays.
+- Development limits are 100 items per page, 5 pages and 500 items per source, 2 MiB per response, 10 seconds per request, and 30 seconds for collection overall. No automatic retries. Limits, warnings, and failed pages preserve incomplete status. Conflicting observations of the same resource are not evaluated. These are not production limits.
+- JSON includes rule ID/version, target, collection start/end times, returned scopes, candidates/evidence, and unevaluated reasons. Observation is current state only, continuous unused duration is unknown, and money is `unknown`. Partial collection cannot yield a complete no-match conclusion.
+- Run diagnostics directly through the local API without persisting results in a DB or Workflow. Resource identifiers appear in the local UI; do not paste results into public files. The existing Workflow remains a connection probe only.
 
 ## Result Contract and Acceptance
 

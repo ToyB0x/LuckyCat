@@ -44,7 +44,7 @@ Better Authの設定、プラグイン選択、セッション処理、ロール
 | `apps/web` | TanStack StartアプリケーションとoRPCクライアント | 土台のみ |
 | `apps/api` | oRPCエンドポイントとauth・core・DBパッケージの組み合わせ | 土台のみ |
 | `packages/auth` | Better Authの統合、認証、セッション、ロール、権限、認可のインターフェース | 土台のみ |
-| `packages/core` | FinOpsのドメインロジック、ユースケース、永続化インターフェース | 土台のみ |
+| `packages/core` | FinOpsのドメインロジック、ユースケース、永続化インターフェース | ローカル診断の結果型と2ルールの評価 |
 | `packages/db` | 認証データの永続化を含むDrizzleスキーマ、マイグレーション、D1アクセス | 土台のみ |
 | `packages/oidc` | 開発用のGoogle Cloud認証情報プロバイダー | ローカル専用。OIDC・WIFは未実装 |
 
@@ -63,11 +63,11 @@ Vite+はルートの開発依存として導入しており、グローバルイ
 - `pnpm dev`で、両ガイド・Webアプリ・APIをVite+経由でまとめて起動します。
 - Web: `http://127.0.0.1:3000`でTanStack StartのHello Worldを表示します。
 - API: `http://127.0.0.1:8787`でCloudflare Workerをローカル実行します。`GET /`は挨拶を返し、`/rpc/hello`は認証なしのoRPCサンプルです。
-- `packages/core`は挨拶を返す関数、`packages/db`はD1クライアントの生成関数を提供します。DB・スキーマ・マイグレーションはまだ作成していません。
+- `packages/core`は挨拶の見本に加えて[ローカル診断](./diagnostics#ローカル診断の範囲)の結果型と評価処理、`packages/db`はD1クライアントの生成関数を提供します。DB・スキーマ・マイグレーションはまだ作成していません。
 - `packages/auth`はDB・ベースURL・シークレット・許可オリジンを受け取る、サーバー専用のBetter Auth初期化関数を提供します。認証ルート、ログイン方式、ロール、権限は有効にしておらず、APIにもまだ接続していません。
 - Webの見本からoRPCはまだ呼び出しません。保護が必要な製品のエンドポイントと業務フローは、これから設計します。
 - 共通パッケージはワークスペース内向けにTypeScriptソースを公開し、ビルド時にJavaScriptと型宣言を出力します。Webの生成済みルートツリーは管理対象に含め、新しいチェックアウトでも型チェックできるようにします。
-- GitHub ActionsはPRと`main`へのPushで、ロックファイルを固定したインストール・`pnpm typecheck`・`pnpm build`を実行します。APIはWranglerのdry-runでビルドするため、CIにCloudflareアカウント・シークレット・デプロイ権限は不要です。
+- GitHub ActionsはPRと`main`へのPushで、ロックファイルを固定したインストール・`pnpm typecheck`・`pnpm test`・`pnpm build`を実行します。APIはWranglerのdry-runでビルドするため、CIにCloudflareアカウント・シークレット・デプロイ権限は不要です。
 
 ### ガイドのデプロイ
 
