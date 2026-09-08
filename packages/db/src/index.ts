@@ -5,3 +5,5 @@ import type { D1Database } from '@cloudflare/workers-types';
 export function createDatabase(binding: D1Database): DrizzleD1Database {
   return drizzle(binding);
 }
+
+export * from './diagnostic-history';

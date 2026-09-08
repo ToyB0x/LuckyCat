@@ -1,9 +1,10 @@
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from 'cloudflare:workers';
 import application from './index';
+import { handleHistory, type HistorySettings } from './debug/history';
 import { diagnoseGoogleCloud } from './debug/diagnose';
 import { allowedProjects, checkGoogleConnection, debugEnabled, type DebugSettings } from './debug/check';
 
-interface LocalEnv extends DebugSettings {
+interface LocalEnv extends DebugSettings, HistorySettings {
   GOOGLE_CONNECTION_CHECK: Workflow<{ project: string }>;
 }
 
@@ -27,6 +28,7 @@ export default {
     if (request.method === 'GET' && url.pathname === '/local-debug/status') {
       return reply({ enabled: debugEnabled(env), credentialConfigured: Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON), projects: allowedProjects(env) });
     }
+    if (url.pathname === '/local-debug/history' || url.pathname.startsWith('/local-debug/history/')) return handleHistory(request, env);
     if (!debugEnabled(env)) return reply({ error: 'debug_disabled' }, 403);
     try {
       if (request.method === 'GET' && url.pathname.startsWith('/local-debug/workflow/')) {

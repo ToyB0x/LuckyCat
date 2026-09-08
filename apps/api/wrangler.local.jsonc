@@ -10,5 +10,13 @@
       "name": "luckycat-local-connection-check",
       "class_name": "LocalConnectionCheck"
     }
+  ],
+  "d1_databases": [
+    {
+      "binding": "LOCAL_DIAGNOSTICS",
+      "database_name": "luckycat-diagnostics-local",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "../../packages/db/migrations"
+    }
   ]
 }

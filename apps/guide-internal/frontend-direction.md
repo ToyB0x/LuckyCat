@@ -44,7 +44,7 @@ No live connection, storage, history, searching, filtering, scheduled diagnosis,
 3. Reuse `DiagnosticResults` in `apps/web/src/diagnostics/results.tsx` for both real and synthetic results. Extract only the presentational pieces needed; remove dependence on a debug-panel CSS wrapper as necessary.
 4. Keep `DiagnosticResult` in `packages/core/src/diagnostics.ts` as the result contract. Validate synthetic results with the same boundary checks as real responses. Loading and transport errors are request states, not fabricated successful results. Authentication failure is representable by the current result contract.
 5. Keep acquisition, credentials, diagnosis, and pricing out of presentation components. Apply visual tokens in the web app's own styles; do not copy this standalone renderer or earlier mock framework dependencies into the application.
-6. Use the same result display for later saved snapshots. Local D1 persistence, history improvements, and diagnosis Workflow execution are separate changes, not prerequisites for the UI preview.
+6. Use the same result display for saved snapshots. [Local storage and history](./local-debug#local-diagnostic-storage-and-history) use the API and D1, but are not prerequisites for the UI preview. Diagnostic Workflow execution remains a separate change.
 
 Current pricing is fixed-rate **USD/month**, not verified billing or achieved savings. Unknown amounts remain visible and are excluded from the priced subtotal. An annual projection or currency conversion requires an explicit basis; do not import fictional yen values or “30 days unused” claims from previous mock data. See [Diagnostic design](./diagnostics) and [Local debugging](./local-debug).
 

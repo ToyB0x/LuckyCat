@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { DiagnosticResult } from '@luckycat/core';
+import { SaveDiagnostic } from './diagnostics/save';
 import { DiagnosticResults } from './diagnostics/results';
 import { parseDiagnosticResult } from './diagnostics/response';
 import { diagnosticStyles } from './diagnostics/styles';
@@ -75,7 +76,7 @@ export function LocalDebugPanel() {
     </div>
     <div role="status" aria-live="polite">{busy ? (busy === 'diagnose' ? '診断中です。以前の結果は表示していません。' : '確認中…') : diagnosis ? '診断結果を更新しました。' : ''}</div>
     {error && <p role="alert" className="request-error">{error} 診断結果は未確認です。</p>}
-    {diagnosis && <DiagnosticResults result={diagnosis} />}
+    {diagnosis && <><SaveDiagnostic result={diagnosis} /><DiagnosticResults result={diagnosis} /></>}
     {status && <details className="connection-tools"><summary>接続確認ツール</summary>
       <p>OIDCサーバーを使わず、サーバー側のJSON鍵で確認します。接続確認は各1ページの読み取りのみで、診断ではありません。</p>
       <button type="button" className="secondary" disabled={!!busy || !ready} onClick={() => void run('check')}>APIで接続確認</button>

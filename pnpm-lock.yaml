@@ -23,6 +23,9 @@ importers:
       '@luckycat/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@luckycat/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@luckycat/oidc':
         specifier: workspace:*
         version: link:../../packages/oidc
@@ -33,6 +36,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: '>=4.20250101.0 <6'
         version: 5.20260905.1
+      miniflare:
+        specifier: 5.20260903.0-alpha
+        version: 5.20260903.0-alpha
       wrangler:
         specifier: ^4.0.0
         version: 4.129.0(@cloudflare/workers-types@5.20260905.1)

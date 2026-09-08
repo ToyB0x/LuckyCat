@@ -4,3 +4,5 @@ export function getGreeting(): string {
 }
 
 export * from './diagnostics';
+
+export * from './diagnostic-response';

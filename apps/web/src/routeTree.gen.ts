@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DevDiagnosticsRouteImport } from './routes/dev.diagnostics'
+import { Route as DevHistoryRouteImport } from './routes/dev.history'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const DevDiagnosticsRoute = DevDiagnosticsRouteImport.update({
   path: '/dev/diagnostics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevHistoryRoute = DevHistoryRouteImport.update({
+  id: '/dev/history',
+  path: '/dev/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dev/diagnostics': typeof DevDiagnosticsRoute
+  '/dev/history': typeof DevHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dev/diagnostics': typeof DevDiagnosticsRoute
+  '/dev/history': typeof DevHistoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dev/diagnostics': typeof DevDiagnosticsRoute
+  '/dev/history': typeof DevHistoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dev/diagnostics'
+  fullPaths: '/' | '/dev/diagnostics' | '/dev/history'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dev/diagnostics'
-  id: '__root__' | '/' | '/dev/diagnostics'
+  to: '/' | '/dev/diagnostics' | '/dev/history'
+  id: '__root__' | '/' | '/dev/diagnostics' | '/dev/history'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DevDiagnosticsRoute: typeof DevDiagnosticsRoute
+  DevHistoryRoute: typeof DevHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevDiagnosticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/history': {
+      id: '/dev/history'
+      path: '/dev/history'
+      fullPath: '/dev/history'
+      preLoaderRoute: typeof DevHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DevDiagnosticsRoute: DevDiagnosticsRoute,
+  DevHistoryRoute: DevHistoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
