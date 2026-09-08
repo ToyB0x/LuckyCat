@@ -52,6 +52,41 @@ test('late detail responses are ignored and invalid snapshots never become an em
   assert.equal(fetcher.mock.calls[1][1].signal.aborted, true);
 });
 
+test('reselecting the same entry preserves pending requests and loaded evidence without refetching', async () => {
+  const pending = deferred<Response>();
+  const fetcher = vi.fn().mockResolvedValueOnce(page()).mockReturnValueOnce(pending.promise);
+  vi.stubGlobal('fetch', fetcher); render(<DiagnosticHistory />);
+  const entry = await screen.findByRole('button', { name: new RegExp(project) });
+  fireEvent.click(entry); fireEvent.click(entry);
+  assert.equal(fetcher.mock.calls.length, 2);
+  assert.equal(fetcher.mock.calls[1][1].signal.aborted, false);
+  await act(async () => pending.resolve(saved()));
+  await screen.findByRole('heading', { name: '一部を評価できませんでした' });
+  fireEvent.click(screen.getByText('disk-a'));
+  fireEvent.click(entry);
+  assert.ok(screen.getByRole('region', { name: '診断結果' }));
+  assert.equal(screen.getByText('disk-a').closest('details')?.open, true);
+  assert.equal(screen.queryByText('保存結果を読み込み中…'), null);
+  assert.equal(fetcher.mock.calls.length, 2);
+});
+
+test('reselecting a failed entry preserves its error and reloading history permits another attempt', async () => {
+  const fetcher = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(new Response('', { status: 503 }))
+    .mockResolvedValueOnce(page()).mockResolvedValueOnce(saved());
+  vi.stubGlobal('fetch', fetcher); render(<DiagnosticHistory />);
+  const entry = await screen.findByRole('button', { name: new RegExp(project) });
+  fireEvent.click(entry);
+  await screen.findByRole('alert');
+  fireEvent.click(entry);
+  assert.ok(screen.getByRole('alert'));
+  assert.equal(screen.queryByText('保存結果を読み込み中…'), null);
+  assert.equal(fetcher.mock.calls.length, 2);
+  fireEvent.click(screen.getByRole('button', { name: '履歴を再読み込み' }));
+  fireEvent.click(await screen.findByRole('button', { name: new RegExp(project) }));
+  await screen.findByRole('heading', { name: '一部を評価できませんでした' });
+  assert.equal(screen.queryByRole('alert'), null);
+});
+
 test('failed list and delete requests remain errors and English history retains the same behavior', async () => {
   const fetcher = vi.fn().mockResolvedValueOnce(new Response('', { status: 503 })).mockResolvedValueOnce(page()).mockResolvedValueOnce(new Response('', { status: 503 }));
   vi.stubGlobal('fetch', fetcher); render(<DiagnosticHistory />);

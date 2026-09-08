@@ -29,7 +29,10 @@ export function DiagnosticHistory() {
     }).catch(() => { if (!controller.signal.aborted) setDetailError(true); });
     return () => controller.abort();
   }, [selected]);
-  function select(item?: HistoryItem) { setDetail(undefined); setDetailError(false); setSelected(item); }
+  function select(item?: HistoryItem) {
+    if (item && item.id === selected?.id) return;
+    setDetail(undefined); setDetailError(false); setSelected(item);
+  }
   function reload(nextOffset = offset) { select(); setConfirm(undefined); setPage(undefined); setOffset(nextOffset); setRevision(value => value + 1); }
   async function remove(id: string) {
     const controller = new AbortController(); removal.current = controller;
