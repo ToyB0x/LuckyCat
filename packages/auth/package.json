@@ -1,0 +1,16 @@
+{
+  "name": "@luckycat/auth",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --outDir dist --declaration"
+  },
+  "dependencies": {
+    "@luckycat/db": "workspace:*",
+    "better-auth": "^1.4.0"
+  }
+}

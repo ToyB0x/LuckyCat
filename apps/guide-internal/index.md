@@ -4,7 +4,7 @@ Keep the customer experience and internal design knowledge aligned as LuckyCat e
 
 ## Main Architecture
 
-The following stack is selected for LuckyCat. The guide sites already exist; the application and shared packages below are the implementation plan.
+The following stack is selected for LuckyCat. The guide sites and minimal application/package scaffolds exist. Authentication, persistence, and FinOps workflows remain to be implemented.
 
 | Area | Technology / responsibility |
 | --- | --- |
@@ -29,11 +29,11 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 | --- | --- | --- |
 | `apps/guide` | Customer-facing VitePress site and landing page | Existing |
 | `apps/guide-internal` | Internal VitePress site | Existing |
-| `apps/web` | TanStack Start application and oRPC client | Planned |
-| `apps/api` | oRPC endpoints and composition of auth, core, and DB packages | Planned |
-| `packages/auth` | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Planned |
-| `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Planned |
-| `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Planned |
+| `apps/web` | TanStack Start application and oRPC client | Scaffold |
+| `apps/api` | oRPC endpoints and composition of auth, core, and DB packages | Scaffold |
+| `packages/auth` | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Scaffold |
+| `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Scaffold |
+| `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Scaffold |
 
 Use pnpm Workspace for `apps/*` and `packages/*`. Keep app-specific wiring in `apps/` and reusable responsibilities in `packages/`. Both guide sites continue to build from Markdown.
 
@@ -41,7 +41,18 @@ Use pnpm Workspace for `apps/*` and `packages/*`. Keep app-specific wiring in `a
 
 Use **Vite+ (VitePlus)** instead of Turborepo for workspace task execution and caching. Retain pnpm for package management. [Vite+ Run](https://viteplus.dev/guide/run) supports dependency-ordered workspace tasks; caching for package scripts must be explicitly enabled.
 
-Vite+ is the selected direction, not yet an installed tool in this repository. Until it is introduced, the existing `pnpm dev` and `pnpm build` commands remain the working entry points. When integrating Vite+, preserve the guide packages' VitePress scripts and run them through `vp run`; do not replace them with the built-in Vite development or build commands.
+The root development dependency provides Vite+ locally; no global installation is required. `pnpm dev`, `pnpm typecheck`, and `pnpm build` run workspace tasks through `vp run`. Type checks and builds enable caching. The guide packages retain their VitePress scripts; the web app uses Vite+ for its TanStack Start build.
+
+### Starter and CI
+
+- `pnpm dev` starts both guides, the web app, and the API together through Vite+.
+- Web: TanStack Start Hello World at `http://127.0.0.1:3000`.
+- API: local Cloudflare Worker at `http://127.0.0.1:8787`. `GET /` returns a greeting; `/rpc/hello` is an unauthenticated oRPC example.
+- `packages/core` supplies the greeting. `packages/db` provides a D1 client factory; no database, schema, or migrations are created yet.
+- `packages/auth` provides a server-only Better Auth factory requiring a database, base URL, secret, and trusted origins. No authentication routes, login methods, roles, or permissions are enabled. It is not yet wired into the API.
+- The web starter does not yet call oRPC. All protected product endpoints and workflows remain to be designed.
+- Shared packages export TypeScript source for workspace consumers and emit JavaScript/declarations during builds. The generated web route tree is checked in so type checks work on a fresh checkout.
+- GitHub Actions runs a frozen-lockfile install, `pnpm typecheck`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
 
 ## Infrastructure Selection Criteria
 
