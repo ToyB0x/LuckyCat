@@ -33,3 +33,9 @@ Run `pnpm typecheck` and `pnpm build` for all workspace packages through the loc
 The web and API apps are Hello World starters. Auth and DB packages expose initialization factories only; no sign-in, D1 database, or product workflow is configured. See the internal guide for the package boundaries.
 
 The guides start small and grow alongside the product. Product workflows and infrastructure choices remain to be defined.
+
+## Guide Deployment
+
+On pushes to `main`, a separate GitHub Actions workflow deploys both guide sites to Cloudflare Workers Static Assets in parallel with CI. Each guide deploys after its own typecheck and build pass, without waiting for the repository-wide CI result. PRs only validate the deployment configuration. Configure `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in the GitHub `production` environment before the first deployment. Both guides, including the internal guide, are published on workers.dev.
+
+See [the internal guide](apps/guide-internal/index.md#guide-deployment) for setup and Worker names.
