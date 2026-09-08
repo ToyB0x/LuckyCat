@@ -27,3 +27,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm build
+      - name: Validate guide deployment configurations
+        run: pnpm exec vp run --filter @luckycat/guide --filter @luckycat/guide-internal deploy:dry-run

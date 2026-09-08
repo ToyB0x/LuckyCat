@@ -42,6 +42,9 @@ importers:
       vue:
         specifier: 3.5.42
         version: 3.5.42(typescript@5.9.3)
+      wrangler:
+        specifier: ^4.0.0
+        version: 4.129.0(@cloudflare/workers-types@5.20260905.1)
 
   apps/guide-internal:
     devDependencies:
@@ -51,6 +54,9 @@ importers:
       vue:
         specifier: 3.5.42
         version: 3.5.42(typescript@5.9.3)
+      wrangler:
+        specifier: ^4.0.0
+        version: 4.129.0(@cloudflare/workers-types@5.20260905.1)
 
   apps/web:
     dependencies:

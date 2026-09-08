@@ -54,6 +54,19 @@ The root development dependency provides Vite+ locally; no global installation i
 - Shared packages export TypeScript source for workspace consumers and emit JavaScript/declarations during builds. The generated web route tree is checked in so type checks work on a fresh checkout.
 - GitHub Actions runs a frozen-lockfile install, `pnpm typecheck`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
 
+### Guide Deployment
+
+On pushes to `main`, `deploy-guides.yml` runs independently of CI and deploys both guides to Cloudflare Workers Static Assets in parallel. Each guide must pass its own typecheck and build before deployment; the repository-wide CI result does not block deployment. Production deployment runs are serialized to avoid overlapping releases. Pull requests only build and validate with Wrangler dry-run; they do not deploy. Each site serves English and Japanese from the same deployment.
+
+| Guide | Worker name | Static output |
+| --- | --- | --- |
+| Customer guide | `luckycat-guide` | `apps/guide/.vitepress/dist` |
+| Internal guide | `luckycat-guide-internal` | `apps/guide-internal/.vitepress/dist` |
+
+Before the first deployment, configure the GitHub `production` environment with `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets. Use an API token scoped to the target account with Workers Scripts edit permission. Enable the account's workers.dev subdomain. Credentials are passed only to the deploy step; CI validation needs none.
+
+Each guide's `wrangler.jsonc` defines its Worker name and static directory. Both sites are publicly accessible through workers.dev after deployment, including the internal guide; its name does not provide access control. Custom domains and access restrictions are not configured. Application/API deployment is separate and remains unconfigured in CI.
+
 ## Infrastructure Selection Criteria
 
 Actively use **Cloudflare infrastructure** to keep operating costs low and offer the service free of charge wherever possible. Treat free availability as a design goal, not a guarantee that every feature or workload can be supported at no cost.
@@ -64,7 +77,7 @@ For application hosting, evaluate D1 binding access, TanStack Start and Better A
 
 When Cloudflare's specifications or limits cannot meet a requirement, consider other cloud providers for the affected component. Also consider browser-side processing, such as **DuckDB WASM**, to reduce server-side computation where appropriate. Evaluate these alternatives against workload needs, browser resource usage, user experience, and total operating cost; they are options to assess, not additional selected infrastructure.
 
-Specific Cloudflare services for application and guide hosting, deployment configuration, operating budget, and any exceptions: [UNDECIDED]. Make these choices within the Cloudflare-first direction above.
+Guides use Cloudflare Workers Static Assets. Production application hosting and deployment configuration, operating budget, and any exceptions: [UNDECIDED]. Make these choices within the Cloudflare-first direction above.
 
 ---
 
