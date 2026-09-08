@@ -22,19 +22,19 @@ Automatic changes, AWS/Azure support, reseller referrals, tree planting, thanks,
 
 Organizing and sharing costs without changing resources remains a product direction. The following candidates have lower priority than the first diagnosis and are not v0.1 prerequisites; implementation scope, free allowances, and target versions remain undecided.
 
-| Candidate | Goal and intended experience | Constraints and availability |
-| --- | --- | --- |
+| Candidate              | Goal and intended experience                                                                                   | Constraints and availability                                                                                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Virtual tags or labels | Define classification rules for imported cost data and inspect team or product totals and uncategorized costs. | Keep classifications within LuckyCat; do not write back to resource tags or Terraform. Detail depends on available data. Not available; target version undecided. |
-| Simple showback | Share classified costs and their rationale with stakeholders within a limited viewing scope. | Internal billing and accounting are out of scope. Shared-cost allocation methods are undecided. Not available; target version undecided. |
+| Simple showback        | Share classified costs and their rationale with stakeholders within a limited viewing scope.                   | Internal billing and accounting are out of scope. Shared-cost allocation methods are undecided. Not available; target version undecided.                          |
 
 ### How to Read Release Status
 
 The planned label applies to the Google Cloud flow above. Trial and available labels below illustrate later states and do not announce availability:
 
-| Example | Meaning |
-| --- | --- |
-| v0.1 planned · Not available | Assigned to that release, but cannot be used yet. |
-| v0.1 · Trial | Verified as available for trial use, with documented limits. |
-| v0.1 · Available | Verified as available within the documented scope. |
+| Example                      | Meaning                                                      |
+| ---------------------------- | ------------------------------------------------------------ |
+| v0.1 planned · Not available | Assigned to that release, but cannot be used yet.            |
+| v0.1 · Trial                 | Verified as available for trial use, with documented limits. |
+| v0.1 · Available             | Verified as available within the documented scope.           |
 
 A version alone never means a feature is available. Dates, prices, free allowances, installation methods, and the product license remain undecided.

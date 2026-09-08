@@ -4,7 +4,7 @@ LuckyCat is a streamlined FinOps tool and service designed for simplicity, affor
 
 ## Product Philosophy
 
-The Japanese appliance maker TWINBIRD is one inspiration for our approach to building products. Its FPSC cooling technology is [used in a refrigerator in the International Space Station’s Kibo module](<https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf>). Its [appliance brand philosophy](https://www.twinbird.jp/brand/) emphasizes essential functions, lasting quality, and meaningful design.
+The Japanese appliance maker TWINBIRD is one inspiration for our approach to building products. Its FPSC cooling technology is [used in a refrigerator in the International Space Station’s Kibo module](https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf). Its [appliance brand philosophy](https://www.twinbird.jp/brand/) emphasizes essential functions, lasting quality, and meaningful design.
 
 The author admires how technical depth can become useful, everyday usability. LuckyCat applies that lesson to simple, reasonably priced, easy-to-use FinOps. Use technical skill to reduce setup and operational effort and make decisions clearer. Alongside free-to-affordable pricing, set **refined design and usability that bring tangible benefits to day-to-day work** as a quality goal.
 

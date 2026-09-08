@@ -4,12 +4,12 @@ Keep the customer experience and internal design knowledge aligned as LuckyCat e
 
 ## Product Direction
 
-| Page | Contents |
-| --- | --- |
-| [Concept](./concept) | Purpose, generic FinOps, intended audience, and the quiet-companion experience |
-| [Business model](./business-model) | Pricing, potential revenue, referral conditions, market approach, and economic validation |
-| [Development guidelines](./product-strategy) | Design principles, development scope, acceptance conditions, and open decisions |
-| [Provisional frontend direction](./frontend-direction) | Temporary light earth-tone baseline, interactive HTML reference, and application handoff |
+| Page                                                   | Contents                                                                                  |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| [Concept](./concept)                                   | Purpose, generic FinOps, intended audience, and the quiet-companion experience            |
+| [Business model](./business-model)                     | Pricing, potential revenue, referral conditions, market approach, and economic validation |
+| [Development guidelines](./product-strategy)           | Design principles, development scope, acceptance conditions, and open decisions           |
+| [Provisional frontend direction](./frontend-direction) | Temporary light earth-tone baseline, interactive HTML reference, and application handoff  |
 
 Google Cloud connection setup and the first diagnosis are **v0.1 planned · Not available**. See [connection design](./google-cloud) and [diagnostic design](./diagnostics) for the proposed implementation boundaries and acceptance conditions.
 
@@ -19,14 +19,14 @@ The following sections describe the selected technologies and monorepo structure
 
 The following stack is selected for LuckyCat. The guide sites and minimal application/package scaffolds exist. Authentication, persistence, and FinOps workflows remain to be implemented.
 
-| Area | Technology / responsibility |
-| --- | --- |
-| Guide sites | VitePress, with English and Japanese content |
-| Web application | TanStack Start for the user interface and application routing |
-| API | [oRPC](https://orpc.dev/) for typed client-server communication |
+| Area                             | Technology / responsibility                                                                                                                                                                      |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Guide sites                      | VitePress, with English and Japanese content                                                                                                                                                     |
+| Web application                  | TanStack Start for the user interface and application routing                                                                                                                                    |
+| API                              | [oRPC](https://orpc.dev/) for typed client-server communication                                                                                                                                  |
 | Authentication and authorization | Encapsulate [Better Auth](https://better-auth.com/docs/adapters/drizzle) in `packages/auth`, preferring its authentication, session, and access-control capabilities over custom implementations |
-| Business logic | A `core` package for FinOps domain logic and use cases |
-| Persistence | [Drizzle ORM with Cloudflare D1](https://orm.drizzle.team/docs/connect-cloudflare-d1) for schema definitions and database access |
+| Business logic                   | A `core` package for FinOps domain logic and use cases                                                                                                                                           |
+| Persistence                      | [Drizzle ORM with Cloudflare D1](https://orm.drizzle.team/docs/connect-cloudflare-d1) for schema definitions and database access                                                                 |
 
 The web application calls the API through oRPC. The API delegates session validation and authorization to `packages/auth` before invoking core use cases. Keep core logic independent of UI, HTTP, authentication, and database libraries; supply persistence through interfaces. Keep D1 access and server-side authentication code out of browser bundles.
 
@@ -38,16 +38,16 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 
 ## Monorepo Foundation
 
-| Path | Purpose | Availability |
-| --- | --- | --- |
-| `apps/guide` | Customer-facing VitePress site and landing page | Existing |
-| `apps/guide-internal` | Internal VitePress site | Existing |
-| `apps/web` | TanStack Start application and oRPC client | Scaffold |
-| `apps/api` | oRPC endpoints and composition of auth, core, and DB packages | Scaffold |
-| `packages/auth` | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Scaffold |
-| `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Local diagnostic result types and two rule evaluators |
-| `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Scaffold |
-| `packages/oidc` | Google Cloud credential provider for development | Local only; OIDC/WIF unimplemented |
+| Path                  | Purpose                                                                                             | Availability                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `apps/guide`          | Customer-facing VitePress site and landing page                                                     | Existing                                              |
+| `apps/guide-internal` | Internal VitePress site                                                                             | Existing                                              |
+| `apps/web`            | TanStack Start application and oRPC client                                                          | Scaffold                                              |
+| `apps/api`            | oRPC endpoints and composition of auth, core, and DB packages                                       | Scaffold                                              |
+| `packages/auth`       | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Scaffold                                              |
+| `packages/core`       | FinOps domain logic, use cases, and persistence interfaces                                          | Local diagnostic result types and two rule evaluators |
+| `packages/db`         | Drizzle schemas, migrations, and D1 access, including authentication persistence                    | Scaffold                                              |
+| `packages/oidc`       | Google Cloud credential provider for development                                                    | Local only; OIDC/WIF unimplemented                    |
 
 Use pnpm Workspace for `apps/*` and `packages/*`. Keep app-specific wiring in `apps/` and reusable responsibilities in `packages/`. Both guide sites continue to build from Markdown.
 
@@ -68,15 +68,21 @@ The root development dependency provides Vite+ locally; no global installation i
 - `packages/auth` provides a server-only Better Auth factory requiring a database, base URL, secret, and trusted origins. No authentication routes, login methods, roles, or permissions are enabled. It is not yet wired into the API.
 - The web starter does not yet call oRPC. All protected product endpoints and workflows remain to be designed.
 - Shared packages export TypeScript source for workspace consumers and emit JavaScript/declarations during builds. The generated web route tree is checked in so type checks work on a fresh checkout.
-- GitHub Actions runs a frozen-lockfile install, `pnpm typecheck`, `pnpm test`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
+- GitHub Actions runs a frozen-lockfile install, `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
+
+### Quality Checks Before Handoff
+
+Run `pnpm check` at the root to perform lint, format validation, and workspace type checks, tests, and builds in sequence, stopping at the first failure. Use Vite+'s bundled Oxlint and Oxfmt, configured in the root `vite.config.ts`. Lint warnings/errors and formatting differences fail CI.
+
+Run `pnpm lint:fix` and `pnpm format` for automatic corrections, review the diff, then rerun `pnpm check`. Generated route trees, lockfiles, build output, and local state are excluded. Git hooks are not mandatory: developers or AI run checks before commits/pushes, and PR CI checks them again. Requiring successful checks to merge is a separate GitHub repository setting, not part of the workflow definition.
 
 ### Guide Deployment
 
 On pushes to `main`, `deploy-guides.yml` runs independently of CI and deploys both guides to Cloudflare Workers Static Assets in parallel. Each guide must pass its own typecheck and build before deployment; the repository-wide CI result does not block deployment. Production deployment runs are serialized to avoid overlapping releases. Pull requests only build and validate with Wrangler dry-run; they do not deploy. Each site serves English and Japanese from the same deployment.
 
-| Guide | Worker name | Static output |
-| --- | --- | --- |
-| Customer guide | `luckycat-guide` | `apps/guide/.vitepress/dist` |
+| Guide          | Worker name               | Static output                         |
+| -------------- | ------------------------- | ------------------------------------- |
+| Customer guide | `luckycat-guide`          | `apps/guide/.vitepress/dist`          |
 | Internal guide | `luckycat-guide-internal` | `apps/guide-internal/.vitepress/dist` |
 
 Before the first deployment, configure the GitHub `production` environment with `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets. Use an API token scoped to the target account with Workers Scripts edit permission. Enable the account's workers.dev subdomain. Credentials are passed only to the deploy step; CI validation needs none.

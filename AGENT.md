@@ -22,3 +22,7 @@ When using Codex for local development, leave changes available for human review
 - Do not include information from other projects or nonpublic information in committed files, commit messages, pull requests, or other public content unless explicitly authorized for publication.
 - The author frequently uses voice input. Treat incidental thoughts, self-talk, and unintended transcriptions as private conversation, not material to reproduce in public artifacts.
 - Before committing or preparing public-facing content, check that it contains only information intended for publication and necessary to explain the contribution.
+
+## Validation Before Handoff
+
+Run `pnpm check` from the repository root before handing off code changes. It checks lint, formatting, workspace types, tests, and builds. Use `pnpm lint:fix` and `pnpm format` to apply automatic corrections, review the resulting diff, then rerun the checks. Report any checks that could not run. Generated files and local state are excluded from lint and format; do not edit them to satisfy these checks.

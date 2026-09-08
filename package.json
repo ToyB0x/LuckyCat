@@ -6,7 +6,12 @@
     "dev": "vp run -r --parallel dev",
     "build": "vp run -r --cache build",
     "typecheck": "vp run -r --cache typecheck",
-    "test": "vp run -r test"
+    "test": "vp run -r test",
+    "lint": "vp lint --deny-warnings",
+    "lint:fix": "vp lint --fix --deny-warnings",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
+    "check": "vp run lint && vp run format:check && vp run typecheck && vp run test && vp run build"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

@@ -12,11 +12,11 @@ The proposal requires a trusted issuer, signing-key protection and rotation, and
 
 Cloudflare hosting alone does not establish an OIDC issuer for this design. The issuer implementation or service, token renewal, runtime compatibility, and operating burden require validation before selecting WIF. Customer Google Cloud keys would not be stored, but LuckyCat's own signing credentials would still require protection.
 
-| Alternative | Position |
-| --- | --- |
-| Delegated user OAuth | Compare only if WIF setup proves too burdensome. Consent, scope requirements, token storage/revocation, user departure, and any verification requirements need a separate design. Not selected. |
-| Local CLI / application-default credentials | A local development technique, not the customer Web connection contract. |
-| Uploaded long-lived service account key | Not the default onboarding path. Do not introduce key upload as a shortcut around unresolved federation design; Google recommends [avoiding user-managed keys where possible](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys). |
+| Alternative                                 | Position                                                                                                                                                                                                                                                                |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Delegated user OAuth                        | Compare only if WIF setup proves too burdensome. Consent, scope requirements, token storage/revocation, user departure, and any verification requirements need a separate design. Not selected.                                                                         |
+| Local CLI / application-default credentials | A local development technique, not the customer Web connection contract.                                                                                                                                                                                                |
+| Uploaded long-lived service account key     | Not the default onboarding path. Do not introduce key upload as a shortcut around unresolved federation design; Google recommends [avoiding user-managed keys where possible](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys). |
 
 ## Setup and Runtime Permissions
 
@@ -51,11 +51,11 @@ Read-only diagnosis excludes resource changes, not API requests, query execution
 
 ## Release Gates
 
-| Decision or verification | Required outcome before provision |
-| --- | --- |
-| Authentication and onboarding | Select WIF or an alternative; confirm issuer operation, customer setup effort, exact permissions/APIs, and organization-policy compatibility. |
-| Isolation and revocation | Verify wrong-organization/project requests are denied, no credentials reach the browser, expiry/renewal is correct, and disconnect plus cloud revocation behave as documented. |
-| Data lifecycle and limits | Approve retention, deletion, in-flight cancellation, collection/retry bounds, and cost controls. |
-| End-to-end connection | Test approved setup and denied/disabled/partial/quota cases in a separately authorized environment using the actual LuckyCat runtime. Documentation or mock tests alone do not establish readiness. |
+| Decision or verification      | Required outcome before provision                                                                                                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authentication and onboarding | Select WIF or an alternative; confirm issuer operation, customer setup effort, exact permissions/APIs, and organization-policy compatibility.                                                       |
+| Isolation and revocation      | Verify wrong-organization/project requests are denied, no credentials reach the browser, expiry/renewal is correct, and disconnect plus cloud revocation behave as documented.                      |
+| Data lifecycle and limits     | Approve retention, deletion, in-flight cancellation, collection/retry bounds, and cost controls.                                                                                                    |
+| End-to-end connection         | Test approved setup and denied/disabled/partial/quota cases in a separately authorized environment using the actual LuckyCat runtime. Documentation or mock tests alone do not establish readiness. |
 
 The [diagnostic design](./diagnostics) defines rule-level requirements and acceptance cases. Do not change availability until the customer flow and these gates have been verified.

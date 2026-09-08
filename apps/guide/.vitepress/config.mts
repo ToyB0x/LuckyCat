@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'LuckyCat',
@@ -15,14 +15,14 @@ export default defineConfig({
         nav: [
           { text: '製品方針', link: '/ja/product' },
           { text: '提供状況', link: '/ja/getting-started' },
-          { text: '製品比較', link: '/ja/comparison' }
+          { text: '製品比較', link: '/ja/comparison' },
         ],
         sidebar: [
           { text: '製品方針', link: '/ja/product' },
           { text: '提供状況とはじめ方', link: '/ja/getting-started' },
           { text: 'Google Cloud連携', link: '/ja/google-cloud' },
           { text: '初回診断とルール候補', link: '/ja/diagnostics' },
-          { text: '製品比較', link: '/ja/comparison' }
+          { text: '製品比較', link: '/ja/comparison' },
         ],
         footer: { message: 'LuckyCat · シンプルさを、設計から。' },
         outline: { label: 'このページの内容' },
@@ -33,23 +33,23 @@ export default defineConfig({
         skipToContentLabel: '本文へスキップ',
         darkModeSwitchLabel: '表示テーマ',
         darkModeSwitchTitle: 'ダークモードに切り替え',
-        lightModeSwitchTitle: 'ライトモードに切り替え'
-      }
-    }
+        lightModeSwitchTitle: 'ライトモードに切り替え',
+      },
+    },
   },
   themeConfig: {
     nav: [
       { text: 'Product', link: '/product' },
       { text: 'Availability', link: '/getting-started' },
-      { text: 'Comparison', link: '/comparison' }
+      { text: 'Comparison', link: '/comparison' },
     ],
     sidebar: [
       { text: 'Product direction', link: '/product' },
       { text: 'Availability and getting started', link: '/getting-started' },
       { text: 'Google Cloud connection', link: '/google-cloud' },
       { text: 'First diagnosis and rule candidates', link: '/diagnostics' },
-      { text: 'Product comparison', link: '/comparison' }
+      { text: 'Product comparison', link: '/comparison' },
     ],
-    footer: { message: 'LuckyCat · Simple by design.' }
-  }
-})
+    footer: { message: 'LuckyCat · Simple by design.' },
+  },
+});

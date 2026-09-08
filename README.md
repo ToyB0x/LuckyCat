@@ -4,7 +4,7 @@ LuckyCat is a streamlined, minimalist FinOps tool. It is designed primarily for 
 
 ## Product Philosophy
 
-LuckyCat takes inspiration from the Japanese appliance maker TWINBIRD, whose [cooling technology is used aboard the International Space Station](<https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf>) and whose [appliance philosophy emphasizes essential functions, lasting quality, and design](https://www.twinbird.jp/brand/). We admire how technical depth can become everyday usability.
+LuckyCat takes inspiration from the Japanese appliance maker TWINBIRD, whose [cooling technology is used aboard the International Space Station](https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf) and whose [appliance philosophy emphasizes essential functions, lasting quality, and design](https://www.twinbird.jp/brand/). We admire how technical depth can become everyday usability.
 
 LuckyCat aims to apply that lesson to simple, affordable, easy-to-use FinOps, with **refined design and usability that bring tangible benefits to day-to-day work**. Read the [product philosophy](apps/guide/product.md#product-philosophy) for how this shapes the product.
 

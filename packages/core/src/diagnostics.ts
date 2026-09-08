@@ -15,7 +15,10 @@ export interface ResourceObservation {
   ipVersionInferred?: boolean;
   addressTypeDefaulted?: boolean;
 }
-export interface CollectionIssue { reason: string; scope?: string }
+export interface CollectionIssue {
+  reason: string;
+  scope?: string;
+}
 export interface Inventory {
   source: SourceKind;
   status: 'complete' | 'partial' | 'failed' | 'not_attempted';
@@ -45,40 +48,79 @@ export interface RuleResult {
 }
 
 function assess(source: SourceKind, r: ResourceObservation): string {
-  if (r.referenceCount === null || !Number.isInteger(r.referenceCount) || r.referenceCount < 0 || !r.state) return 'missing_or_invalid_evidence';
+  if (
+    r.referenceCount === null ||
+    !Number.isInteger(r.referenceCount) ||
+    r.referenceCount < 0 ||
+    !r.state
+  )
+    return 'missing_or_invalid_evidence';
   if (source === 'disks') {
     if (!r.diskType) return 'missing_disk_type';
-    if (!['pd-standard', 'pd-balanced', 'pd-ssd', 'pd-extreme'].includes(r.diskType)) return 'unsupported_disk_type';
+    if (!['pd-standard', 'pd-balanced', 'pd-ssd', 'pd-extreme'].includes(r.diskType))
+      return 'unsupported_disk_type';
     if (r.replicating) return 'replication_requires_review';
-    if (!['READY', 'CREATING', 'RESTORING', 'FAILED', 'DELETING'].includes(r.state)) return 'unknown_disk_state';
+    if (!['READY', 'CREATING', 'RESTORING', 'FAILED', 'DELETING'].includes(r.state))
+      return 'unknown_disk_state';
     return r.state === 'READY' && r.referenceCount === 0 ? 'candidate' : 'not_candidate';
   }
-  if (!['EXTERNAL', 'INTERNAL'].includes(r.addressType ?? '') || !['IPV4', 'IPV6'].includes(r.ipVersion ?? '')) return 'missing_or_invalid_address_type';
+  if (
+    !['EXTERNAL', 'INTERNAL'].includes(r.addressType ?? '') ||
+    !['IPV4', 'IPV6'].includes(r.ipVersion ?? '')
+  )
+    return 'missing_or_invalid_address_type';
   if (r.addressType === 'INTERNAL' || r.ipVersion === 'IPV6') return 'not_candidate';
   if (!['RESERVED', 'IN_USE', 'RESERVING'].includes(r.state)) return 'unknown_address_state';
-  if ((r.state === 'RESERVED' && r.referenceCount > 0) || (r.state === 'IN_USE' && r.referenceCount === 0)) return 'contradictory_address_state';
+  if (
+    (r.state === 'RESERVED' && r.referenceCount > 0) ||
+    (r.state === 'IN_USE' && r.referenceCount === 0)
+  )
+    return 'contradictory_address_state';
   return r.state === 'RESERVED' && r.referenceCount === 0 ? 'candidate' : 'not_candidate';
 }
 
 /** Pure evaluation: incomplete collection never proves absence. */
 export function evaluateInventory(inventory: Inventory): RuleResult {
   const result: RuleResult = {
-    rule: inventory.source === 'disks' ? 'unattached-persistent-disk' : 'unassigned-static-external-ipv4',
-    version: '1', source: inventory.source, status: 'not_evaluated', conclusion: 'incomplete',
-    evaluatedResources: 0, candidates: [], unevaluated: [], collectionIssues: inventory.issues,
+    rule:
+      inventory.source === 'disks'
+        ? 'unattached-persistent-disk'
+        : 'unassigned-static-external-ipv4',
+    version: '1',
+    source: inventory.source,
+    status: 'not_evaluated',
+    conclusion: 'incomplete',
+    evaluatedResources: 0,
+    candidates: [],
+    unevaluated: [],
+    collectionIssues: inventory.issues,
   };
   if (inventory.status === 'failed' || inventory.status === 'not_attempted') return result;
   for (const resource of inventory.records) {
     const outcome = assess(inventory.source, resource);
     if (outcome === 'candidate' || outcome === 'not_candidate') {
       result.evaluatedResources++;
-      if (outcome === 'candidate') result.candidates.push({ resource: resource.resource, evidence: resource,
-        amount: estimatePrototypeAmount(inventory.source, resource), requiresHumanReview: true });
+      if (outcome === 'candidate')
+        result.candidates.push({
+          resource: resource.resource,
+          evidence: resource,
+          amount: estimatePrototypeAmount(inventory.source, resource),
+          requiresHumanReview: true,
+        });
     } else result.unevaluated.push({ resource: resource.resource, reason: outcome });
   }
-  const complete = inventory.status === 'complete' && !inventory.issues.length && !result.unevaluated.length;
-  result.status = complete ? 'evaluated' : result.evaluatedResources > 0 ? 'partially_evaluated' : 'not_evaluated';
-  result.conclusion = result.candidates.length ? 'candidates_found' : complete ? 'no_matching_candidates' : 'incomplete';
+  const complete =
+    inventory.status === 'complete' && !inventory.issues.length && !result.unevaluated.length;
+  result.status = complete
+    ? 'evaluated'
+    : result.evaluatedResources > 0
+      ? 'partially_evaluated'
+      : 'not_evaluated';
+  result.conclusion = result.candidates.length
+    ? 'candidates_found'
+    : complete
+      ? 'no_matching_candidates'
+      : 'incomplete';
   return result;
 }
 
@@ -91,7 +133,14 @@ export interface DiagnosticResult {
   authentication: 'succeeded' | 'failed';
   authenticationReason?: string;
   observation: { kind: 'current_state'; continuousUnusedDuration: 'unknown' };
-  limits: { pageSize: number; pagesPerSource: number; recordsPerSource: number; bytesPerResponse: number; requestMs: number; totalMs: number };
+  limits: {
+    pageSize: number;
+    pagesPerSource: number;
+    recordsPerSource: number;
+    bytesPerResponse: number;
+    requestMs: number;
+    totalMs: number;
+  };
   status: RuleResult['status'];
   sources: (Omit<Inventory, 'records'> & { receivedResources: number })[];
   rules: RuleResult[];

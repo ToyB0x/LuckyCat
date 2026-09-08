@@ -20,13 +20,13 @@ Before release, this guide will provide the selected authentication procedure, A
 
 ## Planned Setup and First Run
 
-| Step | Customer preparation or LuckyCat action | Expected result |
-| --- | --- | --- |
-| 1. Choose scope | Agree on projects, resource types, who may run a diagnosis, and who may see results. | A visible, explicit scope. |
-| 2. Prepare access | The administrator configures the approved authentication method, APIs, and least-privilege access. | Access sufficient for the selected rules, without resource-modification permissions. |
-| 3. Register and check | Register the connection in LuckyCat and request an authentication and required-read check. | Separate status for authentication and each checked data source, with the check time and actionable errors. |
-| 4. Start diagnosis | Review scope, selected rules, data collection, and cost/quota implications, then explicitly start the first diagnosis. | Data is retrieved for the approved scope and eligible rules are evaluated. Connecting alone does not start a diagnosis. |
-| 5. Review findings | Open the run result and inspect candidates, evidence, and coverage. | Evaluated rules, unevaluated rules, and unknown amounts are distinguishable. |
+| Step                  | Customer preparation or LuckyCat action                                                                                | Expected result                                                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1. Choose scope       | Agree on projects, resource types, who may run a diagnosis, and who may see results.                                   | A visible, explicit scope.                                                                                              |
+| 2. Prepare access     | The administrator configures the approved authentication method, APIs, and least-privilege access.                     | Access sufficient for the selected rules, without resource-modification permissions.                                    |
+| 3. Register and check | Register the connection in LuckyCat and request an authentication and required-read check.                             | Separate status for authentication and each checked data source, with the check time and actionable errors.             |
+| 4. Start diagnosis    | Review scope, selected rules, data collection, and cost/quota implications, then explicitly start the first diagnosis. | Data is retrieved for the approved scope and eligible rules are evaluated. Connecting alone does not start a diagnosis. |
+| 5. Review findings    | Open the run result and inspect candidates, evidence, and coverage.                                                    | Evaluated rules, unevaluated rules, and unknown amounts are distinguishable.                                            |
 
 A successful connection check only establishes that the checked operations worked at that time. It does not prove complete collection, sufficient observation history, absence of issues, or that an amount can be calculated. Permission changes and later retrieval failures can still prevent evaluation. See [diagnosis and rule candidates](./diagnostics).
 

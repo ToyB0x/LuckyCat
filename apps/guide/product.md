@@ -6,7 +6,7 @@ Finding an opportunity is only part of the work. Someone still needs to understa
 
 ## Product Philosophy
 
-LuckyCat takes inspiration from the Japanese appliance maker TWINBIRD. Its [cooling technology is used in a refrigerator aboard the International Space Station](<https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf>), while its [appliance philosophy emphasizes essential functions, lasting quality, and design](https://www.twinbird.jp/brand/). We admire the connection between technical depth and everyday usability.
+LuckyCat takes inspiration from the Japanese appliance maker TWINBIRD. Its [cooling technology is used in a refrigerator aboard the International Space Station](https://www.twinbird.jp/wordpress/wp-content/uploads/2021/11/ir_other_news_2021_8.pdf), while its [appliance philosophy emphasizes essential functions, lasting quality, and design](https://www.twinbird.jp/brand/). We admire the connection between technical depth and everyday usability.
 
 LuckyCat aims to turn sound technology into simplicity, affordability, and ease of use. Alongside free-to-affordable pricing, we pursue **refined design and usability that bring tangible benefits to day-to-day work**.
 
@@ -43,10 +43,10 @@ Native tools already offer categorization and allocation. Respect their use and 
 
 ### Roles Involved in Adoption
 
-| Role | What matters |
-| --- | --- |
-| Day-to-day user | Engineers and others managing costs alongside their main work need quick understanding and useful next steps. |
-| Adoption decision-maker | The person responsible for engineering, budgets, or procurement needs to judge setup effort, trust, and organizational fit. |
+| Role                      | What matters                                                                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Day-to-day user           | Engineers and others managing costs alongside their main work need quick understanding and useful next steps.                            |
+| Adoption decision-maker   | The person responsible for engineering, budgets, or procurement needs to judge setup effort, trust, and organizational fit.              |
 | Potential revenue partner | A reseller or specialist service may fund an optional referral arrangement; its incentives must not determine what is best for the user. |
 
 Choose by needs and operational complexity, not company size alone. When advanced allocation, complex organizational management, specialist analysis, or governance is essential, a more specialized product may fit better. See the [fit comparison](./comparison).
@@ -57,11 +57,11 @@ LuckyCat aims to be something useful to keep in place, rather than a dashboard y
 
 A small, simple black cat represents good fortune without getting in the way of work. Use encouraging, precise language: “We found a possible ¥120,000 annual improvement,” rather than blaming someone for waste. An estimate is not a cash gift, guaranteed profit, or a saving already achieved.
 
-| Value pillar | Product direction | Availability |
-| --- | --- | --- |
-| Find treasure | Help discover cost improvement opportunities. | Google Cloud setup and first diagnosis: [v0.1 planned · Not available](./getting-started) |
-| Keep watch | Help notice unexpected spending increases and anomalies. | Not available; release scope unassigned |
-| Bring good fortune | Help identify discount and contract opportunities. | Not available; release scope unassigned |
+| Value pillar       | Product direction                                        | Availability                                                                              |
+| ------------------ | -------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Find treasure      | Help discover cost improvement opportunities.            | Google Cloud setup and first diagnosis: [v0.1 planned · Not available](./getting-started) |
+| Keep watch         | Help notice unexpected spending increases and anomalies. | Not available; release scope unassigned                                                   |
+| Bring good fortune | Help identify discount and contract opportunities.       | Not available; release scope unassigned                                                   |
 
 These pillars describe the product's direction, not a commitment to deliver all three in v0.1. See [availability and development plans](./getting-started).
 

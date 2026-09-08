@@ -39,7 +39,9 @@
   line-height: 1.06;
 }
 
-.landing h1 span { color: var(--vp-c-brand-1); }
+.landing h1 span {
+  color: var(--vp-c-brand-1);
+}
 
 :lang(ja) .landing h1 {
   font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
@@ -73,9 +75,17 @@
   font-weight: 600;
 }
 
-.landing .primary:hover { background: var(--vp-c-brand-2); }
-.landing .secondary { text-decoration: underline; text-underline-offset: 5px; }
-.landing a:focus-visible { outline: 3px solid var(--vp-c-brand-2); outline-offset: 5px; }
+.landing .primary:hover {
+  background: var(--vp-c-brand-2);
+}
+.landing .secondary {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.landing a:focus-visible {
+  outline: 3px solid var(--vp-c-brand-2);
+  outline-offset: 5px;
+}
 
 .principles {
   display: grid;
@@ -85,18 +95,54 @@
   padding-top: 28px;
 }
 
-.principles h2 { margin: 0 0 10px; font-size: 18px; font-weight: 600; }
-.principles p { color: var(--vp-c-text-2); font-size: 16px; line-height: 1.65; }
-.landing .status { margin-top: 48px; color: var(--vp-c-text-2); font-size: 14px; }
-
-@media (max-width: 640px) {
-  .landing { padding: 48px 24px 36px; }
-  .landing .intro { font-size: 17px; }
-  .landing .actions { margin-bottom: 40px; }
-  .principles { grid-template-columns: 1fr; gap: 24px; }
+.principles h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.principles p {
+  color: var(--vp-c-text-2);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.landing .status {
+  margin-top: 48px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
 }
 
-.landing .cat-mark { width: 40px; height: 40px; color: #171b18; }
-.dark .landing .cat-mark { background: #c5cebf; border-radius: 50%; padding: 4px; }
-.landing .availability { color: var(--vp-c-text-2); font-size: 14px; margin-bottom: 16px; }
-.landing .status a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) {
+  .landing {
+    padding: 48px 24px 36px;
+  }
+  .landing .intro {
+    font-size: 17px;
+  }
+  .landing .actions {
+    margin-bottom: 40px;
+  }
+  .principles {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.landing .cat-mark {
+  width: 40px;
+  height: 40px;
+  color: #171b18;
+}
+.dark .landing .cat-mark {
+  background: #c5cebf;
+  border-radius: 50%;
+  padding: 4px;
+}
+.landing .availability {
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.landing .status a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
