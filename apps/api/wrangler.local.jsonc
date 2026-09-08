@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "luckycat-api-local",
+  "main": "src/local.ts",
+  "compatibility_date": "2026-09-08",
+  "workers_dev": false,
+  "workflows": [
+    {
+      "binding": "GOOGLE_CONNECTION_CHECK",
+      "name": "luckycat-local-connection-check",
+      "class_name": "LocalConnectionCheck"
+    }
+  ]
+}
