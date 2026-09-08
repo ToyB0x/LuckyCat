@@ -10,6 +10,8 @@ Keep the customer experience and internal design knowledge aligned as LuckyCat e
 | [Business model](./business-model) | Pricing, potential revenue, referral conditions, market approach, and economic validation |
 | [Development guidelines](./product-strategy) | Design principles, development scope, acceptance conditions, and open decisions |
 
+Google Cloud connection setup and the first diagnosis are **v0.1 planned · Not available**. See [connection design](./google-cloud) and [diagnostic design](./diagnostics) for the proposed implementation boundaries and acceptance conditions.
+
 The following sections describe the selected technologies and monorepo structure.
 
 ## Main Architecture
@@ -46,6 +48,8 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 | `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Scaffold |
 
 Use pnpm Workspace for `apps/*` and `packages/*`. Keep app-specific wiring in `apps/` and reusable responsibilities in `packages/`. Both guide sites continue to build from Markdown.
+
+`packages/oidc` is an additional candidate for server-side workload identity and federation token handling. It does not exist yet; decide its adoption and boundary with the [Google Cloud connection design](./google-cloud). Better Auth responsibilities remain in `packages/auth`.
 
 ### Development Tooling
 

@@ -29,7 +29,11 @@ export default defineConfig({
           },
           {
             text: '技術',
-            items: [{ text: 'アーキテクチャとモノレポ', link: '/ja/' }]
+            items: [
+              { text: 'アーキテクチャとモノレポ', link: '/ja/' },
+              { text: 'Google Cloud連携の設計', link: '/ja/google-cloud' },
+              { text: '初回診断の設計', link: '/ja/diagnostics' }
+            ]
           }
         ],
         outline: { level: [2, 3], label: 'このページの内容' },
@@ -62,7 +66,11 @@ export default defineConfig({
       },
       {
         text: 'Technology',
-        items: [{ text: 'Architecture and monorepo', link: '/' }]
+        items: [
+          { text: 'Architecture and monorepo', link: '/' },
+          { text: 'Google Cloud connection design', link: '/google-cloud' },
+          { text: 'Initial diagnostic design', link: '/diagnostics' }
+        ]
       }
     ]
   }

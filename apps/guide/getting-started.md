@@ -12,13 +12,15 @@ Start with [product direction](./product) and [fit comparison](./comparison) to 
 
 ## Development Plans
 
-No customer feature has an approved target version yet. In particular, the first supported cloud and detection rule are undecided. The three value pillars describe the longer-term direction; they are not an approved v0.1 scope.
+**v0.1 planned · Not available:** the next scope is Google Cloud connection setup and a first diagnosis: configure the connection → check access → retrieve data within the selected scope → evaluate rules → inspect improvement candidates and evidence.
 
-When a feature is approved, this page will describe its user goal, planned actions, expected result, and constraints, together with both a target version and availability. Until then, there are no product setup steps to follow.
+See the [connection plan](./google-cloud) for preparation, access, and disconnection, and [diagnosis and rule candidates](./diagnostics) for results and limits. Google Cloud and this experience are decided; authentication, individual rule adoption, thresholds, and exact permissions remain undecided. There are no executable product setup steps yet.
+
+Automatic changes, AWS/Azure support, reseller referrals, tree planting, thanks, badges, profiles, advanced allocation/internal billing, implementation of every mock screen or rule, scheduled runs, and Slack notifications are outside this v0.1 scope. The three value pillars remain the longer-term direction.
 
 ### Features Under Consideration
 
-Organizing and sharing costs without changing resources is a product direction. The following capabilities are candidates for that experience; implementation scope, free allowances, and target versions remain undecided.
+Organizing and sharing costs without changing resources remains a product direction. The following candidates have lower priority than the first diagnosis and are not v0.1 prerequisites; implementation scope, free allowances, and target versions remain undecided.
 
 | Candidate | Goal and intended experience | Constraints and availability |
 | --- | --- | --- |
@@ -27,7 +29,7 @@ Organizing and sharing costs without changing resources is a product direction. 
 
 ### How to Read Release Status
 
-These are notation examples, not announced releases:
+The planned label applies to the Google Cloud flow above. Trial and available labels below illustrate later states and do not announce availability:
 
 | Example | Meaning |
 | --- | --- |

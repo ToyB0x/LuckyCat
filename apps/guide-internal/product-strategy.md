@@ -14,11 +14,15 @@ Retain the [selected stack and package boundaries](./index#main-architecture): T
 
 ## Development Scope and Acceptance
 
-The repository currently contains guide sites and application/package scaffolds. There is no implemented customer FinOps workflow and no approved feature-to-version assignment. Do not treat the Hello World app, greeting endpoint, or auth/DB factories as a product release.
+The repository currently contains guide sites and application/package scaffolds. There is no implemented customer FinOps workflow. Google Cloud connection setup and a first diagnosis are approved as **v0.1 planned · Not available**. Do not treat the Hello World app, greeting endpoint, or auth/DB factories as a product release.
 
 When a feature is approved, add its goal, planned user action, expected result, constraints, target version, and availability to the customer guide. Record the necessary design and acceptance conditions here in the same change. Connect the documented expected result to scenario tests during implementation. Only mark a feature as trial or available after verifying its actual behavior and documenting its limits.
 
-The following are acceptance principles for future scope, not scheduled features:
+The approved flow is setup → connection and permission checks → scoped retrieval → evaluation → candidates and evidence. See [Google Cloud connection design](./google-cloud) and [initial diagnostic design](./diagnostics) for proposed methods, rule selection, data management, and release gates. Reuse collection across a small rule set; neither one rule only nor every rule is a requirement.
+
+v0.1 excludes automatic resource changes, AWS/Azure, reseller implementation, tree planting, thanks, badges, profiles, advanced allocation/chargeback, every mock screen or rule, scheduled runs, and Slack notifications. Virtual classification and simple showback remain lower-priority candidates with unassigned versions.
+
+The following general principles apply when their respective scope is adopted; they do not expand v0.1:
 
 | If the approved scope includes… | Verify that… |
 | --- | --- |
@@ -28,7 +32,7 @@ The following are acceptance principles for future scope, not scheduled features
 | A change to cloud resources | The required authorization is enforced and risky changes cannot run without it. |
 | A quote request or referral | The relationship, recipient, and shared data are clear; declining consent sends nothing. |
 
-Use paired version and availability labels, such as `v0.1 planned · Not available` / `v0.1予定・未提供`. These are examples, not a release announcement. Keep both language versions consistent as scope and implementation change.
+Use paired version and availability labels, such as `v0.1 planned · Not available` / `v0.1予定・未提供`. The planned label applies to the approved Google Cloud flow; it does not announce availability. Keep both language versions consistent as scope and implementation change.
 
 ## Design Conditions for Virtual Classification and Simple Showback
 
@@ -41,8 +45,8 @@ Organizing and sharing costs without changing resources is a product direction. 
 
 ## Open Decisions and Validation
 
-- **Release scope:** first customer outcome, supported cloud, detection rules, target version, and timing. “One cloud, one rule” is not an approved specification.
-- **Delivery:** onboarding, permissions, data handling, notification methods, and evidence/estimate requirements. A GitHub App or team-specific settings are candidates, not selected approaches.
+- **v0.1 details:** individual rule adoption, thresholds, supported resource subtypes, and timing. Google Cloud and the first-diagnosis flow are decided.
+- **Delivery:** authentication method, exact permissions/APIs, retention/deletion, collection limits, and pricing evidence; resolve the gates on the connection and diagnostic pages before provision.
 - **Distribution:** product license and production self-hosting support.
 
 Resolve these as the relevant work is approved. Pricing, operating economics, and partnership validation belong in the [business model](./business-model#sustainability-and-validation).

@@ -59,7 +59,7 @@ A small, simple black cat represents good fortune without getting in the way of 
 
 | Value pillar | Product direction | Availability |
 | --- | --- | --- |
-| Find treasure | Help discover cost improvement opportunities. | Not available; release scope unassigned |
+| Find treasure | Help discover cost improvement opportunities. | Google Cloud setup and first diagnosis: [v0.1 planned · Not available](./getting-started) |
 | Keep watch | Help notice unexpected spending increases and anomalies. | Not available; release scope unassigned |
 | Bring good fortune | Help identify discount and contract opportunities. | Not available; release scope unassigned |
 
