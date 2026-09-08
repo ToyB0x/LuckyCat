@@ -1,9 +1,9 @@
-import { evaluateInventory, type Inventory, type SourceKind } from '@luckycat/core';
+import { evaluateInventory, type Inventory, type SourceKind, type DiagnosticResult } from '@luckycat/core';
 import { createLocalServiceAccountProvider, CredentialError } from '@luckycat/oidc';
 import { allowedProjects, debugEnabled, type DebugSettings } from './check';
 import { collectInventory, collectionLimits } from '../google-cloud/inventory';
 
-export async function diagnoseGoogleCloud(env: DebugSettings, project: string, fetcher: typeof fetch = fetch) {
+export async function diagnoseGoogleCloud(env: DebugSettings, project: string, fetcher: typeof fetch = fetch): Promise<DiagnosticResult> {
   if (!debugEnabled(env)) throw new Error('debug_disabled');
   if (!allowedProjects(env).includes(project)) throw new Error('project_not_allowed');
   const startedAt = new Date().toISOString();

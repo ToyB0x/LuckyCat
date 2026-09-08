@@ -24,9 +24,13 @@ After loading the configured status, choose an allowed project and explicitly re
 
 The check exchanges the JSON-key assertion for a short-lived token and makes at most one list-page probe each for disks, addresses, and instances. Each request has a timeout; there are no automatic retries or full inventory scans. Results distinguish authentication failure, successful or incomplete probes, access denied/API disabled, quota limits, and other retrieval failure. A successful probe is not a completed diagnosis, full permission audit, or proof of no findings. Connection probes do not return resource contents or inventory to the browser.
 
-## Inspect Diagnostic JSON
+## Review Diagnostic Results
 
-Load the configuration, select an allowed project, and click the diagnostic JSON button (「診断してJSONを表示」). Separate from connection probes, `POST /local-debug/diagnose` collects paginated disks/addresses and evaluates rules under the [local diagnostic limits](./diagnostics#local-diagnostic-scope). Disks on stopped VMs are not evaluated yet.
+Load the configuration, select an allowed project, and click Run diagnosis (「診断を実行」). Separate from connection probes, `POST /local-debug/diagnose` collects paginated disks/addresses and evaluates rules under the [local diagnostic limits](./diagnostics#local-diagnostic-scope). Disks on stopped VMs are not evaluated yet.
+
+The screen shows the project, run time, candidate list, and evidence for each candidate. Review the resource name, location, observation time, and condition. Unevaluated resources and collection gaps appear separately with reasons. Amounts and unused duration remain unknown. JSON stays available in a collapsed detail section.
+
+Switching projects, reloading configuration, or rerunning clears previous results. Late responses from earlier requests are ignored; network failures and invalid responses never become zero findings. Aborting a browser request does not guarantee that an already-started server read stops.
 
 Read `status` together with each rule's `conclusion`. `candidates_found` means review candidates exist; `no_matching_candidates` applies only to completely collected and evaluated scope; `incomplete` means a conclusion cannot be made for all scope. Even with findings, `partially_evaluated` retains collection/evaluation gaps. Reasons appear in `sources.issues` and `rules.unevaluated`. Amounts are `unknown`, as is continuous unused duration.
 
@@ -38,7 +42,7 @@ JSON includes candidate resource identifiers and necessary evidence, excluding I
 - Tokens are cached only within a provider instance and expire conservatively. Keys, tokens, and raw Google errors are not API results or Workflow inputs/outputs. Token acquisition happens inside a Workflow step, never as a separate persisted step result.
 - Local Workflows persist the selected project, sanitized check result, and time under `.wrangler/`. Treat this as development data; remove local state after stopping the server when it is no longer needed.
 - `packages/auth` and the production WIF design remain separate. Debug mode does not implement customer onboarding or tenant authorization.
-- `pnpm test` runs the workspace tests through Vite+ and its bundled Vitest (`vp test run`, with APIs from `vite-plus/test`); no separate Vitest dependency is needed. Each package configures tests in `vite.config.ts`. These are Node-environment unit tests; Worker and Workflow runtime checks remain separate.
+- `pnpm test` runs the workspace tests through Vite+ and its bundled Vitest (`vp test run`, with APIs from `vite-plus/test`); no separate Vitest dependency is needed. Core, API, and oidc configure Node-environment tests in `vite.config.ts`. Web uses a separate `vitest.config.ts` with React Testing Library and jsdom to test UI interactions; Worker and Workflow runtime checks remain separate.
 - The tests check credential signing, expiry, errors, project restrictions, and read-probe semantics using generated test keys and mocked Google responses. It requires no real key or cloud access. Actual Google Cloud connectivity and least-privilege IAM must be verified separately for an explicitly approved project.
 
 Google documents [service account OAuth](https://developers.google.com/identity/protocols/oauth2/service-account); Cloudflare documents [local secrets](https://developers.cloudflare.com/workers/configuration/secrets/) and [local Workflows](https://developers.cloudflare.com/workflows/build/local-development/).
