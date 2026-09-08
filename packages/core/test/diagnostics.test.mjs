@@ -4,10 +4,10 @@ import { evaluateInventory } from '../src/diagnostics.ts';
 const record = { resource: 'projects/debug-example/zones/zone-a/disks/example', observedAt: '2026-01-01T00:00:00Z', state: 'READY', referenceCount: 0, referencesOmitted: false, diskType: 'pd-balanced', sizeGb: '10', replicating: false };
 const inventory = (source, records, extra = {}) => ({ source, status: 'complete', records, issues: [], scopes: [], pages: 1, startedAt: record.observedAt, completedAt: record.observedAt, ...extra });
 
-test('unattached disks produce current-state evidence with unknown money and mandatory human review', () => {
+test('unattached disks produce current-state evidence with prototype money and mandatory human review', () => {
   const result = evaluateInventory(inventory('disks', [record]));
   assert.equal(result.status, 'evaluated'); assert.equal(result.conclusion, 'candidates_found');
-  assert.deepEqual(result.candidates[0], { resource: record.resource, evidence: record, amount: { status: 'unknown', reason: 'pricing_not_collected' }, requiresHumanReview: true });
+  assert.deepEqual(result.candidates[0], { resource: record.resource, evidence: record, amount: { status: 'estimated', basis: 'prototype-fixed-rates', monthlyUsd: 1, unitPriceUsd: 0.1, quantity: 10, unit: 'GiB-month' }, requiresHumanReview: true });
 });
 test('attached and non-ready disks do not match; missing or unsupported evidence stays unevaluated', () => {
   const cases = [

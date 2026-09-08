@@ -25,7 +25,7 @@ export async function diagnoseGoogleCloud(env: DebugSettings, project: string, f
   } finally { clearTimeout(timer); }
   const rules = sources.map(evaluateInventory);
   return {
-    schemaVersion: '1', project, startedAt, completedAt: new Date().toISOString(), authentication,
+    schemaVersion: '2', project, startedAt, completedAt: new Date().toISOString(), authentication,
     ...(authenticationReason ? { authenticationReason } : {}),
     observation: { kind: 'current_state', continuousUnusedDuration: 'unknown' },
     limits: collectionLimits,

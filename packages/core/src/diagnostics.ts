@@ -1,3 +1,5 @@
+import { estimatePrototypeAmount, type PrototypeAmount } from './prototype-pricing';
+
 export type SourceKind = 'disks' | 'addresses';
 export interface ResourceObservation {
   resource: string;
@@ -27,7 +29,7 @@ export interface Inventory {
 export interface Finding {
   resource: string;
   evidence: ResourceObservation;
-  amount: { status: 'unknown'; reason: 'pricing_not_collected' };
+  amount: PrototypeAmount;
   requiresHumanReview: true;
 }
 export interface RuleResult {
@@ -71,7 +73,7 @@ export function evaluateInventory(inventory: Inventory): RuleResult {
     if (outcome === 'candidate' || outcome === 'not_candidate') {
       result.evaluatedResources++;
       if (outcome === 'candidate') result.candidates.push({ resource: resource.resource, evidence: resource,
-        amount: { status: 'unknown', reason: 'pricing_not_collected' }, requiresHumanReview: true });
+        amount: estimatePrototypeAmount(inventory.source, resource), requiresHumanReview: true });
     } else result.unevaluated.push({ resource: resource.resource, reason: outcome });
   }
   const complete = inventory.status === 'complete' && !inventory.issues.length && !result.unevaluated.length;
@@ -82,7 +84,7 @@ export function evaluateInventory(inventory: Inventory): RuleResult {
 
 /** Transport-neutral result shared by the API and diagnostic UI. */
 export interface DiagnosticResult {
-  schemaVersion: '1';
+  schemaVersion: '2';
   project: string;
   startedAt: string;
   completedAt: string;

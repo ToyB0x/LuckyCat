@@ -11,7 +11,7 @@ export function fixture(mode: 'candidate' | 'empty' | 'partial' | 'unknown' | 'a
   if (mode === 'partial') { address.status = 'failed'; address.pages = 0; address.scopes = []; address.issues = [{ reason: 'access_denied_or_api_disabled' }]; }
   if (mode === 'authentication') for (const source of [disk, address]) { source.status = 'not_attempted'; source.scopes = []; source.pages = 0; source.issues = [{ reason: 'authentication_failed' }]; }
   return {
-    schemaVersion: '1', project: target, startedAt: at, completedAt: at,
+    schemaVersion: '2', project: target, startedAt: at, completedAt: at,
     authentication: mode === 'authentication' ? 'failed' : 'succeeded', ...(mode === 'authentication' ? { authenticationReason: 'invalid_credentials' } : {}),
     observation: { kind: 'current_state', continuousUnusedDuration: 'unknown' },
     limits: { pageSize: 100, pagesPerSource: 5, recordsPerSource: 500, bytesPerResponse: 2097152, requestMs: 10000, totalMs: 30000 },

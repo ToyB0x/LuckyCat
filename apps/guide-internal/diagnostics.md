@@ -41,8 +41,19 @@ Local diagnostics separate collection/normalization in `apps/api`, pure evaluati
 - Candidates are `READY` disks without references and `EXTERNAL`, `IPV4`, `RESERVED` addresses without references. Replicating disks and unsupported disk types remain unevaluated. Grace periods and retention exceptions are not automatically applied yet.
 - Request explicit fields. Normalize an omitted repeated `users` field in Google's list response as zero references, retaining the omission in evidence. Null/malformed references, missing state/type/identity, and contradictions remain unevaluated. An omitted `addressType` uses the documented `EXTERNAL` default. An omitted `ipVersion` becomes `IPV4` only when the actual address strictly validates as IPv4. Record both normalization decisions in evidence, excluding the actual IP from results. Other missing values and explicit nulls remain unevaluated. The generic core never converts missing data into empty arrays.
 - Development limits are 100 items per page, 5 pages and 500 items per source, 2 MiB per response, 10 seconds per request, and 30 seconds for collection overall. No automatic retries. Limits, warnings, and failed pages preserve incomplete status. Conflicting observations of the same resource are not evaluated. These are not production limits.
-- JSON includes rule ID/version, target, collection start/end times, returned scopes, candidates/evidence, and unevaluated reasons. Observation is current state only, continuous unused duration is unknown, and money is `unknown`. Partial collection cannot yield a complete no-match conclusion.
+- JSON includes rule ID/version, target, collection start/end times, returned scopes, candidates/evidence, and unevaluated reasons. Observation is current state only, continuous unused duration is unknown, and money is a prototype fixed-rate estimate as described below, or `unknown`. Partial collection cannot yield a complete no-match conclusion.
 - Run diagnostics directly through the local API without persisting results in a DB or Workflow. Resource identifiers appear in the local UI; do not paste results into public files. The existing Workflow remains a connection probe only.
+
+## Prototype Price Estimates
+
+Price estimation is currently a prototype for evaluating the screen and user experience. Keep fixed rates in `packages/core/src/prototype-pricing.ts`, use ordinary numeric arithmetic, and round monthly amounts to cents. Do not add a pricing API, price-expiry management, or billing-data connection at this stage.
+
+- Multiply zonal disk capacity by `pd-standard: $0.04`, `pd-balanced: $0.10`, or `pd-ssd: $0.17` per GiB-month. Approximate regional disks at twice those rates. Unknown/invalid capacity and `pd-extreme` retain unknown amounts.
+- Approximate both regional and global unassigned static external IPv4 at `$0.01 × 730 hours = $7.30/month`. Regional differences, discounts, free tiers, BYOIP, and other special conditions are not reflected.
+- API and UI use result format v2. Each estimate includes a prototype marker, USD monthly amount, rate, quantity, and unit. Keep detection unchanged and preserve candidates with unknown amounts. Show the subtotal of priced candidates with priced and unknown counts.
+- Label the screen “Price estimation is a prototype.” Amounts approximate the cost of continuing the current state and indicate potential savings only if deletion/release is possible without replacement costs. They are not actual bills, historical spend, or realized savings.
+
+Rates are UI approximations informed by [disk pricing](https://cloud.google.com/compute/disks-image-pricing) and [IPv4 pricing](https://cloud.google.com/vpc/network-pricing#ipaddress). Before formal adoption, validate region/SKU matching, additional charges, BYOIP, and discounts; improve estimates using BigQuery Billing Export, pricing REST APIs, and other sources as appropriate.
 
 ## Result Contract and Acceptance
 

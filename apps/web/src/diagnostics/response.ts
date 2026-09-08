@@ -13,9 +13,14 @@ const resource = (v: unknown) => object(v) && string(v.resource) && timestamp(v.
   && typeof v.referencesOmitted === 'boolean'
   && ['diskType', 'sizeGb', 'addressType', 'ipVersion'].every(k => v[k] === undefined || v[k] === null || string(v[k]))
   && ['replicating', 'ipVersionInferred', 'addressTypeDefaulted'].every(k => v[k] === undefined || typeof v[k] === 'boolean');
+const nonnegative = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && v >= 0;
+const amount = (v: unknown) => object(v) && (
+  (v.status === 'unknown' && oneOf(v.reason, ['unsupported_prototype_price', 'invalid_capacity']))
+  || (v.status === 'estimated' && v.basis === 'prototype-fixed-rates' && nonnegative(v.monthlyUsd)
+    && nonnegative(v.unitPriceUsd) && nonnegative(v.quantity) && oneOf(v.unit, ['GiB-month', 'IP-hour'])));
 const candidate = (v: unknown) => object(v) && string(v.resource) && resource(v.evidence)
   && object(v.evidence) && v.evidence.resource === v.resource && v.requiresHumanReview === true
-  && object(v.amount) && v.amount.status === 'unknown' && v.amount.reason === 'pricing_not_collected';
+  && amount(v.amount);
 const rule = (v: unknown) => object(v) && v.version === '1' && evaluation(v.status) && count(v.evaluatedResources)
   && oneOf(v.conclusion, ['candidates_found', 'no_matching_candidates', 'incomplete'])
   && Array.isArray(v.candidates) && v.candidates.every(candidate)
@@ -28,7 +33,7 @@ const source = (v: unknown) => object(v) && oneOf(v.status, ['complete', 'partia
 /** Check the network boundary before interpreting a missing value as a count or status. */
 export function parseDiagnosticResult(value: unknown, project: string): DiagnosticResult {
   const invalid = () => new Error('診断結果の形式を確認できませんでした。APIと画面のバージョンを確認して再実行してください。');
-  if (!object(value) || value.schemaVersion !== '1' || value.project !== project
+  if (!object(value) || value.schemaVersion !== '2' || value.project !== project
     || !timestamp(value.startedAt) || !timestamp(value.completedAt) || !evaluation(value.status)
     || !oneOf(value.authentication, ['succeeded', 'failed']) || (value.authenticationReason !== undefined && !string(value.authenticationReason))
     || !object(value.observation) || value.observation.kind !== 'current_state' || value.observation.continuousUnusedDuration !== 'unknown'
