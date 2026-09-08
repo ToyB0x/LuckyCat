@@ -44,7 +44,7 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 | `apps/web` | TanStack Start application and oRPC client | Scaffold |
 | `apps/api` | oRPC endpoints and composition of auth, core, and DB packages | Scaffold |
 | `packages/auth` | Better Auth integration, authentication, sessions, roles, permissions, and authorization interfaces | Scaffold |
-| `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Scaffold |
+| `packages/core` | FinOps domain logic, use cases, and persistence interfaces | Local diagnostic result types and two rule evaluators |
 | `packages/db` | Drizzle schemas, migrations, and D1 access, including authentication persistence | Scaffold |
 | `packages/oidc` | Google Cloud credential provider for development | Local only; OIDC/WIF unimplemented |
 
@@ -63,11 +63,11 @@ The root development dependency provides Vite+ locally; no global installation i
 - `pnpm dev` starts both guides, the web app, and the API together through Vite+.
 - Web: TanStack Start Hello World at `http://127.0.0.1:3000`.
 - API: local Cloudflare Worker at `http://127.0.0.1:8787`. `GET /` returns a greeting; `/rpc/hello` is an unauthenticated oRPC example.
-- `packages/core` supplies the greeting. `packages/db` provides a D1 client factory; no database, schema, or migrations are created yet.
+- `packages/core` supplies the greeting example plus [local diagnostic](./diagnostics#local-diagnostic-scope) result types and evaluation. `packages/db` provides a D1 client factory; no database, schema, or migrations are created yet.
 - `packages/auth` provides a server-only Better Auth factory requiring a database, base URL, secret, and trusted origins. No authentication routes, login methods, roles, or permissions are enabled. It is not yet wired into the API.
 - The web starter does not yet call oRPC. All protected product endpoints and workflows remain to be designed.
 - Shared packages export TypeScript source for workspace consumers and emit JavaScript/declarations during builds. The generated web route tree is checked in so type checks work on a fresh checkout.
-- GitHub Actions runs a frozen-lockfile install, `pnpm typecheck`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
+- GitHub Actions runs a frozen-lockfile install, `pnpm typecheck`, `pnpm test`, and `pnpm build` on pull requests and pushes to `main`. API builds use Wrangler dry-run; CI needs no Cloudflare account, secrets, or deployment access.
 
 ### Guide Deployment
 

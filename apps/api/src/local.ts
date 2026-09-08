@@ -1,5 +1,6 @@
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from 'cloudflare:workers';
 import application from './index';
+import { diagnoseGoogleCloud } from './debug/diagnose';
 import { allowedProjects, checkGoogleConnection, debugEnabled, type DebugSettings } from './debug/check';
 
 interface LocalEnv extends DebugSettings {
@@ -35,11 +36,12 @@ export default {
         // Never expose arbitrary Workflow errors or stack traces.
         return reply({ status: state.status, ...(state.status === 'complete' ? { output: state.output } : {}) });
       }
-      if (request.method !== 'POST' || !['/local-debug/check', '/local-debug/workflow'].includes(url.pathname)) return reply({ error: 'not_found' }, 404);
+      if (request.method !== 'POST' || !['/local-debug/check', '/local-debug/workflow', '/local-debug/diagnose'].includes(url.pathname)) return reply({ error: 'not_found' }, 404);
       if (!request.headers.get('Content-Type')?.startsWith('application/json')) return reply({ error: 'json_required' }, 415);
       const body: unknown = await request.json();
       if (!body || typeof body !== 'object' || !('project' in body) || typeof body.project !== 'string'
         || Object.keys(body).some(key => key !== 'project') || !allowedProjects(env).includes(body.project)) return reply({ error: 'project_not_allowed' }, 400);
+      if (url.pathname === '/local-debug/diagnose') return reply(await diagnoseGoogleCloud(env, body.project));
       if (url.pathname === '/local-debug/check') return reply(await checkGoogleConnection(env, body.project));
       const instance = await env.GOOGLE_CONNECTION_CHECK.create({ id: crypto.randomUUID(), params: { project: body.project } });
       return reply({ id: instance.id }, 202);

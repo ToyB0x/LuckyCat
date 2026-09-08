@@ -23,8 +23,8 @@ export function LocalDebugPanel() {
   }
   const buttonStyle = { padding: '10px 16px', margin: '8px 8px 8px 0', cursor: 'pointer' };
   return <section style={{ borderTop: '1px solid #ccc', marginTop: 32, paddingTop: 16 }}>
-    <h2>Google Cloud · ローカル接続確認</h2>
-    <p>開発専用です。OIDCサーバーを使わず、サーバー側に設定したサービスアカウントJSON鍵で確認します。診断ルールはまだ実行しません。</p>
+    <h2>Google Cloud · ローカル検証</h2>
+    <p>開発専用です。OIDCサーバーを使わず、サーバー側に設定したサービスアカウントJSON鍵で確認します。接続確認と、未接続ディスク・未割り当て外部IPv4の診断を実行できます。</p>
     <button style={buttonStyle} disabled={busy} onClick={() => run(async () => {
       const next: Status = await call('status'); setStatus(next); setProject(next.projects[0] ?? '');
     })}>設定状態を読み込む</button>
@@ -33,8 +33,10 @@ export function LocalDebugPanel() {
       <label>対象プロジェクト <select value={project} onChange={event => setProject(event.target.value)}>
         {status.projects.map(value => <option key={value}>{value}</option>)}
       </select></label>
-      <p>以下の確認はGoogle Cloudへ接続し、読み取りクォータを消費します。リソースの変更や全件取得は行いません。</p>
+      <p>以下の確認はGoogle Cloudへ接続し、読み取りクォータを消費します。接続確認は各1ページ、診断は各取得元の上限付きページングを行います。リソースは変更しません。</p>
       <button style={buttonStyle} disabled={busy || !project || !status.enabled || !status.credentialConfigured} onClick={() => run(async () => setResult(await call('check', { project })))}>APIで接続確認</button>
+      <button style={buttonStyle} disabled={busy || !project || !status.enabled || !status.credentialConfigured} onClick={() => run(async () => { setWorkflow(''); setResult(await call('diagnose', { project })); })}>診断してJSONを表示</button>
+      <p>診断結果にはリソース識別子を含みます。公開先へ貼り付けないでください。金額・未使用期間・安全に削除できるかは未確認です。未評価や部分取得の理由も確認してください。</p>
       <button style={buttonStyle} disabled={busy || !project || !status.enabled || !status.credentialConfigured} onClick={() => run(async () => {
         const created = await call('workflow', { project }); setWorkflow(created.id); setResult({ status: '開始しました。結果を確認してください。' });
       })}>ローカルWorkflowで確認</button>

@@ -1,6 +1,6 @@
 # Local Google Cloud Debugging
 
-The development-only connection checker uses a **service account JSON key**, not a standard Google API key. It needs no OIDC server. This is an implemented development foundation; the customer diagnosis remains **v0.1 planned · Not available**.
+The development-only connection checker uses a **service account JSON key**, not a standard Google API key. It needs no OIDC server. This development foundation supports connection probes and the first two diagnostic rules; the customer diagnosis remains **v0.1 planned · Not available**.
 
 ## Configuration
 
@@ -22,7 +22,15 @@ Run `pnpm dev` at the repository root. The local API uses `wrangler.local.jsonc`
 
 After loading the configured status, choose an allowed project and explicitly request either a direct API check or a local Workflow check. Fetch the Workflow result using its status button. Starting the servers, loading status, or viewing a result does not contact Google Cloud. Clicking a check with valid credentials does contact Google's token endpoint and Compute API, consuming read quotas even though Workers and Workflows run locally.
 
-The check exchanges the JSON-key assertion for a short-lived token and makes at most one list-page probe each for disks, addresses, and instances. Each request has a timeout; there are no automatic retries or full inventory scans. Results distinguish authentication failure, successful or incomplete probes, access denied/API disabled, quota limits, and other retrieval failure. A successful probe is not a completed diagnosis, full permission audit, or proof of no findings. No resource contents or inventory are returned to the browser.
+The check exchanges the JSON-key assertion for a short-lived token and makes at most one list-page probe each for disks, addresses, and instances. Each request has a timeout; there are no automatic retries or full inventory scans. Results distinguish authentication failure, successful or incomplete probes, access denied/API disabled, quota limits, and other retrieval failure. A successful probe is not a completed diagnosis, full permission audit, or proof of no findings. Connection probes do not return resource contents or inventory to the browser.
+
+## Inspect Diagnostic JSON
+
+Load the configuration, select an allowed project, and click the diagnostic JSON button (「診断してJSONを表示」). Separate from connection probes, `POST /local-debug/diagnose` collects paginated disks/addresses and evaluates rules under the [local diagnostic limits](./diagnostics#local-diagnostic-scope). Disks on stopped VMs are not evaluated yet.
+
+Read `status` together with each rule's `conclusion`. `candidates_found` means review candidates exist; `no_matching_candidates` applies only to completely collected and evaluated scope; `incomplete` means a conclusion cannot be made for all scope. Even with findings, `partially_evaluated` retains collection/evaluation gaps. Reasons appear in `sources.issues` and `rules.unevaluated`. Amounts are `unknown`, as is continuous unused duration.
+
+JSON includes candidate resource identifiers and necessary evidence, excluding IP addresses, labels, descriptions, credentials, and raw Google errors. Inspect results locally and do not save them in Git-tracked files. Diagnosis does not persist results in a DB or Workflow or automatically modify resources. Startup and configuration loading do not start a diagnosis.
 
 ## Boundaries and Verification
 
