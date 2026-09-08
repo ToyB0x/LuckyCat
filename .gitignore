@@ -3,3 +3,11 @@ node_modules/
 .pnpm-store/
 **/.vitepress/cache/
 **/.vitepress/dist/
+**/dist/
+**/.wrangler/
+**/.tanstack/
+**/.output/
+.dev.vars
+.env
+.env.*
+!.env.example

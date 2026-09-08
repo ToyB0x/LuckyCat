@@ -1,0 +1,23 @@
+{
+  "name": "@luckycat/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev --host 127.0.0.1 --port 3000 --strictPort",
+    "build": "vp build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@luckycat/core": "workspace:*",
+    "@tanstack/react-start": "^1.168.0",
+    "@tanstack/react-router": "^1.170.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0"
+  }
+}

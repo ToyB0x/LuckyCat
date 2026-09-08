@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vitepress dev . --host 127.0.0.1 --port 5173 --strictPort",
     "build": "vitepress build .",
-    "preview": "vitepress preview . --host 127.0.0.1 --port 4173 --strictPort"
+    "preview": "vitepress preview . --host 127.0.0.1 --port 4173 --strictPort",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "vitepress": "1.6.4",

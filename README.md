@@ -12,7 +12,7 @@ Similarly, this tool is backed by solid technology but goes beyond simply being 
 
 This repository is not just a platform to share a tool; it is a space for my own hands-on practice and growth. I view this solo project as a vital opportunity to earnestly dedicate myself to the craft of building software, hone my technical skills, and continue evolving as an engineer.
 
-## Guide Development
+## Local Development
 
 Use Node.js 22 or later and pnpm 11.18.0.
 
@@ -26,6 +26,10 @@ pnpm dev
 
 Both sites support English at `/` and Japanese at `/ja/`. Use the language menu to switch between corresponding pages. Keep paired Markdown pages synchronized when editing either language.
 
-Run one site with `pnpm guide:dev` or `pnpm guide-internal:dev`. Build both with `pnpm build`.
+`pnpm dev` starts both guides, the web app (port 3000), and the API (port 8787) together through Vite+.
+
+Run `pnpm typecheck` and `pnpm build` for all workspace packages through the locally installed Vite+ task runner. VitePress remains the guide-site builder. GitHub Actions runs these checks on PRs and pushes to `main`; Worker builds are dry-runs and do not deploy.
+
+The web and API apps are Hello World starters. Auth and DB packages expose initialization factories only; no sign-in, D1 database, or product workflow is configured. See the internal guide for the package boundaries.
 
 The guides start small and grow alongside the product. Product workflows and infrastructure choices remain to be defined.

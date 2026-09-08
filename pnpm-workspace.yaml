@@ -4,3 +4,8 @@ packages:
 minimumReleaseAge: 2880
 allowBuilds:
   esbuild: true
+  workerd: true
+peerDependencyRules:
+  allowedVersions:
+    # The Vite+ compatibility package uses the Vite+ version number.
+    vite: '0.3.0'

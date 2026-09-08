@@ -1,0 +1,18 @@
+{
+  "name": "@luckycat/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local --ip 127.0.0.1 --port 8787",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@luckycat/core": "workspace:*",
+    "@orpc/server": "^1.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0",
+    "@cloudflare/workers-types": ">=4.20250101.0 <6"
+  }
+}

@@ -1,14 +1,19 @@
 {
   "name": "luckycat",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp run -r --parallel dev",
+    "build": "vp run -r --cache build",
+    "typecheck": "vp run -r --cache typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite-plus": "^0.3.0",
+    "@types/node": "^24.0.0"
+  },
   "packageManager": "pnpm@11.18.0",
   "engines": {
     "node": ">=22"
-  },
-  "scripts": {
-    "dev": "pnpm --parallel --filter './apps/*' dev",
-    "guide:dev": "pnpm --filter @luckycat/guide dev",
-    "guide-internal:dev": "pnpm --filter @luckycat/guide-internal dev",
-    "build": "pnpm -r build"
   }
 }
