@@ -26,6 +26,9 @@ jobs:
       - uses: pnpm/action-setup@v4
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
+      - run: pnpm test
       - run: pnpm build
+      - name: Validate local debug Worker and Workflow
+        run: pnpm exec vp run --filter @luckycat/api build:local
       - name: Validate guide deployment configurations
         run: pnpm exec vp run --filter @luckycat/guide --filter @luckycat/guide-internal deploy:dry-run
