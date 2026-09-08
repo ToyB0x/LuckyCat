@@ -24,9 +24,13 @@ GOOGLE_SERVICE_ACCOUNT_JSON='{"type":"service_account","client_email":"reader@yo
 
 JSON鍵で署名した情報を短期トークンへ交換し、ディスク・アドレス・VMの一覧をそれぞれ最大1ページだけ確認します。各要求にはタイムアウトがあり、自動再試行や全件スキャンは行いません。認証失敗、読み取り確認の成功・不完全、権限拒否／API無効、クォータ制限、その他の取得失敗を区別します。確認成功は診断完了、全権限の監査、検知0件の証明ではありません。接続確認はリソースの中身や一覧をブラウザへ返しません。
 
-## 診断JSONの確認
+## 診断結果の確認
 
-設定状態を読み込み、許可したプロジェクトを選んで「診断してJSONを表示」を押します。`POST /local-debug/diagnose`は、接続確認とは別にディスク・アドレスのページング取得とルール評価を行います。[診断設計](./diagnostics#ローカル診断の範囲)の上限を適用し、停止VMのディスクはまだ評価しません。
+設定状態を読み込み、許可したプロジェクトを選んで「診断を実行」を押します。`POST /local-debug/diagnose`は、接続確認とは別にディスク・アドレスのページング取得とルール評価を行います。[診断設計](./diagnostics#ローカル診断の範囲)の上限を適用し、停止VMのディスクはまだ評価しません。
+
+画面は対象プロジェクトと実行時刻、候補一覧、候補ごとの根拠を表示します。リソース名・場所・取得時点・判定条件を確認し、未評価のリソースや取得できなかった範囲は理由とともに別に表示します。金額と未使用期間は不明のままです。詳細確認用のJSONは折りたたんで残します。
+
+プロジェクトの切り替え、設定の再読み込み、再実行では古い結果を消去します。遅れて到着した以前の応答は採用せず、通信失敗や不正な応答を候補0件として表示しません。画面上のリクエスト中断は、すでに開始したサーバー側の読み取り停止を保証しません。
 
 `status`と各ルールの`conclusion`を併せて確認します。`candidates_found`は見直し候補あり、`no_matching_candidates`は完全に取得・評価できた範囲で該当なし、`incomplete`は判定できない範囲がある状態です。候補がある場合も`partially_evaluated`なら未取得・未評価の範囲が残ります。`sources.issues`と`rules.unevaluated`に理由を示します。金額は`unknown`、連続した未使用期間も不明です。
 
@@ -38,7 +42,7 @@ JSONには候補のリソース識別子と必要な根拠だけを含め、IP�
 - トークンのキャッシュはプロバイダーのインスタンス内に限定し、有効期限に余裕を持って更新します。鍵・トークン・Googleの生エラーをAPIの結果やWorkflowの入出力に含めません。認証情報の取得はステップ内で行い、独立した永続化されるステップの戻り値にはしません。
 - ローカルWorkflowsは、指定したプロジェクト、機密情報を除いた確認結果、時刻を`.wrangler/`配下へ保存します。開発データとして扱い、不要になったローカル状態はサーバーを停止してから削除します。
 - `packages/auth`と本番のWIF設計は別に維持します。デバッグモードは顧客向けの導入やテナント認可を実装するものではありません。
-- `pnpm test`はVite+に同梱されたVitestでワークスペースのテストを実行します（`vp test run`、APIは`vite-plus/test`から読み込み）。Vitest単体の追加依存は不要です。各パッケージの`vite.config.ts`にテスト設定を置きます。Node環境のユニットテストであり、Worker・Workflowの実行環境での確認は別に行います。
+- `pnpm test`はVite+に同梱されたVitestでワークスペースのテストを実行します（`vp test run`、APIは`vite-plus/test`から読み込み）。Vitest単体の追加依存は不要です。core・API・oidcの`vite.config.ts`にNode環境のテスト設定を置き、Webはアプリ起動用と分けた`vitest.config.ts`でReact Testing Libraryとjsdomによる画面操作テストを実行します。Worker・Workflowの実行環境での確認は別に行います。
 - テストは生成したテスト鍵とGoogleの模擬応答を使い、署名、有効期限、エラー、プロジェクト制限、読み取り確認の意味を検証します。実鍵やクラウド接続は不要です。実際のGoogle Cloud接続と最小権限のIAMは、明示的に承認したプロジェクトで別途検証します。
 
 Googleの[サービスアカウントOAuth](https://developers.google.com/identity/protocols/oauth2/service-account)、Cloudflareの[ローカルシークレット](https://developers.cloudflare.com/workers/configuration/secrets/)と[ローカルWorkflows](https://developers.cloudflare.com/workflows/build/local-development/)も参照してください。

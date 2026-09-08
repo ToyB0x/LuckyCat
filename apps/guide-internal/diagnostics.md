@@ -46,6 +46,8 @@ Local diagnostics separate collection/normalization in `apps/api`, pure evaluati
 
 ## Result Contract and Acceptance
 
+`DiagnosticResult` in `packages/core` is the shared API/UI result type. The UI separates candidate presence from evaluation completeness; partial evaluation, unevaluated scope, and authentication failure must not appear as no matches. UI tests use mocked responses without live cloud access.
+
 Keep authentication, source retrieval, rule evaluation, findings, and money as separate states. Every run records the requested scope, actual coverage, retrieval times, observation periods, rule conditions/version, and unevaluated reasons.
 
 | Scenario | Required result |

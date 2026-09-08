@@ -79,3 +79,18 @@ export function evaluateInventory(inventory: Inventory): RuleResult {
   result.conclusion = result.candidates.length ? 'candidates_found' : complete ? 'no_matching_candidates' : 'incomplete';
   return result;
 }
+
+/** Transport-neutral result shared by the API and diagnostic UI. */
+export interface DiagnosticResult {
+  schemaVersion: '1';
+  project: string;
+  startedAt: string;
+  completedAt: string;
+  authentication: 'succeeded' | 'failed';
+  authenticationReason?: string;
+  observation: { kind: 'current_state'; continuousUnusedDuration: 'unknown' };
+  limits: { pageSize: number; pagesPerSource: number; recordsPerSource: number; bytesPerResponse: number; requestMs: number; totalMs: number };
+  status: RuleResult['status'];
+  sources: (Omit<Inventory, 'records'> & { receivedResources: number })[];
+  rules: RuleResult[];
+}

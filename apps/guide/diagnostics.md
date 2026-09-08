@@ -24,6 +24,8 @@ Snapshot retention review remains a separate candidate requiring an agreed reten
 
 ## Reading Results
 
+The planned results screen presents candidates with resource names, locations, observation times, and evidence. Collection gaps and unevaluated reasons remain visible so readers can understand candidates and limitations without reading JSON.
+
 | State | Meaning |
 | --- | --- |
 | Authenticated | The connection obtained credentials; data access is checked separately. |
