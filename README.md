@@ -24,6 +24,8 @@ pnpm dev
 - Customer guide: http://127.0.0.1:5173 (`apps/guide`)
 - Internal guide: http://127.0.0.1:5174 (`apps/guide-internal`)
 
+Both sites support English at `/` and Japanese at `/ja/`. Use the language menu to switch between corresponding pages. Keep paired Markdown pages synchronized when editing either language.
+
 Run one site with `pnpm guide:dev` or `pnpm guide-internal:dev`. Build both with `pnpm build`.
 
 The guides start small and grow alongside the product. Product workflows and infrastructure choices remain to be defined.

@@ -41,6 +41,15 @@
 
 .landing h1 span { color: var(--vp-c-brand-1); }
 
+:lang(ja) .landing h1 {
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: clamp(32px, 5.5vw, 72px);
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 .landing .intro {
   max-width: 570px;
   color: var(--vp-c-text-2);

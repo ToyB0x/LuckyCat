@@ -5,6 +5,34 @@ export default defineConfig({
   description: 'A streamlined, minimalist approach to FinOps.',
   lang: 'en-US',
   cleanUrls: true,
+  locales: {
+    root: { label: 'English', lang: 'en-US' },
+    ja: {
+      label: '日本語',
+      lang: 'ja-JP',
+      description: 'シンプルで実用的なFinOpsを目指すLuckyCat。',
+      themeConfig: {
+        nav: [
+          { text: 'ガイド', link: '/ja/getting-started' },
+          { text: '製品比較', link: '/ja/comparison' }
+        ],
+        sidebar: [
+          { text: 'はじめに', link: '/ja/getting-started' },
+          { text: '製品比較', link: '/ja/comparison' }
+        ],
+        footer: { message: 'LuckyCat · シンプルさを、設計から。' },
+        outline: { label: 'このページの内容' },
+        docFooter: { prev: '前のページ', next: '次のページ' },
+        langMenuLabel: '言語を変更',
+        sidebarMenuLabel: 'メニュー',
+        returnToTopLabel: 'ページの先頭へ',
+        skipToContentLabel: '本文へスキップ',
+        darkModeSwitchLabel: '表示テーマ',
+        darkModeSwitchTitle: 'ダークモードに切り替え',
+        lightModeSwitchTitle: 'ライトモードに切り替え'
+      }
+    }
+  },
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/getting-started' },
