@@ -404,3 +404,459 @@ footer {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* GitHub-style concept surface, isolated from the diagnostic reference. */
+.pr-mode {
+  background: #fff;
+  color: #1f2328;
+  --primary: #0969da;
+}
+.pr-mode .shell {
+  display: block;
+}
+.pr-mode .sidebar,
+.pr-mode .topbar,
+.pr-mode .heading {
+  display: none;
+}
+.pr-mode main {
+  max-width: none;
+  padding: 0;
+}
+.pr-mode footer {
+  max-width: 1216px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  font-size: 12px;
+}
+.gh-reference {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+.gh-repo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 28px 12px;
+  color: #0969da;
+  background: #f6f8fa;
+}
+.gh-repo > span:first-of-type {
+  color: #59636e;
+}
+.gh-tabs {
+  display: flex;
+  gap: 24px;
+  padding: 0 24px;
+  border-bottom: 1px solid #d1d9e0;
+  background: #f6f8fa;
+  font-size: 14px;
+  overflow-x: auto;
+}
+.gh-tabs > span {
+  padding: 14px 0;
+  white-space: nowrap;
+}
+.gh-tabs .gh-active {
+  border-bottom: 2px solid #fd8c73;
+  font-weight: 600;
+}
+.gh-body {
+  max-width: 1264px;
+  padding: 24px;
+  margin: auto;
+}
+.gh-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.gh-search {
+  display: flex;
+  flex: 1 1 260px;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  color: #59636e;
+}
+.gh-search > span {
+  padding: 5px 12px;
+}
+.gh-search > span:first-child {
+  border-right: 1px solid #d1d9e0;
+  background: #f6f8fa;
+  color: #1f2328;
+}
+.gh-control,
+.gh-new {
+  padding: 5px 12px;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+}
+.gh-new {
+  background: #1f883d;
+  color: #fff;
+  border-color: #1f883d;
+  font-weight: 600;
+}
+.gh-count {
+  padding: 0 6px;
+  border-radius: 16px;
+  background: #e9ecef;
+  color: #1f2328;
+  font-size: 12px;
+}
+.gh-list {
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.gh-list-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #f6f8fa;
+  border-bottom: 1px solid #d1d9e0;
+  padding: 15px 16px;
+  font-size: 14px;
+  color: #59636e;
+}
+.gh-list-header strong {
+  color: #1f2328;
+}
+.gh-sort {
+  margin-left: auto;
+  font-size: 12px;
+}
+.gh-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.gh-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 16px;
+  min-height: 65px;
+}
+.gh-row + .gh-row {
+  border-top: 1px solid #d1d9e0;
+}
+.gh-row:hover {
+  background: #f6f8fa;
+}
+.gh-checkbox {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  border: 1px solid #818b98;
+  border-radius: 3px;
+  margin: 4px 8px 0 0;
+  background: #fff;
+}
+.gh-row > .gh-pr-icon {
+  margin-top: 4px;
+  color: #1a7f37;
+  flex-shrink: 0;
+}
+.gh-pr-icon {
+  display: inline-block;
+  vertical-align: -3px;
+}
+.gh-row-content {
+  flex: 1;
+  min-width: 0;
+}
+.gh-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+button.gh-title {
+  display: inline;
+  border: 0;
+  background: none;
+  color: #1f2328;
+  text-align: left;
+  padding: 0;
+}
+button.gh-title:hover {
+  color: #0969da;
+}
+.gh-row-content p {
+  font-size: 12px;
+  color: #59636e;
+  margin-top: 3px;
+}
+.gh-badge {
+  display: inline-block;
+  color: #59636e;
+  border: 1px solid #d1d9e0;
+  border-radius: 12px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 400;
+}
+.gh-task {
+  margin-left: 5px;
+}
+.gh-check {
+  color: #1a7f37;
+}
+.gh-label {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid #9ed9c3;
+  border-radius: 20px;
+  font-size: 12px;
+  background: #dafbe1;
+  color: #116329;
+}
+.gh-comments {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #59636e;
+  padding-top: 4px;
+}
+.gh-back {
+  padding: 0;
+  margin-bottom: 16px;
+  background: none;
+  color: #0969da;
+  border: 0;
+}
+#gh-detail-view h1 {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: normal;
+  overflow-wrap: anywhere;
+}
+.gh-number {
+  color: #59636e;
+}
+.gh-detail-meta {
+  font-size: 14px;
+  color: #59636e;
+  margin-top: 12px;
+}
+.gh-open {
+  display: inline-block;
+  background: #1f883d;
+  border-radius: 20px;
+  color: #fff;
+  padding: 4px 12px;
+  margin-right: 8px;
+}
+.gh-detail-meta code {
+  background: #ddf4ff;
+  overflow-wrap: anywhere;
+}
+.gh-detail-tabs {
+  border-bottom: 1px solid #d1d9e0;
+  margin: 24px 0;
+  padding-bottom: 12px;
+  font-size: 14px;
+}
+.gh-comment {
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  max-width: 920px;
+}
+.gh-comment header {
+  background: #f6f8fa;
+  border-bottom: 1px solid #d1d9e0;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #59636e;
+}
+.gh-comment > div {
+  padding: 24px;
+}
+.gh-comment h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #d1d9e0;
+  padding-bottom: 12px;
+}
+.gh-comment h3 {
+  font-size: 18px;
+  margin: 24px 0 12px;
+}
+.gh-comment p {
+  margin-top: 16px;
+}
+.gh-comment .gh-profit {
+  font-size: 28px;
+  font-weight: 600;
+}
+.gh-profit span {
+  font-size: 16px;
+  font-weight: 400;
+}
+.gh-estimate-note {
+  font-size: 13px;
+  color: #59636e;
+  border-left: 3px solid #d1d9e0;
+  padding-left: 12px;
+}
+@media (max-width: 560px) {
+  .gh-body {
+    padding: 16px 12px;
+  }
+  .gh-repo {
+    flex-wrap: wrap;
+    padding: 16px 12px;
+    font-size: 14px;
+  }
+  .gh-tabs {
+    padding: 0 12px;
+    gap: 20px;
+  }
+  .gh-sort,
+  .gh-task {
+    display: none;
+  }
+  .gh-row {
+    padding: 12px 8px;
+    gap: 6px;
+  }
+  .gh-checkbox {
+    margin-right: 2px;
+  }
+  .gh-title {
+    font-size: 14px;
+  }
+  .gh-comments {
+    display: none;
+  }
+  .gh-list-header {
+    gap: 8px;
+    padding: 12px 8px;
+  }
+  .gh-comment > div {
+    padding: 16px;
+  }
+}
+
+/* Proposed post-merge flow; all states are presentation data. */
+.change-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+}
+.change-provisional {
+  color: var(--warning-ink);
+}
+.change-issue {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.change-issue header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.change-issue h2 {
+  font-size: 1.25rem;
+  margin-top: 4px;
+}
+.change-status {
+  font-size: 0.875rem;
+  background: var(--selection);
+  color: var(--primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+.change-resource {
+  margin-top: 16px;
+  overflow-wrap: anywhere;
+}
+.change-deadline {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--sidebar);
+  border-left: 3px solid var(--primary);
+}
+.change-deadline strong {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+.change-deadline p {
+  font-size: 0.875rem;
+}
+.change-facts {
+  margin: 0;
+}
+.change-facts > div {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(0, 2fr);
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+.change-facts dt {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.change-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+}
+.change-hold {
+  background: var(--surface);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin-top: 20px;
+}
+.change-hold:hover {
+  background: var(--selection);
+}
+.change-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 28px 0;
+}
+.change-timeline li {
+  border-top: 2px solid var(--line);
+  padding-top: 12px;
+}
+.change-timeline p {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.change-footnote {
+  margin-top: 20px;
+}
+@media (max-width: 560px) {
+  .change-issue {
+    padding: 16px;
+  }
+  .change-facts > div,
+  .change-timeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .change-facts > div {
+    gap: 4px;
+  }
+}
