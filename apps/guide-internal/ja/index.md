@@ -40,6 +40,7 @@ Better Authの設定、プラグイン選択、セッション処理、ロール
 
 | パス                  | 目的                                                                      | 状態                                |
 | --------------------- | ------------------------------------------------------------------------- | ----------------------------------- |
+| `apps/lp`             | GitHubでの応援を案内する独立LP                                            | 静的HTML・CSS                       |
 | `apps/guide`          | 顧客向けのVitePressサイトとランディングページ                             | 作成済み                            |
 | `apps/guide-internal` | 内部向けのVitePressサイト                                                 | 作成済み                            |
 | `apps/web`            | TanStack StartアプリケーションとoRPCクライアント                          | 土台のみ                            |
@@ -61,7 +62,7 @@ Vite+はルートの開発依存として導入しており、グローバルイ
 
 ### 見本の土台とCI
 
-- `pnpm dev`で、両ガイド・Webアプリ・APIをVite+経由でまとめて起動します。
+- `pnpm dev`で、LP・両ガイド・Webアプリ・APIをVite+経由でまとめて起動します。
 - Web: `http://127.0.0.1:3000`でTanStack StartのHello Worldを表示します。
 - API: `http://127.0.0.1:8787`でCloudflare Workerをローカル実行します。`GET /`は挨拶を返し、`/rpc/hello`は認証なしのoRPCサンプルです。
 - `packages/core`は挨拶の見本に加えて[ローカル診断](./diagnostics#ローカル診断の範囲)の結果型と評価処理、`packages/db`はD1クライアントの生成関数を提供します。DB・スキーマ・マイグレーションはまだ作成していません。
@@ -88,6 +89,14 @@ GitHub Actionsの`deploy-guides.yml`は`main`へのPushでCIと独立して実�
 初回デプロイ前に、GitHubの`production`環境へ`CLOUDFLARE_ACCOUNT_ID`と`CLOUDFLARE_API_TOKEN`をSecretsとして設定します。APIトークンは対象アカウントに限定し、Workers Scriptsの編集権限を付与します。アカウントのworkers.devサブドメインも有効にします。認証情報はデプロイステップだけに渡し、CIでの検証には使用しません。
 
 各ガイドの`wrangler.jsonc`でWorker名と静的ファイルの配置を定義します。デプロイ後は内部ガイドを含む両サイトがworkers.dev経由で公開されます。内部ガイドという名前にアクセス制御の効果はありません。独自ドメインやアクセス制限は未設定です。アプリケーション・APIのデプロイは別扱いで、CIではまだ設定していません。
+
+### LPの開発とデプロイ
+
+`apps/lp`は、日本語の小さなLPです。淡い背景に眠る黒猫を添え、中央のGitHubスターリンクと、その下の控えめなXフォローリンクだけを表示します。文字は濃色、金色は小さなスターのアクセントに絞り、説明文・ヘッダー・フッターは置きません。HTML・CSSをVite+でビルドし、開発サーバーは`http://127.0.0.1:5175`です。ルートの`pnpm dev`・`pnpm check`の対象に含まれます。
+
+`deploy-lp.yml`は`main`へのPushで独立して動き、LPの型チェック・ビルド後に`luckycat-lp` Workerへ`apps/lp/dist`をWorkers Static Assetsとして配信します。既存のGitHub `production`環境の`CLOUDFLARE_ACCOUNT_ID`・`CLOUDFLARE_API_TOKEN`を使い、Secretsはデプロイステップだけに渡します。ガイドのデプロイと同様、リポジトリ全体のCIを待たず、LPのデプロイ同士は直列化します。PRのCIではdry-run検証のみを行います。
+
+Workerの名前と出力先は`apps/lp/wrangler.jsonc`で管理します。workers.devでの公開を設定し、独自ドメインは未設定です。サーバー処理やCloudflare Pagesの権限は追加しません。
 
 ## インフラ選定基準
 

@@ -40,6 +40,7 @@ Keep Better Auth configuration, plugin selection, session handling, roles, permi
 
 | Path                  | Purpose                                                                                             | Availability                                          |
 | --------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `apps/lp`             | Standalone landing page inviting GitHub support                                                     | Static HTML and CSS                                   |
 | `apps/guide`          | Customer-facing VitePress site and landing page                                                     | Existing                                              |
 | `apps/guide-internal` | Internal VitePress site                                                                             | Existing                                              |
 | `apps/web`            | TanStack Start application and oRPC client                                                          | Scaffold                                              |
@@ -61,7 +62,7 @@ The root development dependency provides Vite+ locally; no global installation i
 
 ### Starter and CI
 
-- `pnpm dev` starts both guides, the web app, and the API together through Vite+.
+- `pnpm dev` starts the LP, both guides, the web app, and the API together through Vite+.
 - Web: TanStack Start Hello World at `http://127.0.0.1:3000`.
 - API: local Cloudflare Worker at `http://127.0.0.1:8787`. `GET /` returns a greeting; `/rpc/hello` is an unauthenticated oRPC example.
 - `packages/core` supplies the greeting example plus [local diagnostic](./diagnostics#local-diagnostic-scope) result types and evaluation. `packages/db` provides a D1 client factory; no database, schema, or migrations are created yet.
@@ -88,6 +89,14 @@ On pushes to `main`, `deploy-guides.yml` runs independently of CI and deploys bo
 Before the first deployment, configure the GitHub `production` environment with `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets. Use an API token scoped to the target account with Workers Scripts edit permission. Enable the account's workers.dev subdomain. Credentials are passed only to the deploy step; CI validation needs none.
 
 Each guide's `wrangler.jsonc` defines its Worker name and static directory. Both sites are publicly accessible through workers.dev after deployment, including the internal guide; its name does not provide access control. Custom domains and access restrictions are not configured. Application/API deployment is separate and remains unconfigured in CI.
+
+### LP Development and Deployment
+
+`apps/lp` is a small Japanese landing page. Use a pale background, a sleeping black cat, and dark text, with a centered GitHub star link and a quieter X follow link below it. Reserve muted gold for the small star accent; omit explanatory copy, headers, and footers. Vite+ builds the HTML and CSS, with the development server at `http://127.0.0.1:5175`. Root `pnpm dev` and `pnpm check` include this package.
+
+On pushes to `main`, the independent `deploy-lp.yml` workflow typechecks and builds the LP, then serves `apps/lp/dist` through the `luckycat-lp` Worker using Workers Static Assets. It reuses `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the GitHub `production` environment, passing secrets only to the deployment step. Like guide deployment, it does not wait for repository-wide CI; LP deployments are serialized. PR CI performs only dry-run validation.
+
+`apps/lp/wrangler.jsonc` defines the Worker name and output directory. Publication uses workers.dev; no custom domain is configured. No server-side application code or Cloudflare Pages permissions are added.
 
 ## Infrastructure Selection Criteria
 

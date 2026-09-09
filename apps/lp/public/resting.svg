@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 185" role="img" aria-labelledby="lc-resting-luckycat-title">
+<title id="lc-resting-luckycat-title">LuckyCat — a soft black cat having a quiet nap</title>
+<!-- Original LuckyCat vector artwork. Soft-charcoal study. Static; named groups support future animation. -->
+<g id="lc-resting-tail" fill="#30363a">
+ <path d="M230 113C252 111 274 117 280 135C286 154 274 174 258 172C249 171 245 164 249 160C252 157 256 161 259 161C268 162 273 147 266 139C259 131 244 132 233 132C224 132 221 117 230 113Z"/>
+</g>
+<g id="lc-resting-body">
+ <path d="M95 126C98 97 119 75 145 68C176 59 210 68 230 87C243 99 253 116 251 126C249 135 232 140 207 140H113Z" fill="#30363a"/>
+ <path d="M206 111C221 110 234 119 236 131C223 136 204 138 186 136C183 123 192 113 206 111Z" fill="#373d41"/>
+ <path d="M198 136C202 134 214 134 221 135" fill="none" stroke="#50585c" stroke-width="1.7" stroke-linecap="round"/>
+</g>
+<g id="lc-resting-resting-head" transform="translate(3 14) scale(.82) rotate(-5 116 100)">
+ <g id="lc-resting-head"><path id="lc-resting-head-outline" d="M55 74
+ C52 65 51 50 52 37
+ C52 28 54 22 59 23
+ C65 24 78 35 87 42
+ C105 37 126 37 143 42
+ C153 34 164 25 170 26
+ C176 27 179 38 179 49
+ C179 60 177 68 174 75
+ C184 84 189 98 185 111
+ C180 134 154 145 120 145
+ C88 145 62 137 51 121
+ C41 106 45 87 55 74Z" fill="#30363a"/><g id="lc-resting-ears" fill="#505559">
+ <path d="M63 43C62.7 39 63.4 36.6 65.6 38.1C69.8 41 75.2 46.2 78.2 49.5C80.1 51.5 79.2 52.4 76.6 53C72.8 53.9 68.4 55.7 65.2 57C63.3 57.8 62.9 55.9 63 53.4C63.1 50 63 46 63 43Z"/>
+ <path d="M157 49.4C160.6 45.3 164.4 42.1 166.6 42.1C169.3 42.1 169.5 49.3 168.9 54.6C168.6 56.7 167.5 57.1 165.7 56.1C163.1 54.6 160.4 53.4 157.5 52.3C155.4 51.5 155.6 51 157 49.4Z"/>
+</g><g id="lc-resting-eyes" fill="none" stroke="#d6d9cf" stroke-width="3.5" stroke-linecap="round">
+ <path d="M76 104C79.5 109.1 86.1 111 91.5 105.1"/>
+ <path d="M138 105C141.9 110.2 148.4 111.3 153.8 105.5"/>
+</g><g id="lc-resting-muzzle">
+ <path d="M112.5 120C114 119 118.6 119 120.1 120C121.6 121.1 118.4 124 116.3 124C114.3 124 111 121.2 112.5 120Z" fill="#909694"/>
+ <path d="M116.3 124V126.2C116.3 128.2 113.2 129.1 111.5 127.3M116.3 126.2C116.3 128.2 119.5 129.1 121.2 127.3" fill="none" stroke="#777f80" stroke-width="1.5" stroke-linecap="round"/>
+</g></g>
+</g>
+<g id="lc-resting-front-paws" fill="#353b3f">
+ <path d="M55 124C43 121 34 125 34 132C34 140 42 143 57 143C71 143 83 141 83 134C83 127 70 124 55 124Z"/>
+ <path d="M117 125C105 123 94 127 94 134C94 141 104 143 116 143C131 143 142 141 142 135C142 128 131 125 117 125Z"/>
+</g>
+<g id="lc-resting-toe-lines" fill="none" stroke="#5b6366" stroke-width="1.5" stroke-linecap="round">
+ <path d="M45 135V139M53 136V140M108 136V140M116 137V140"/>
+</g>
+</svg>
