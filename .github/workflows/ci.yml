@@ -32,5 +32,5 @@ jobs:
       - run: pnpm build
       - name: Validate local debug Worker and Workflow
         run: pnpm exec vp run --filter @luckycat/api build:local
-      - name: Validate guide deployment configurations
-        run: pnpm exec vp run --filter @luckycat/guide --filter @luckycat/guide-internal deploy:dry-run
+      - name: Validate static site deployment configurations
+        run: pnpm exec vp run --filter @luckycat/guide --filter @luckycat/guide-internal --filter @luckycat/lp deploy:dry-run

@@ -1,0 +1,16 @@
+{
+  "name": "@luckycat/lp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev --host 127.0.0.1 --port 5175 --strictPort",
+    "build": "vp build",
+    "preview": "vp preview --host 127.0.0.1 --port 4175 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy",
+    "deploy:dry-run": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

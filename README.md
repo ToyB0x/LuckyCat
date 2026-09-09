@@ -21,12 +21,13 @@ pnpm install
 pnpm dev
 ```
 
+- Landing page: http://127.0.0.1:5175 (`apps/lp`)
 - Customer guide: http://127.0.0.1:5173 (`apps/guide`)
 - Internal guide: http://127.0.0.1:5174 (`apps/guide-internal`)
 
-Both sites support English at `/` and Japanese at `/ja/`. Use the language menu to switch between corresponding pages. Keep paired Markdown pages synchronized when editing either language.
+Both guide sites support English at `/` and Japanese at `/ja/`. Use the language menu to switch between corresponding pages. Keep paired Markdown pages synchronized when editing either language.
 
-`pnpm dev` starts both guides, the web app (port 3000), and the API (port 8787) together through Vite+.
+`pnpm dev` starts the landing page, both guides, the web app (port 3000), and the API (port 8787) together through Vite+.
 
 Run `pnpm typecheck` and `pnpm build` for all workspace packages through the locally installed Vite+ task runner. VitePress remains the guide-site builder. GitHub Actions runs these checks on PRs and pushes to `main`; Worker builds are dry-runs and do not deploy.
 
@@ -39,3 +40,7 @@ The guides are the shared home for product direction and development plans. See 
 On pushes to `main`, a separate GitHub Actions workflow deploys both guide sites to Cloudflare Workers Static Assets in parallel with CI. Each guide deploys after its own typecheck and build pass, without waiting for the repository-wide CI result. PRs only validate the deployment configuration. Configure `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in the GitHub `production` environment before the first deployment. Both guides, including the internal guide, are published on workers.dev.
 
 See [the internal guide](apps/guide-internal/index.md#guide-deployment) for setup and Worker names.
+
+## Landing Page Deployment
+
+`apps/lp` builds a small Japanese landing page inviting GitHub stars and optional follows on X. On pushes to `main`, `deploy-lp.yml` deploys it to the `luckycat-lp` Cloudflare Worker using the same `production` environment secrets as the guides. PRs validate its build and deployment configuration without publishing. See the [internal guide](apps/guide-internal/index.md#lp-development-and-deployment) for details.

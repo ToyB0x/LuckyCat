@@ -67,6 +67,12 @@ importers:
         specifier: ^4.0.0
         version: 4.129.0(@cloudflare/workers-types@5.20260905.1)
 
+  apps/lp:
+    devDependencies:
+      wrangler:
+        specifier: ^4.0.0
+        version: 4.129.0(@cloudflare/workers-types@5.20260905.1)
+
   apps/web:
     dependencies:
       '@luckycat/core':

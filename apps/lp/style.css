@@ -1,0 +1,82 @@
+:root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',
+    sans-serif;
+  color: #30363a;
+  background: #f7f6f2;
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+.cat {
+  display: block;
+  margin-bottom: 28px;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 600;
+  line-height: 1.5;
+}
+a {
+  color: inherit;
+  text-underline-offset: 6px;
+}
+a:focus-visible {
+  outline: 2px solid #b68b3d;
+  outline-offset: 10px;
+  border-radius: 4px;
+}
+.github-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.github-link:hover span {
+  text-decoration: underline;
+}
+.star {
+  display: block;
+  flex-shrink: 0;
+  color: #b68b3d;
+}
+.follow-link {
+  margin-top: 32px;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b6f69;
+  text-decoration: none;
+}
+.follow-link:hover,
+.follow-link:focus-visible {
+  color: #30363a;
+  text-decoration: underline;
+}
+@media (max-height: 500px) {
+  main {
+    padding: 24px 20px;
+  }
+  .cat {
+    margin-bottom: 12px;
+  }
+  .follow-link {
+    margin-top: 24px;
+  }
+}
