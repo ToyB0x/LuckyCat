@@ -33,6 +33,22 @@ The broader product purpose in [Concept](./concept) remains in place. This provi
 
 ## Reference Scope
 
+### A Cat-Delivered Pull Request
+
+[Open the PR list reference](./design/plain/index.html?lang=en&view=pull-requests). Deliver proposals to the GitHub PR list engineers already use, much like Renovate. Keeping an unaddressed proposal open gives it repeated opportunities to be noticed during everyday reviews and acted upon.
+
+Reframe cost reduction as “treasure to claim,” “profit discovery,” and “a contribution to additional profit.” Use ordinary 🐈 and 💰 emoji in the title, without depending on a custom cat image or a special extension to GitHub's PR list. Show three entries: the LuckyCat PR first, followed by two dependency updates. Omit explanatory banners and keep the title short, showing the amount and resource. Opening the title reveals evidence and the checks needed to claim the opportunity.
+
+Lead with about $96/year ($8/month × 12 months), with the assumption of an unchanged state and rate for 12 months explained in the detail view. Amounts are fictional fixed-rate estimates representing potential additional profit if the cost can be avoided. They do not promise realized profit or safe deletion. This future-experience mock does not connect to GitHub, create or merge PRs, or add a feature to v0.1. Explanatory content is bilingual; GitHub UI and public PR titles remain English. This view is separate from the eight diagnostic states below.
+
+### Seven-Day Post-Merge Grace Period (Proposal)
+
+[Open the change-issue management mock](./design/plain/index.html?lang=en&view=grace-period). In this proposal, merging a PR registers a change issue in the application instead of immediately modifying resources. A seven-day grace period starts at merge time. Review the deadline, resource, and planned action, and place the change on hold during the grace period. After the deadline, recheck resource use and execution conditions before applying the change. If verification cannot complete, hold the change rather than executing solely because time has elapsed.
+
+Switch between fictional waiting, on-hold, blocked-by-recheck, and applied states. Seven days passing does not establish deletion safety or realized profit. Deadlines after releasing a hold, execution permissions, approval requirements, and notifications remain undecided. This proposal does not expand the v0.1 diagnostic scope or implement scheduling or resource operations.
+
+### Initial Diagnosis Reference
+
 The reference covers **run summary → candidate list → evidence**, with mock states for findings, many findings, no matches, partial collection, unknown pricing, authentication failure, transport failure, and loading. Details show identity, location, observed state, references, a rule/version, pricing basis, unknown unused duration, and human-review requirements. The sample displays a selected project; it does not implement onboarding or connection settings.
 
 No live connection, storage, history, searching, filtering, scheduled diagnosis, Slack integration, charts, annual savings promises, or resource changes are introduced. The sample does not call the real result renderer yet; it is deliberately isolated reference HTML/CSS/JavaScript.

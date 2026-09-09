@@ -3,7 +3,9 @@
 (() => {
   const app = document.getElementById('app');
   let language = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'ja';
-  let scenario = 'findings';
+  const initialView = new URLSearchParams(location.search).get('view');
+  let scenario = ['pull-requests', 'grace-period'].includes(initialView) ? initialView : 'findings';
+  let changeState = 'waiting';
   const l = (ja, en) => (language === 'ja' ? ja : en);
   const usd = (value) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
@@ -17,6 +19,8 @@
     ['auth', '認証失敗', 'Authentication failed'],
     ['error', '通信失敗', 'Transport failed'],
     ['loading', '読み込み中', 'Loading'],
+    ['pull-requests', 'PR一覧 · 猫のお届け', 'PR list · Cat delivery'],
+    ['grace-period', 'マージ後の猶予期間 · 仮案', 'Post-merge grace period · Proposal'],
   ];
   // Fixed presentation data only; amounts are not calculated from cloud resources.
   const sample = [
@@ -82,7 +86,83 @@
       ])}</dl><p class="review">${l('保持目的・再利用予定・復旧要件を確認してください。現在の参照先がないことは、安全に削除できる証明ではありません。', 'Check retention purpose, planned reuse, and recovery requirements. No current references does not prove that deletion is safe.')}</p></div>
     </details>`;
   }
+  // Fictional GitHub presentation. Only the LuckyCat title opens a local detail view.
+  function pullRequests() {
+    const prIcon =
+      '<svg class="gh-pr-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="4" cy="3" r="1.7"/><circle cx="4" cy="13" r="1.7"/><circle cx="12" cy="13" r="1.7"/><path d="M4 5v6m8 0V6c0-2-1-3-4-3m0 0 2-2M8 3l2 2"/></g></svg>';
+    const treasureTitle = '🐈 💰 Profit opportunity: disk · ~$96/year';
+    const rows = [
+      [352, treasureTitle, 'luckycat', '3 days ago'],
+      [351, 'chore(deps): update dependency typescript', 'renovate', '4 days ago'],
+      [349, 'chore(deps): update actions/checkout', 'renovate', '5 days ago'],
+    ];
+    return `<section class="gh-reference" aria-label="${l('GitHubのPR一覧を想定した架空の見本', 'Fictional GitHub pull request reference')}">
+      <div class="gh-repo">demo-team <span>/</span> <strong>demo-infrastructure</strong><span class="gh-badge">Private</span></div>
+      <div class="gh-tabs" aria-label="Repository tabs (mock)"><span>Code</span><span>Issues</span><span class="gh-active">${prIcon} Pull requests <span class="gh-count">${rows.length}</span></span><span>Actions</span><span>Security and quality</span><span>Insights</span><span>Settings</span></div>
+      <div class="gh-body">
+        <div id="gh-list-view">
+          <div class="gh-toolbar"><div class="gh-search"><span>Filters ▾</span><span>⌕ &nbsp; is:pr is:open</span></div><span class="gh-control">Labels <span class="gh-count">9</span></span><span class="gh-control">Milestones <span class="gh-count">0</span></span><span class="gh-new">New pull request</span></div>
+          <div class="gh-list"><div class="gh-list-header"><span class="gh-checkbox" aria-hidden="true"></span><strong>${prIcon} ${rows.length} Open</strong><span>✓ &nbsp;342 Closed</span><span class="gh-sort">Author ▾　 Label ▾　 Reviews ▾　 Sort ▾</span></div>
+          <ul>${rows.map(([id, title, author, ago]) => `<li class="gh-row"><span class="gh-checkbox" aria-hidden="true"></span>${prIcon}<div class="gh-row-content"><div>${author === 'luckycat' ? `<button type="button" class="gh-title" id="open-treasure">${title}</button>` : `<span class="gh-title">${title}</span>`}${author === 'luckycat' ? ' <span class="gh-label">finops</span>' : ' <span class="gh-check" aria-label="Checks passed">✓</span>'}</div><p>#${id} opened ${ago} by ${author} <span class="gh-badge">Bot</span> <span class="gh-task">☷ 1 task</span></p></div><span class="gh-comments" aria-label="1 comment">▱ 1</span></li>`).join('')}</ul></div>
+        </div>
+        <section id="gh-detail-view" hidden tabindex="-1" aria-label="${l('お宝PRの詳細', 'Treasure PR detail')}">
+          <button type="button" id="back-to-prs" class="gh-back">← Pull requests</button>
+          <h1>${treasureTitle} <span class="gh-number">#352</span></h1>
+          <p class="gh-detail-meta"><span class="gh-open">${prIcon} Open</span> luckycat wants to merge 1 commit into <code>main</code> from <code>luckycat/profit-opportunity</code></p>
+          <div class="gh-detail-tabs">Conversation <span class="gh-count">1</span>　 Commits <span class="gh-count">1</span>　 Files changed <span class="gh-count">1</span></div>
+          <article class="gh-comment"><header><strong>luckycat</strong> <span class="gh-badge">Bot</span> commented 3 days ago</header><div>
+            <h2>${l('🐈 💰 お宝を見つけてきました', '🐈 💰 I found a profit opportunity')}</h2>
+            <p>${l('未接続のディスクに、年約96ドルの利益改善候補があります。', 'An unattached disk offers a potential $96/year profit improvement.')}</p>
+            <h3>${l('獲得できるかもしれないお宝', 'Treasure you could claim')}</h3>
+            <p class="gh-profit">~$96 <span>USD / ${l('年の追加利益の可能性', 'year in potential additional profit')}</span></p>
+            <p>${l('demo-cache-disk は、架空の取得時点では接続先がない200 GiBのディスクです。用途を終えたディスクなら、費用を回避して利益への貢献につなげられる可能性があります。', 'demo-cache-disk is a 200 GiB disk with no attachment in this fictional snapshot. If it is no longer needed, avoiding its cost could contribute to additional profit.')}</p>
+            <h3>${l('お宝を獲得する前に', 'Before claiming the treasure')}</h3>
+            <p>☐ ${l('保持目的・再利用予定・復旧要件を確認する', 'Review retention purpose, planned reuse, and recovery requirements')}</p>
+            <p>${l('仮案では、マージ後に変更Issueを登録し、7日間の猶予と再確認を経て反映します。即座にリソースを削除するものではありません。', 'The proposal registers a change issue on merge, with application after a seven-day grace period and revalidation. Resources are not deleted immediately.')}</p>
+            <p><a href="?lang=${language}&view=grace-period">${l('マージ後の猶予期間の見本を見る', 'View the post-merge grace period mock')}</a></p>
+            <p class="gh-estimate-note">${l('価格推定は仮実装です。$0.04 × 200 GiB = 月約8ドルを12か月分に換算した年約96ドルの架空例です。同じ状態・単価が12か月続く前提で、地域差や割引は未反映です。表示額は実請求・確定利益・実現済み削減額ではありません。', 'Price estimation is a prototype: $0.04 × 200 GiB = about $8/month × 12 months = about $96/year. This fictional annual estimate assumes the same state and rate for 12 months, excluding regional differences and discounts. The amount is not actual billing, confirmed profit, or realized savings.')}</p>
+          </div></article>
+        </section>
+      </div>
+    </section>`;
+  }
+  function gracePeriod() {
+    const states = [
+      ['waiting', '猶予期間中', 'Grace period'],
+      ['held', '保留中', 'On hold'],
+      ['blocked', '再確認で停止', 'Blocked by recheck'],
+      ['applied', '反映済み', 'Applied'],
+    ];
+    const status = states.find(([id]) => id === changeState);
+    const waiting = changeState === 'waiting';
+    const applied = changeState === 'applied';
+    return `<section class="change-preview" aria-labelledby="change-title">
+      <div class="change-controls"><span class="change-provisional">${l('UI・機能の仮案 · 実リソースは操作しません', 'UI / feature proposal · No real resource operations')}</span><label for="change-state">${l('状態の見本', 'Sample state')} <select id="change-state">${states.map(([id, ja, en]) => `<option value="${id}" ${id === changeState ? 'selected' : ''}>${l(ja, en)}</option>`).join('')}</select></label></div>
+      <article class="change-issue"><header><div><p class="secondary">CHANGE-42 · ${l('変更Issue', 'Change issue')}</p><h2 id="change-title">${l('未接続ディスクの削除', 'Delete an unattached disk')}</h2></div><span class="change-status">${l(status[1], status[2])}</span></header>
+        <p class="change-resource">demo-cache-disk <span class="secondary">· luckycat-demo / asia-northeast1-a</span></p>
+        <div class="change-deadline"><strong>${waiting ? l('反映予定まで、あと4日', '4 days until scheduled application') : applied ? l('7日間の猶予と再確認を経て反映', 'Applied after seven days and revalidation') : l('反映を停止しています', 'Application is on hold')}</strong><p>${waiting ? l('7日間のうち3日が経過した架空の見本です。まだリソースは変更されていません。', 'Fictional example: day 3 of a seven-day grace period. Resources have not been changed.') : applied ? l('削除が完了した場合の表示見本です。実際の削除や利益の確定は行いません。', 'Sample display after a completed deletion. No actual deletion or profit verification occurs.') : changeState === 'blocked' ? l('期限後の再確認で接続先が見つかった想定です。自動では反映せず、担当者の確認を待ちます。', 'Assume a new attachment was found during the post-deadline recheck. Wait for review without applying the change.') : l('担当者が保留しました。予定時刻を過ぎても反映しません。', 'A reviewer placed this change on hold. It will not apply even after the scheduled time.')}</p></div>
+        <dl class="change-facts">${pairs([
+          [l('元のPR', 'Source PR'), '#352 · 🐈 💰 Profit opportunity: disk · ~$96/year'],
+          [l('マージ日時（架空）', 'Merged at (fictional)'), '2026-09-01 09:00 JST'],
+          [
+            l('反映予定（マージから7日後）', 'Scheduled application (seven days after merge)'),
+            '2026-09-08 09:00 JST',
+          ],
+          [l('予定する操作', 'Planned action'), l('このディスク1件の削除', 'Delete this one disk')],
+        ])}</dl>
+        ${waiting ? `<button type="button" class="change-hold" id="hold-change">${l('反映を保留する（モック）', 'Put on hold (mock)')}</button>` : ''}
+      </article>
+      <ol class="change-timeline">
+        <li><strong>${l('1. PRをマージ', '1. Merge the PR')}</strong><p>${l('変更Issueを登録。ここでは削除しません。', 'Register a change issue. No deletion at this step.')}</p></li>
+        <li><strong>${l('2. 7日間の猶予', '2. Seven-day grace period')}</strong><p>${l('担当者が用途・保持要件を確認。必要なら保留。', 'Review usage and retention requirements; put on hold if needed.')}</p></li>
+        <li><strong>${l('3. 再確認して反映', '3. Revalidate and apply')}</strong><p>${l('期限後に状態・権限を再確認。条件を満たす場合に実行。', 'After the deadline, recheck state and permissions. Execute only if conditions are met.')}</p></li>
+      </ol>
+      <p class="secondary change-footnote">${l('仮案です。保留解除後の期限、実行権限、承認・通知の設計は未決定です。状態切り替えは表示のみで、時間経過による実行やクラウド接続はありません。', 'Proposal only. Deadlines after releasing a hold, execution permissions, approvals, and notifications are undecided. State changes affect only this display; no timed execution or cloud connection occurs.')}</p>
+    </section>`;
+  }
   function content() {
+    if (scenario === 'grace-period') return gracePeriod();
+    if (scenario === 'pull-requests') return pullRequests();
     if (['auth', 'error', 'loading'].includes(scenario)) {
       const loading = scenario === 'loading';
       return `<section class="notice ${loading ? '' : 'error'}" role="${loading ? 'status' : 'alert'}">
@@ -130,16 +210,24 @@
       </ul><p class="secondary">${l('観測は現在の状態のみです。継続的な未使用期間、保持目的、実際の請求額は不明です。', 'Current-state observation only. Continuous unused duration, retention intent, and actual billing remain unknown.')}</p></details>`;
   }
   function render(focusId) {
+    const isPr = scenario === 'pull-requests';
+    const isGrace = scenario === 'grace-period';
+    const viewTitle = isPr
+      ? l('プルリクエスト', 'Pull requests')
+      : isGrace
+        ? l('変更Issue', 'Change issues')
+        : l('診断結果', 'Diagnostic result');
+    document.body.classList.toggle('pr-mode', isPr);
     document.documentElement.lang = language;
     document.title = `LuckyCat — ${l('暫定フロント見本', 'Provisional frontend')}`;
-    app.innerHTML = `<header class="reference-bar"><div><strong>${l('案1を仮採用 · HTMLデザイン見本', 'Option 1 · Provisional HTML reference')}</strong><p>${l('デザイン・表現コンセプトは未確定。フロントは頻繁に変更予定です。', 'Visual style and expression are not finalized. Expect frequent frontend changes.')}</p></div>
-      <div class="preview-controls"><label for="scenario">${l('表示状態', 'State')}<select id="scenario">${scenarios.map(([id, ja, en]) => `<option value="${id}" ${id === scenario ? 'selected' : ''}>${l(ja, en)}</option>`).join('')}</select></label>
+    app.innerHTML = `<header class="reference-bar"><div><strong>${isPr ? l('PR一覧モック', 'PR list mock') : l('案1を仮採用 · HTMLデザイン見本', 'Option 1 · Provisional HTML reference')}</strong>${isPr ? '' : `<p>${l('デザイン・表現コンセプトは未確定。フロントは頻繁に変更予定です。', 'Visual style and expression are not finalized. Expect frequent frontend changes.')}</p>`}</div>
+      <div class="preview-controls"><label for="scenario">${l('見本・表示状態', 'View / state')}<select id="scenario">${scenarios.map(([id, ja, en]) => `<option value="${id}" ${id === scenario ? 'selected' : ''}>${l(ja, en)}</option>`).join('')}</select></label>
         <label for="language">${l('言語', 'Language')}<select id="language"><option value="ja" ${language === 'ja' ? 'selected' : ''}>日本語</option><option value="en" ${language === 'en' ? 'selected' : ''}>English</option></select></label></div></header>
       <div class="shell"><aside class="sidebar"><div><div class="wordmark">LuckyCat</div><p class="secondary">cloud companion</p></div><div class="workspace"><strong>Demo workspace</strong><span class="secondary">Google Cloud · 1 ${l('プロジェクト', 'project')}</span></div>
-        <nav aria-label="${l('見本のナビゲーション', 'Reference navigation')}"><a class="nav-link" href="#main" aria-current="page">${l('診断結果', 'Diagnostic result')}</a></nav>
+        <nav aria-label="${l('見本のナビゲーション', 'Reference navigation')}"><a class="nav-link" href="#main" aria-current="page">${viewTitle}</a></nav>
         <div class="cat-note"><img src="./resting.svg" width="48" height="27" alt=""><p class="secondary">${l('架空データのみ・接続なし', 'Synthetic data · No connection')}</p></div></aside>
-      <div class="content"><div class="topbar"><span>Demo workspace / ${l('診断結果', 'Diagnostic result')}</span><span class="secondary">MOCK · ${l('実クラウドは操作しません', 'No cloud operations')}</span></div>
-        <main id="main" tabindex="-1"><div class="heading"><p class="eyebrow">GOOGLE CLOUD / DIAGNOSTICS</p><h1>${l('リソースの見直し候補', 'Resource review candidates')}</h1><p class="secondary">luckycat-demo · ${['loading', 'error', 'auth'].includes(scenario) ? l('診断結果は未確認', 'Results unconfirmed') : `${l('取得時点', 'Observed')} ${observed}`}</p></div>
+      <div class="content"><div class="topbar"><span>Demo workspace / ${viewTitle}</span><span class="secondary">MOCK · ${l('実クラウドは操作しません', 'No cloud operations')}</span></div>
+        <main id="main" tabindex="-1"><div class="heading"><p class="eyebrow">${isPr ? 'WORKFLOW CONCEPT / PULL REQUESTS' : isGrace ? 'PROPOSAL / CHANGE MANAGEMENT' : 'GOOGLE CLOUD / DIAGNOSTICS'}</p><h1>${isPr ? l('猫が届ける、小さな改善のきっかけ', 'A small opportunity, delivered by your cat') : isGrace ? l('マージのあとに、7日間の猶予を', 'Seven days between merge and application') : l('リソースの見直し候補', 'Resource review candidates')}</h1><p class="secondary">${isPr ? l('普段の開発フローに溶け込む、LuckyCatからの提案。', 'A proposal from LuckyCat, alongside your everyday development work.') : isGrace ? l('マージ → 変更Issue → 猶予期間 → 再確認・反映', 'Merge → Change issue → Grace period → Revalidate and apply') : `luckycat-demo · ${['loading', 'error', 'auth'].includes(scenario) ? l('診断結果は未確認', 'Results unconfirmed') : `${l('取得時点', 'Observed')} ${observed}`}`}</p></div>
           <div id="result" aria-live="polite">${content()}</div>
           <footer>${l('デザイン検討用。保存・削除・通知は行いません。アプリ本体への組み込みは別作業です。', 'Design reference only. No persistence, deletion, or notifications. Application integration is a separate task.')}</footer>
         </main></div></div>`;
@@ -151,6 +239,30 @@
       language = event.target.value;
       render('language');
     });
+    if (isPr) {
+      const list = document.getElementById('gh-list-view');
+      const detail = document.getElementById('gh-detail-view');
+      document.getElementById('open-treasure').addEventListener('click', () => {
+        list.hidden = true;
+        detail.hidden = false;
+        detail.focus();
+      });
+      document.getElementById('back-to-prs').addEventListener('click', () => {
+        detail.hidden = true;
+        list.hidden = false;
+        document.getElementById('open-treasure').focus();
+      });
+    }
+    if (isGrace) {
+      document.getElementById('change-state').addEventListener('change', (event) => {
+        changeState = event.target.value;
+        render('change-state');
+      });
+      document.getElementById('hold-change')?.addEventListener('click', () => {
+        changeState = 'held';
+        render('change-state');
+      });
+    }
     if (focusId) document.getElementById(focusId).focus();
   }
   render();
