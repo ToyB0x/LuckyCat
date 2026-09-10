@@ -1,4 +1,8 @@
-# LuckyCat
+<p align="center">
+  <img src="apps/lp/public/resting.svg" alt="A sleeping black cat" width="180" height="111">
+</p>
+
+<h1 align="center">LuckyCat</h1>
 
 LuckyCat is a streamlined, minimalist FinOps tool. It is designed primarily for engineering organizations of up to 100–300 members.
 
